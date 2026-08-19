@@ -1,0 +1,32 @@
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# Environment files
+.env
+.env.*
+
+# Generated data
+data/raw/*
+data/cleaned/*
+data/geo/*
+data/image_analysis/*
+
+# Keep directories in Git
+!data/raw/.gitkeep
+!data/cleaned/.gitkeep
+!data/geo/.gitkeep
+!data/image_analysis/.gitkeep

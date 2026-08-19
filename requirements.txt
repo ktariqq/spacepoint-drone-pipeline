@@ -1,0 +1,8 @@
+streamlit>=1.29
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+opencv-python-headless
+Pillow
+jinja2
+google-genai
