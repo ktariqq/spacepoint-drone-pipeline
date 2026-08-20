@@ -8,7 +8,7 @@ import numpy as np
 from PIL import Image
 
 MAX_WIDTH = 800
-LAND_COVER_CLUSTERS = 4
+LAND_COVER_CLUSTERS = 6
 
 # ExG's real range for 8-bit RGB is -510 to 510. ExG <= 0 means no real
 # greenness, regardless of how a pixel compares to the rest of its image.
@@ -82,6 +82,29 @@ def otsu_threshold(raw_index: np.ndarray, physical_range: tuple, absolute_floor:
     return mask, effective_cutoff
 
 
+def classify_cluster_color(center: np.ndarray) -> str:
+    """Labels one K-means cluster center by color, using HSV so hue tells
+    apart categories that look similar in brightness alone - asphalt
+    (gray, low saturation) vs. bare soil (brown) vs. water (blue hue)."""
+    r, g, b = center
+    hsv_pixel = cv2.cvtColor(np.uint8([[[r, g, b]]]), cv2.COLOR_RGB2HSV)[0][0]
+    hue, sat, val = int(hsv_pixel[0]), int(hsv_pixel[1]), int(hsv_pixel[2])
+
+    if val < 60:
+        return "shadow"
+    if g > r and g > b and sat > 40:
+        return "vegetation"
+    if 95 <= hue <= 135 and b >= r and sat > 30:
+        return "water"
+    if 5 <= hue <= 30 and sat > 45 and val < 200:
+        return "bare_soil"
+    if sat < 35 and val >= 170:
+        return "bright_surface"
+    if sat < 40 and val < 170:
+        return "asphalt_pavement"
+    return "other"
+
+
 def classify_land_cover(image_array: np.ndarray, k: int = LAND_COVER_CLUSTERS) -> dict:
     """Unsupervised K-means clustering on pixel colors, labeled by each
     cluster's average color."""
@@ -91,19 +114,7 @@ def classify_land_cover(image_array: np.ndarray, k: int = LAND_COVER_CLUSTERS) -
     _, labels, centers = cv2.kmeans(pixels, k, None, criteria, 5, cv2.KMEANS_PP_CENTERS)
 
     label_map = labels.flatten().reshape(image_array.shape[:2])
-
-    cluster_names = {}
-    for cluster_id, center in enumerate(centers):
-        r, g, b = center
-        brightness = (r + g + b) / 3
-        if g > r and g > b:
-            cluster_names[cluster_id] = "vegetation"
-        elif brightness > 170:
-            cluster_names[cluster_id] = "bright_surface"
-        elif brightness < 60:
-            cluster_names[cluster_id] = "shadow"
-        else:
-            cluster_names[cluster_id] = "other"
+    cluster_names = {cluster_id: classify_cluster_color(center) for cluster_id, center in enumerate(centers)}
 
     return {"label_map": label_map, "cluster_names": cluster_names}
 
