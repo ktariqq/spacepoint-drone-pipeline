@@ -57,7 +57,10 @@ else:
 
 results = []
 for source in image_sources:
-    name = getattr(source, "name", Path(source).name)
+    if hasattr(source, "name"):
+        name = source.name
+    else:
+        name = Path(source).name
     result = analyze_image(source)
     result["name"] = name
     results.append(result)
