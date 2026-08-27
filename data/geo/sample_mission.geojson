@@ -1,0 +1,6158 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37728,
+          24.453887
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.01,
+        "humidity": 43.54,
+        "pressure": 1007.88,
+        "light": 23803.3,
+        "air_quality": 42.8,
+        "battery_voltage": 4.1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37733,
+          24.453904
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.37,
+        "humidity": 51.12,
+        "pressure": 1006.69,
+        "light": 23834.2,
+        "air_quality": 26.5,
+        "battery_voltage": 4.099
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377307,
+          24.453886
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.67,
+        "humidity": 35.03,
+        "pressure": 1007.06,
+        "light": 24902.3,
+        "air_quality": 33.8,
+        "battery_voltage": 4.098
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377324,
+          24.453882
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.52,
+        "humidity": 51.65,
+        "pressure": 1009.2,
+        "light": 22097.1,
+        "air_quality": 26.0,
+        "battery_voltage": 4.097
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377324,
+          24.453882
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.01,
+        "humidity": 37.53,
+        "pressure": 1009.55,
+        "light": 17568.9,
+        "air_quality": 35.4,
+        "battery_voltage": 4.096
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37731,
+          24.45391
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.21,
+        "humidity": 49.95,
+        "pressure": 1006.62,
+        "light": 16050.8,
+        "air_quality": 38.0,
+        "battery_voltage": 4.095
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377315,
+          24.453916
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.64,
+        "humidity": 40.13,
+        "pressure": 1007.97,
+        "light": 23883.4,
+        "air_quality": 25.5,
+        "battery_voltage": 4.094
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377303,
+          24.453898
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.83,
+        "humidity": 43.92,
+        "pressure": 1006.3,
+        "light": 15292.3,
+        "air_quality": 40.9,
+        "battery_voltage": 4.093
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37735,
+          24.453946
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.59,
+        "humidity": 44.59,
+        "pressure": 1009.61,
+        "light": 19797.5,
+        "air_quality": 26.1,
+        "battery_voltage": 4.092
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377309,
+          24.453943
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.47,
+        "humidity": 52.16,
+        "pressure": 1007.77,
+        "light": 16091.2,
+        "air_quality": 42.8,
+        "battery_voltage": 4.091
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377301,
+          24.453914
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.75,
+        "humidity": 46.34,
+        "pressure": 1009.86,
+        "light": 19184.1,
+        "air_quality": 30.7,
+        "battery_voltage": 4.09
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377315,
+          24.453933
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.49,
+        "humidity": 36.32,
+        "pressure": 1008.13,
+        "light": 15776.0,
+        "air_quality": 26.6,
+        "battery_voltage": 4.089
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377325,
+          24.453942
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.93,
+        "humidity": 51.45,
+        "pressure": 1008.5,
+        "light": 16362.1,
+        "air_quality": 37.5,
+        "battery_voltage": 4.088
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377357,
+          24.453922
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.39,
+        "humidity": 45.89,
+        "pressure": 1008.77,
+        "light": 23506.2,
+        "air_quality": 28.6,
+        "battery_voltage": 4.087
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377353,
+          24.453951
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.81,
+        "humidity": 53.0,
+        "pressure": 1007.03,
+        "light": 15740.0,
+        "air_quality": 34.5,
+        "battery_voltage": 4.086
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377314,
+          24.453957
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.17,
+        "humidity": 41.16,
+        "pressure": 1008.87,
+        "light": 21948.0,
+        "air_quality": 36.3,
+        "battery_voltage": 4.085
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377359,
+          24.453929
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.64,
+        "humidity": 53.2,
+        "pressure": 1009.45,
+        "light": 22724.9,
+        "air_quality": 35.9,
+        "battery_voltage": 4.084
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377343,
+          24.453931
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.85,
+        "humidity": 43.35,
+        "pressure": 1010.0,
+        "light": 18999.2,
+        "air_quality": 35.6,
+        "battery_voltage": 4.083
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377353,
+          24.45394
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.98,
+        "humidity": 37.09,
+        "pressure": 1009.91,
+        "light": 22273.1,
+        "air_quality": 30.3,
+        "battery_voltage": 4.082
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377329,
+          24.453966
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.01,
+        "humidity": 40.99,
+        "pressure": 1007.46,
+        "light": 21191.6,
+        "air_quality": 34.4,
+        "battery_voltage": 4.081
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377359,
+          24.453938
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.34,
+        "humidity": 40.3,
+        "pressure": 1007.72,
+        "light": 24857.3,
+        "air_quality": 29.9,
+        "battery_voltage": 4.08
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377379,
+          24.453949
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.42,
+        "humidity": 39.74,
+        "pressure": 1006.34,
+        "light": 20906.1,
+        "air_quality": 41.6,
+        "battery_voltage": 4.079
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377349,
+          24.453963
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.08,
+        "humidity": 53.1,
+        "pressure": 1006.81,
+        "light": 19716.8,
+        "air_quality": 43.4,
+        "battery_voltage": 4.078
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377388,
+          24.453938
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.84,
+        "humidity": 42.07,
+        "pressure": 1008.3,
+        "light": 18455.6,
+        "air_quality": 33.8,
+        "battery_voltage": 4.077
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37739,
+          24.453944
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.18,
+        "humidity": 48.11,
+        "pressure": 1006.73,
+        "light": 15541.8,
+        "air_quality": 33.2,
+        "battery_voltage": 4.076
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377366,
+          24.453933
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.31,
+        "humidity": 36.13,
+        "pressure": 1007.83,
+        "light": 17860.8,
+        "air_quality": 39.7,
+        "battery_voltage": 4.075
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37738,
+          24.453975
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.92,
+        "humidity": 54.0,
+        "pressure": 1008.28,
+        "light": 15550.8,
+        "air_quality": 27.8,
+        "battery_voltage": 4.074
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377392,
+          24.453939
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.03,
+        "humidity": 52.53,
+        "pressure": 1008.87,
+        "light": 16869.6,
+        "air_quality": 32.4,
+        "battery_voltage": 4.073
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377398,
+          24.453946
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.47,
+        "humidity": 49.46,
+        "pressure": 1008.28,
+        "light": 17269.3,
+        "air_quality": 27.2,
+        "battery_voltage": 4.072
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37737,
+          24.453939
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:00:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.25,
+        "humidity": 36.11,
+        "pressure": 1009.13,
+        "light": 18485.5,
+        "air_quality": 27.4,
+        "battery_voltage": 4.071
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377375,
+          24.453956
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.48,
+        "humidity": 46.43,
+        "pressure": 1006.95,
+        "light": 23927.4,
+        "air_quality": 43.3,
+        "battery_voltage": 4.07
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377378,
+          24.453982
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.98,
+        "humidity": 54.41,
+        "pressure": 1006.24,
+        "light": 20509.7,
+        "air_quality": 34.6,
+        "battery_voltage": 4.069
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37737,
+          24.453988
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.44,
+        "humidity": 46.18,
+        "pressure": 1008.28,
+        "light": 22853.3,
+        "air_quality": 29.7,
+        "battery_voltage": 4.068
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377378,
+          24.453991
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.95,
+        "humidity": 39.51,
+        "pressure": 1007.0,
+        "light": 23522.7,
+        "air_quality": 37.3,
+        "battery_voltage": 4.067
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377365,
+          24.453974
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.48,
+        "humidity": 46.03,
+        "pressure": 1006.13,
+        "light": 23467.8,
+        "air_quality": 25.0,
+        "battery_voltage": 4.066
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377374,
+          24.453985
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.87,
+        "humidity": 37.49,
+        "pressure": 1008.93,
+        "light": 15841.4,
+        "air_quality": 27.7,
+        "battery_voltage": 4.065
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37738,
+          24.453953
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.09,
+        "humidity": 43.36,
+        "pressure": 1008.68,
+        "light": 17618.5,
+        "air_quality": 33.5,
+        "battery_voltage": 4.064
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377408,
+          24.453952
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.15,
+        "humidity": 48.05,
+        "pressure": 1009.29,
+        "light": 20154.1,
+        "air_quality": 29.1,
+        "battery_voltage": 4.063
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37739,
+          24.453969
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.35,
+        "humidity": 37.23,
+        "pressure": 1008.18,
+        "light": 19365.5,
+        "air_quality": 33.1,
+        "battery_voltage": 4.062
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37742,
+          24.453973
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.78,
+        "humidity": 49.61,
+        "pressure": 1009.21,
+        "light": 20206.7,
+        "air_quality": 34.8,
+        "battery_voltage": 4.061
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377435,
+          24.453996
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.63,
+        "humidity": 53.12,
+        "pressure": 1006.24,
+        "light": 18712.3,
+        "air_quality": 26.0,
+        "battery_voltage": 4.06
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37743,
+          24.453956
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.18,
+        "humidity": 43.72,
+        "pressure": 1009.52,
+        "light": 22185.6,
+        "air_quality": 26.6,
+        "battery_voltage": 4.059
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377412,
+          24.454008
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.09,
+        "humidity": 38.4,
+        "pressure": 1007.39,
+        "light": 17662.8,
+        "air_quality": 34.6,
+        "battery_voltage": 4.058
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377392,
+          24.453963
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.27,
+        "humidity": 40.31,
+        "pressure": 1006.28,
+        "light": 20123.2,
+        "air_quality": 43.3,
+        "battery_voltage": 4.057
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377413,
+          24.453968
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.76,
+        "humidity": 43.96,
+        "pressure": 1009.47,
+        "light": 17729.5,
+        "air_quality": 26.7,
+        "battery_voltage": 4.056
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377416,
+          24.454015
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.51,
+        "humidity": 40.35,
+        "pressure": 1009.27,
+        "light": 20964.4,
+        "air_quality": 35.3,
+        "battery_voltage": 4.055
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377429,
+          24.453999
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.66,
+        "humidity": 50.83,
+        "pressure": 1007.34,
+        "light": 20333.3,
+        "air_quality": 43.7,
+        "battery_voltage": 4.054
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377405,
+          24.454024
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.59,
+        "humidity": 37.04,
+        "pressure": 1008.05,
+        "light": 22519.3,
+        "air_quality": 39.4,
+        "battery_voltage": 4.053
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377419,
+          24.453983
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.44,
+        "humidity": 39.34,
+        "pressure": 1007.29,
+        "light": 24840.8,
+        "air_quality": 30.7,
+        "battery_voltage": 4.052
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377427,
+          24.453983
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.75,
+        "humidity": 46.82,
+        "pressure": 1006.1,
+        "light": 19886.0,
+        "air_quality": 31.8,
+        "battery_voltage": 4.051
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377426,
+          24.454012
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.95,
+        "humidity": 44.6,
+        "pressure": 1008.01,
+        "light": 21958.6,
+        "air_quality": 35.5,
+        "battery_voltage": 4.049
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377439,
+          24.454033
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.94,
+        "humidity": 35.21,
+        "pressure": 1009.09,
+        "light": 18734.5,
+        "air_quality": 40.5,
+        "battery_voltage": 4.048
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377436,
+          24.454029
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.68,
+        "humidity": 46.98,
+        "pressure": 1007.84,
+        "light": 16036.7,
+        "air_quality": 36.6,
+        "battery_voltage": 4.047
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377431,
+          24.453986
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.62,
+        "humidity": 49.37,
+        "pressure": 1008.96,
+        "light": 15834.6,
+        "air_quality": 27.5,
+        "battery_voltage": 4.046
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377461,
+          24.454018
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.57,
+        "humidity": 37.54,
+        "pressure": 1009.14,
+        "light": 15041.2,
+        "air_quality": 42.6,
+        "battery_voltage": 4.045
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377424,
+          24.453989
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.79,
+        "humidity": 42.4,
+        "pressure": 1007.39,
+        "light": 18370.9,
+        "air_quality": 25.1,
+        "battery_voltage": 4.044
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377447,
+          24.454036
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.88,
+        "humidity": 54.09,
+        "pressure": 1008.61,
+        "light": 24647.7,
+        "air_quality": 36.1,
+        "battery_voltage": 4.043
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377451,
+          24.454014
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.46,
+        "humidity": 54.14,
+        "pressure": 1006.25,
+        "light": 20666.9,
+        "air_quality": 27.2,
+        "battery_voltage": 4.042
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377444,
+          24.453989
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:01:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.63,
+        "humidity": 51.16,
+        "pressure": 1008.49,
+        "light": 21460.1,
+        "air_quality": 35.8,
+        "battery_voltage": 4.041
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377433,
+          24.454016
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.34,
+        "humidity": 43.125,
+        "pressure": 1008.57,
+        "light": 23886.5,
+        "air_quality": 34.8,
+        "battery_voltage": 4.04
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377446,
+          24.454016
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.82,
+        "humidity": 35.09,
+        "pressure": 1006.1,
+        "light": 23255.7,
+        "air_quality": 32.5,
+        "battery_voltage": 4.039
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377445,
+          24.454047
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.9,
+        "humidity": 53.19,
+        "pressure": 1006.94,
+        "light": 24779.0,
+        "air_quality": 37.2,
+        "battery_voltage": 4.038
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377476,
+          24.454047
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.02,
+        "humidity": 50.01,
+        "pressure": 1007.27,
+        "light": 22788.7,
+        "air_quality": 32.85,
+        "battery_voltage": 4.037
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377497,
+          24.454051
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.14,
+        "humidity": 46.83,
+        "pressure": 1007.6,
+        "light": 20798.4,
+        "air_quality": 28.5,
+        "battery_voltage": 4.036
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377471,
+          24.45402
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.07,
+        "humidity": 39.43,
+        "pressure": 1007.08,
+        "light": 21505.1,
+        "air_quality": 32.5,
+        "battery_voltage": 4.035
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377477,
+          24.454032
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.62,
+        "humidity": 43.12,
+        "pressure": 1006.22,
+        "light": 21661.7,
+        "air_quality": 27.3,
+        "battery_voltage": 4.034
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377498,
+          24.454056
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 31.9,
+        "humidity": 50.15,
+        "pressure": 1008.03,
+        "light": 21180.2,
+        "air_quality": 37.6,
+        "battery_voltage": 4.033
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377509,
+          24.454007
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.24,
+        "humidity": 53.97,
+        "pressure": 1009.45,
+        "light": 21320.0,
+        "air_quality": 38.6,
+        "battery_voltage": 4.032
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377499,
+          24.454029
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.63,
+        "humidity": 35.1,
+        "pressure": 1009.12,
+        "light": 17712.8,
+        "air_quality": 41.0,
+        "battery_voltage": 4.031
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377512,
+          24.454021
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.03,
+        "humidity": 43.42,
+        "pressure": 1007.36,
+        "light": 23311.1,
+        "air_quality": 28.3,
+        "battery_voltage": 4.03
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377465,
+          24.454069
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.42,
+        "humidity": 49.6,
+        "pressure": 1006.11,
+        "light": 24553.1,
+        "air_quality": 38.5,
+        "battery_voltage": 4.029
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37749,
+          24.45403
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.03,
+        "humidity": 36.13,
+        "pressure": 1009.88,
+        "light": 19586.4,
+        "air_quality": 43.1,
+        "battery_voltage": 4.028
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377511,
+          24.454055
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.05,
+        "humidity": 42.55,
+        "pressure": 1006.46,
+        "light": 17483.1,
+        "air_quality": 40.0,
+        "battery_voltage": 4.027
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377487,
+          24.454075
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.46,
+        "humidity": 37.56,
+        "pressure": 1007.03,
+        "light": 22098.9,
+        "air_quality": 32.8,
+        "battery_voltage": 4.026
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377516,
+          24.454058
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.49,
+        "humidity": 51.06,
+        "pressure": 1008.11,
+        "light": 17826.3,
+        "air_quality": 42.5,
+        "battery_voltage": 4.025
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377518,
+          24.45403
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.68,
+        "humidity": 40.67,
+        "pressure": 1007.94,
+        "light": 17947.1,
+        "air_quality": 29.8,
+        "battery_voltage": 4.024
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377494,
+          24.454054
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.7,
+        "humidity": 48.58,
+        "pressure": 1009.51,
+        "light": 22390.7,
+        "air_quality": 28.4,
+        "battery_voltage": 4.023
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377488,
+          24.454074
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.72,
+        "humidity": 38.71,
+        "pressure": 1008.61,
+        "light": 23681.5,
+        "air_quality": 44.5,
+        "battery_voltage": 4.022
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377523,
+          24.454069
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.58,
+        "humidity": 37.62,
+        "pressure": 1008.84,
+        "light": 21709.9,
+        "air_quality": 25.4,
+        "battery_voltage": 4.021
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377531,
+          24.454042
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.07,
+        "humidity": 44.85,
+        "pressure": 1009.7,
+        "light": 18410.2,
+        "air_quality": 34.0,
+        "battery_voltage": 4.02
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377543,
+          24.454062
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.35,
+        "humidity": 54.35,
+        "pressure": 1007.17,
+        "light": 21873.2,
+        "air_quality": 36.3,
+        "battery_voltage": 4.019
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377494,
+          24.454084
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.95,
+        "humidity": 42.8,
+        "pressure": 1009.61,
+        "light": 19728.3,
+        "air_quality": 36.7,
+        "battery_voltage": 4.018
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377536,
+          24.454069
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.94,
+        "humidity": 43.65,
+        "pressure": 1006.4,
+        "light": 20426.2,
+        "air_quality": 41.9,
+        "battery_voltage": 4.017
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377551,
+          24.454044
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.1,
+        "humidity": 47.94,
+        "pressure": 1007.53,
+        "light": 19387.5,
+        "air_quality": 30.5,
+        "battery_voltage": 4.016
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377531,
+          24.4541
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.33,
+        "humidity": 44.41,
+        "pressure": 1008.76,
+        "light": 18959.9,
+        "air_quality": 27.9,
+        "battery_voltage": 4.015
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377533,
+          24.454064
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.75,
+        "humidity": 54.9,
+        "pressure": 1006.35,
+        "light": 17668.2,
+        "air_quality": 43.0,
+        "battery_voltage": 4.014
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377551,
+          24.454069
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.98,
+        "humidity": 49.43,
+        "pressure": 1006.14,
+        "light": 21397.5,
+        "air_quality": 30.1,
+        "battery_voltage": 4.013
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377527,
+          24.454084
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.42,
+        "humidity": 43.79,
+        "pressure": 1007.29,
+        "light": 24065.3,
+        "air_quality": 31.8,
+        "battery_voltage": 4.012
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37755,
+          24.454089
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:02:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.08,
+        "humidity": 36.0,
+        "pressure": 1009.99,
+        "light": 24287.6,
+        "air_quality": 40.0,
+        "battery_voltage": 4.011
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377547,
+          24.454078
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.97,
+        "humidity": 52.05,
+        "pressure": 1008.58,
+        "light": 17088.4,
+        "air_quality": 41.0,
+        "battery_voltage": 4.01
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377542,
+          24.454101
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.71,
+        "humidity": 35.98,
+        "pressure": 1008.29,
+        "light": 20205.1,
+        "air_quality": 32.9,
+        "battery_voltage": 4.009
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37754,
+          24.454103
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.07,
+        "humidity": 50.48,
+        "pressure": 1008.93,
+        "light": 23797.8,
+        "air_quality": 32.3,
+        "battery_voltage": 4.008
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377553,
+          24.45411
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.29,
+        "humidity": 54.97,
+        "pressure": 1008.25,
+        "light": 22901.8,
+        "air_quality": 39.0,
+        "battery_voltage": 4.007
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377537,
+          24.454114
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.26,
+        "humidity": 51.97,
+        "pressure": 1009.36,
+        "light": 22295.1,
+        "air_quality": 34.2,
+        "battery_voltage": 4.006
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377556,
+          24.454083
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.7,
+        "humidity": 40.21,
+        "pressure": 1009.91,
+        "light": 17905.1,
+        "air_quality": 32.9,
+        "battery_voltage": 4.005
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377544,
+          24.454097
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.45,
+        "humidity": 52.49,
+        "pressure": 1006.97,
+        "light": 16665.9,
+        "air_quality": 26.3,
+        "battery_voltage": 4.004
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377584,
+          24.454107
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.32,
+        "humidity": 47.17,
+        "pressure": 1007.03,
+        "light": 20512.2,
+        "air_quality": 37.2,
+        "battery_voltage": 4.003
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377564,
+          24.454067
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.46,
+        "humidity": 45.04,
+        "pressure": 1007.54,
+        "light": 21481.4,
+        "air_quality": 32.1,
+        "battery_voltage": 4.002
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377588,
+          24.454121
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.18,
+        "humidity": 54.83,
+        "pressure": 1007.74,
+        "light": 20057.5,
+        "air_quality": 32.6,
+        "battery_voltage": 4.001
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377571,
+          24.454121
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.87,
+        "humidity": 52.8,
+        "pressure": 1008.46,
+        "light": 15843.7,
+        "air_quality": 27.9,
+        "battery_voltage": 4.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377551,
+          24.454091
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.08,
+        "humidity": 49.87,
+        "pressure": 1008.05,
+        "light": 17649.0,
+        "air_quality": 26.3,
+        "battery_voltage": 3.999
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377562,
+          24.45408
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.06,
+        "humidity": 49.1,
+        "pressure": 1006.27,
+        "light": 17953.9,
+        "air_quality": 30.5,
+        "battery_voltage": 3.998
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37759,
+          24.454084
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.81,
+        "humidity": 35.95,
+        "pressure": 1009.14,
+        "light": 20874.8,
+        "air_quality": 41.6,
+        "battery_voltage": 3.997
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377563,
+          24.454087
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.36,
+        "humidity": 51.58,
+        "pressure": 1009.27,
+        "light": 24390.1,
+        "air_quality": 37.4,
+        "battery_voltage": 3.996
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377582,
+          24.454129
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.79,
+        "humidity": 40.46,
+        "pressure": 1009.15,
+        "light": 24034.6,
+        "air_quality": 37.7,
+        "battery_voltage": 3.995
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377581,
+          24.454134
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.97,
+        "humidity": 44.65,
+        "pressure": 1007.27,
+        "light": 20378.5,
+        "air_quality": 41.0,
+        "battery_voltage": 3.994
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377588,
+          24.454131
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.62,
+        "humidity": 39.22,
+        "pressure": 1008.74,
+        "light": 15957.2,
+        "air_quality": 27.4,
+        "battery_voltage": 3.993
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377618,
+          24.454113
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.2,
+        "humidity": 43.14,
+        "pressure": 1008.85,
+        "light": 21376.7,
+        "air_quality": 38.1,
+        "battery_voltage": 3.992
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377585,
+          24.454099
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.69,
+        "humidity": 51.11,
+        "pressure": 1008.27,
+        "light": 24073.1,
+        "air_quality": 40.3,
+        "battery_voltage": 3.991
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377579,
+          24.454143
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.1,
+        "humidity": 53.59,
+        "pressure": 1006.99,
+        "light": 17860.5,
+        "air_quality": 37.5,
+        "battery_voltage": 3.99
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377606,
+          24.45413
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.25,
+        "humidity": 54.99,
+        "pressure": 1008.76,
+        "light": 23207.4,
+        "air_quality": 41.4,
+        "battery_voltage": 3.989
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377622,
+          24.454119
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.39,
+        "humidity": 35.69,
+        "pressure": 1008.22,
+        "light": 18057.4,
+        "air_quality": 27.9,
+        "battery_voltage": 3.988
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377582,
+          24.454144
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.53,
+        "humidity": 43.71,
+        "pressure": 1007.64,
+        "light": 20198.3,
+        "air_quality": 28.9,
+        "battery_voltage": 3.987
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377626,
+          24.454118
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.62,
+        "humidity": 44.9,
+        "pressure": 1006.56,
+        "light": 22497.9,
+        "air_quality": 34.6,
+        "battery_voltage": 3.986
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377611,
+          24.454151
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 32.82,
+        "humidity": 37.79,
+        "pressure": 1007.48,
+        "light": 17806.7,
+        "air_quality": 43.8,
+        "battery_voltage": 3.985
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377604,
+          24.454151
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.33,
+        "humidity": 38.32,
+        "pressure": 1008.57,
+        "light": 15138.8,
+        "air_quality": 43.7,
+        "battery_voltage": 3.984
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377623,
+          24.454119
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.9,
+        "humidity": 48.44,
+        "pressure": 1008.07,
+        "light": 17298.9,
+        "air_quality": 26.1,
+        "battery_voltage": 3.983
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377605,
+          24.454141
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.81,
+        "humidity": 54.43,
+        "pressure": 1009.36,
+        "light": 22919.5,
+        "air_quality": 34.0,
+        "battery_voltage": 3.982
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377603,
+          24.454117
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:03:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.37,
+        "humidity": 42.88,
+        "pressure": 1008.67,
+        "light": 19163.0,
+        "air_quality": 31.2,
+        "battery_voltage": 3.981
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377649,
+          24.45416
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.51,
+        "humidity": 41.54,
+        "pressure": 1009.43,
+        "light": 21671.0,
+        "air_quality": 26.3,
+        "battery_voltage": 3.974
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377629,
+          24.45413
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.04,
+        "humidity": 43.29,
+        "pressure": 1006.83,
+        "light": 24885.5,
+        "air_quality": 41.4,
+        "battery_voltage": 3.973
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37767,
+          24.454144
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.62,
+        "humidity": 51.12,
+        "pressure": 1007.93,
+        "light": 20647.4,
+        "air_quality": 31.4,
+        "battery_voltage": 3.972
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377628,
+          24.454158
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.31,
+        "humidity": 36.77,
+        "pressure": 1006.83,
+        "light": 17852.2,
+        "air_quality": 42.5,
+        "battery_voltage": 3.971
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37763,
+          24.454149
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.33,
+        "humidity": 45.79,
+        "pressure": 1009.57,
+        "light": 22531.9,
+        "air_quality": 41.2,
+        "battery_voltage": 3.97
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377633,
+          24.454151
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.88,
+        "humidity": 49.85,
+        "pressure": 1009.34,
+        "light": 24540.7,
+        "air_quality": 42.5,
+        "battery_voltage": 3.969
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377661,
+          24.454138
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.9,
+        "humidity": 38.22,
+        "pressure": 1008.02,
+        "light": 23262.8,
+        "air_quality": 44.8,
+        "battery_voltage": 3.968
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377649,
+          24.454181
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.27,
+        "humidity": 36.47,
+        "pressure": 1006.04,
+        "light": 19732.4,
+        "air_quality": 39.3,
+        "battery_voltage": 3.967
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377667,
+          24.454156
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.62,
+        "humidity": 46.81,
+        "pressure": 1007.67,
+        "light": 23566.9,
+        "air_quality": 31.6,
+        "battery_voltage": 3.966
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377657,
+          24.454155
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.6,
+        "humidity": 47.11,
+        "pressure": 1009.45,
+        "light": 21262.2,
+        "air_quality": 29.7,
+        "battery_voltage": 3.965
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377692,
+          24.4542
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.57,
+        "humidity": 54.5,
+        "pressure": 1006.41,
+        "light": 19186.1,
+        "air_quality": 39.7,
+        "battery_voltage": 3.964
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377653,
+          24.454173
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.760000000000005,
+        "humidity": 54.185,
+        "pressure": 1006.43,
+        "light": 17397.699999999997,
+        "air_quality": 34.8,
+        "battery_voltage": 3.963
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377647,
+          24.454195
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.95,
+        "humidity": 53.87,
+        "pressure": 1006.45,
+        "light": 15609.3,
+        "air_quality": 29.9,
+        "battery_voltage": 3.962
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377659,
+          24.454169
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.12,
+        "humidity": 50.74,
+        "pressure": 1006.08,
+        "light": 23068.1,
+        "air_quality": 41.5,
+        "battery_voltage": 3.961
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377662,
+          24.454164
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.99,
+        "humidity": 38.97,
+        "pressure": 1007.23,
+        "light": 16677.0,
+        "air_quality": 37.3,
+        "battery_voltage": 3.96
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377696,
+          24.454161
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.36,
+        "humidity": 51.34,
+        "pressure": 1008.74,
+        "light": 15884.2,
+        "air_quality": 34.3,
+        "battery_voltage": 3.959
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377659,
+          24.454192
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.01,
+        "humidity": 44.63,
+        "pressure": 1009.62,
+        "light": 20576.5,
+        "air_quality": 39.0,
+        "battery_voltage": 3.958
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377652,
+          24.454212
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.09,
+        "humidity": 41.39,
+        "pressure": 1009.42,
+        "light": 17995.6,
+        "air_quality": 36.6,
+        "battery_voltage": 3.957
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377664,
+          24.454163
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.73,
+        "humidity": 48.2,
+        "pressure": 1008.13,
+        "light": 16035.1,
+        "air_quality": 40.8,
+        "battery_voltage": 3.956
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377661,
+          24.454203
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.88,
+        "humidity": 37.19,
+        "pressure": 1006.57,
+        "light": 24784.7,
+        "air_quality": 38.6,
+        "battery_voltage": 3.955
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377676,
+          24.454175
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.15,
+        "humidity": 45.15,
+        "pressure": 1008.12,
+        "light": 17261.4,
+        "air_quality": 28.1,
+        "battery_voltage": 3.954
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377695,
+          24.454197
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.44,
+        "humidity": 44.43,
+        "pressure": 1006.85,
+        "light": 16340.3,
+        "air_quality": 39.4,
+        "battery_voltage": 3.953
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377706,
+          24.454172
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.41,
+        "humidity": 43.64,
+        "pressure": 1009.95,
+        "light": 19548.2,
+        "air_quality": 37.6,
+        "battery_voltage": 3.952
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37768,
+          24.45418
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:04:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.08,
+        "humidity": 36.71,
+        "pressure": 1009.41,
+        "light": 17889.7,
+        "air_quality": 42.0,
+        "battery_voltage": 3.951
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377699,
+          24.454185
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.74,
+        "humidity": 41.43,
+        "pressure": 1009.95,
+        "light": 21564.4,
+        "air_quality": 32.1,
+        "battery_voltage": 3.95
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377687,
+          24.454225
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.63,
+        "humidity": 49.76,
+        "pressure": 1008.27,
+        "light": 21000.1,
+        "air_quality": 25.2,
+        "battery_voltage": 3.949
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377708,
+          24.454227
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.71,
+        "humidity": 48.67,
+        "pressure": 1009.86,
+        "light": 15973.1,
+        "air_quality": 25.9,
+        "battery_voltage": 3.948
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377731,
+          24.45419
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.12,
+        "humidity": 44.52,
+        "pressure": 1007.42,
+        "light": 22550.0,
+        "air_quality": 43.1,
+        "battery_voltage": 3.947
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377697,
+          24.454196
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.31,
+        "humidity": 54.42,
+        "pressure": 1008.99,
+        "light": 22722.4,
+        "air_quality": 25.5,
+        "battery_voltage": 3.946
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37773,
+          24.454183
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.43,
+        "humidity": 43.16,
+        "pressure": 1009.82,
+        "light": 18430.4,
+        "air_quality": 35.7,
+        "battery_voltage": 3.945
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377745,
+          24.454214
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.32,
+        "humidity": 54.57,
+        "pressure": 1007.32,
+        "light": 15523.4,
+        "air_quality": 35.0,
+        "battery_voltage": 3.944
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377702,
+          24.454214
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.76,
+        "humidity": 51.88,
+        "pressure": 1009.63,
+        "light": 24803.3,
+        "air_quality": 45.0,
+        "battery_voltage": 3.943
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377697,
+          24.454238
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.92,
+        "humidity": 35.93,
+        "pressure": 1008.95,
+        "light": 20396.6,
+        "air_quality": 40.7,
+        "battery_voltage": 3.942
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377733,
+          24.454211
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.05,
+        "humidity": 36.48,
+        "pressure": 1008.36,
+        "light": 23515.5,
+        "air_quality": 28.5,
+        "battery_voltage": 3.941
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377724,
+          24.45421
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.53,
+        "humidity": 45.84,
+        "pressure": 1008.82,
+        "light": 24645.7,
+        "air_quality": 27.4,
+        "battery_voltage": 3.94
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377757,
+          24.454242
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.23,
+        "humidity": 35.21,
+        "pressure": 1006.67,
+        "light": 18006.7,
+        "air_quality": 33.6,
+        "battery_voltage": 3.939
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377759,
+          24.454218
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.55,
+        "humidity": 36.79,
+        "pressure": 1007.81,
+        "light": 24950.7,
+        "air_quality": 35.1,
+        "battery_voltage": 3.938
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37775,
+          24.454221
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.26,
+        "humidity": 54.98,
+        "pressure": 1007.72,
+        "light": 19933.3,
+        "air_quality": 34.6,
+        "battery_voltage": 3.937
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377708,
+          24.454252
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.35,
+        "humidity": 35.53,
+        "pressure": 1009.37,
+        "light": 19841.0,
+        "air_quality": 44.7,
+        "battery_voltage": 3.936
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377744,
+          24.454243
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.27,
+        "humidity": 39.25,
+        "pressure": 1006.93,
+        "light": 17558.4,
+        "air_quality": 36.6,
+        "battery_voltage": 3.935
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37775,
+          24.454258
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.21,
+        "humidity": 48.04,
+        "pressure": 1008.58,
+        "light": 17024.6,
+        "air_quality": 35.1,
+        "battery_voltage": 3.934
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377752,
+          24.454249
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.78,
+        "humidity": 43.18,
+        "pressure": 1007.43,
+        "light": 22268.4,
+        "air_quality": 29.6,
+        "battery_voltage": 3.933
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37775,
+          24.454221
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.51,
+        "humidity": 53.79,
+        "pressure": 1007.47,
+        "light": 17412.6,
+        "air_quality": 27.0,
+        "battery_voltage": 3.932
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377744,
+          24.454223
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.96,
+        "humidity": 52.53,
+        "pressure": 1006.46,
+        "light": 21929.4,
+        "air_quality": 35.5,
+        "battery_voltage": 3.931
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377772,
+          24.454267
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.67,
+        "humidity": 43.39,
+        "pressure": 1007.49,
+        "light": 22322.7,
+        "air_quality": 25.7,
+        "battery_voltage": 3.93
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377727,
+          24.454246
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.23,
+        "humidity": 53.18,
+        "pressure": 1009.3,
+        "light": 16978.4,
+        "air_quality": 33.0,
+        "battery_voltage": 3.929
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377785,
+          24.454233
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.989999999999995,
+        "humidity": 44.870000000000005,
+        "pressure": 1009.15,
+        "light": 17931.95,
+        "air_quality": 29.4,
+        "battery_voltage": 3.928
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377775,
+          24.454229
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.75,
+        "humidity": 36.56,
+        "pressure": 1009.0,
+        "light": 18885.5,
+        "air_quality": 25.8,
+        "battery_voltage": 3.927
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377766,
+          24.454263
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.89,
+        "humidity": 52.19,
+        "pressure": 1008.59,
+        "light": 24787.5,
+        "air_quality": 37.0,
+        "battery_voltage": 3.926
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37774,
+          24.454236
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.27,
+        "humidity": 52.58,
+        "pressure": 1006.45,
+        "light": 15797.8,
+        "air_quality": 25.7,
+        "battery_voltage": 3.925
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377744,
+          24.454264
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.55,
+        "humidity": 35.24,
+        "pressure": 1008.84,
+        "light": 17655.1,
+        "air_quality": 32.8,
+        "battery_voltage": 3.924
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377761,
+          24.454279
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.03,
+        "humidity": 36.47,
+        "pressure": 1008.14,
+        "light": 15249.5,
+        "air_quality": 29.3,
+        "battery_voltage": 3.923
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37776,
+          24.454255
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.74,
+        "humidity": 52.28,
+        "pressure": 1006.37,
+        "light": 21137.2,
+        "air_quality": 30.3,
+        "battery_voltage": 3.922
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377778,
+          24.454232
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:05:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.16,
+        "humidity": 51.16,
+        "pressure": 1009.51,
+        "light": 24807.6,
+        "air_quality": 40.3,
+        "battery_voltage": 3.921
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377785,
+          24.454237
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.995,
+        "humidity": 43.09,
+        "pressure": 1009.99,
+        "light": 15135.3,
+        "air_quality": 32.9,
+        "battery_voltage": 3.92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377802,
+          24.454278
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.83,
+        "humidity": 42.04,
+        "pressure": 1007.16,
+        "light": 23998.4,
+        "air_quality": 32.3,
+        "battery_voltage": 3.919
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377756,
+          24.45428
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.41,
+        "humidity": 42.26,
+        "pressure": 1008.59,
+        "light": 22273.0,
+        "air_quality": 41.1,
+        "battery_voltage": 3.918
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37776,
+          24.454253
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.81,
+        "humidity": 51.77,
+        "pressure": 1009.52,
+        "light": 20548.7,
+        "air_quality": 31.6,
+        "battery_voltage": 3.917
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377797,
+          24.454278
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.13,
+        "humidity": 54.81,
+        "pressure": 1008.93,
+        "light": 21941.5,
+        "air_quality": 29.2,
+        "battery_voltage": 3.916
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37778,
+          24.454241
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.19,
+        "humidity": 42.09,
+        "pressure": 1006.15,
+        "light": 15298.1,
+        "air_quality": 26.5,
+        "battery_voltage": 3.915
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377814,
+          24.45429
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.53,
+        "humidity": 46.28,
+        "pressure": 1007.76,
+        "light": 17975.4,
+        "air_quality": 37.4,
+        "battery_voltage": 3.914
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377801,
+          24.454255
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.6,
+        "humidity": 54.53,
+        "pressure": 1009.0,
+        "light": 20368.6,
+        "air_quality": 35.5,
+        "battery_voltage": 3.913
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377816,
+          24.454264
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.63,
+        "humidity": 42.9,
+        "pressure": 1007.81,
+        "light": 20977.5,
+        "air_quality": 43.1,
+        "battery_voltage": 3.912
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377779,
+          24.454251
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.02,
+        "humidity": 51.09,
+        "pressure": 1008.7,
+        "light": 15926.3,
+        "air_quality": 42.6,
+        "battery_voltage": 3.911
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377785,
+          24.454286
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.09,
+        "humidity": 46.67,
+        "pressure": 1007.05,
+        "light": 17248.3,
+        "air_quality": 30.2,
+        "battery_voltage": 3.91
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377837,
+          24.454279
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.82,
+        "humidity": 39.17,
+        "pressure": 1007.48,
+        "light": 22059.6,
+        "air_quality": 34.0,
+        "battery_voltage": 3.909
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377819,
+          24.45429
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.92,
+        "humidity": 44.26,
+        "pressure": 1009.02,
+        "light": 22648.1,
+        "air_quality": 44.2,
+        "battery_voltage": 3.908
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377798,
+          24.454263
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.41,
+        "humidity": 51.22,
+        "pressure": 1006.34,
+        "light": 17562.7,
+        "air_quality": 41.4,
+        "battery_voltage": 3.907
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377805,
+          24.454308
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.79,
+        "humidity": 37.82,
+        "pressure": 1006.3,
+        "light": 22416.8,
+        "air_quality": 39.0,
+        "battery_voltage": 3.906
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377791,
+          24.45426
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.45,
+        "humidity": 41.3,
+        "pressure": 1009.06,
+        "light": 16309.7,
+        "air_quality": 41.5,
+        "battery_voltage": 3.905
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377845,
+          24.454275
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.8,
+        "humidity": 35.99,
+        "pressure": 1006.84,
+        "light": 23785.7,
+        "air_quality": 27.8,
+        "battery_voltage": 3.904
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377834,
+          24.454324
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.98,
+        "humidity": 48.63,
+        "pressure": 1009.97,
+        "light": 21870.1,
+        "air_quality": 35.2,
+        "battery_voltage": 3.903
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377846,
+          24.45428
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.19,
+        "humidity": 44.85,
+        "pressure": 1006.17,
+        "light": 19343.9,
+        "air_quality": 44.9,
+        "battery_voltage": 3.902
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377806,
+          24.454316
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.58,
+        "humidity": 48.86,
+        "pressure": 1009.43,
+        "light": 20735.6,
+        "air_quality": 30.5,
+        "battery_voltage": 3.901
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37784,
+          24.454275
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 33.84,
+        "humidity": 35.9,
+        "pressure": 1008.7,
+        "light": 24758.9,
+        "air_quality": 35.0,
+        "battery_voltage": 3.9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377827,
+          24.454296
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:42",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 39.32,
+        "humidity": 50.92,
+        "pressure": 1007.32,
+        "light": 19371.6,
+        "air_quality": 35.0,
+        "battery_voltage": 3.899
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377862,
+          24.454289
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:44",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 34.99,
+        "humidity": 38.74,
+        "pressure": 1006.07,
+        "light": 24677.3,
+        "air_quality": 35.0,
+        "battery_voltage": 3.898
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377815,
+          24.454303
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:46",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 35.92,
+        "humidity": 49.58,
+        "pressure": 1009.02,
+        "light": 15681.1,
+        "air_quality": 35.0,
+        "battery_voltage": 3.897
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377844,
+          24.454301
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:48",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 34.1,
+        "humidity": 41.17,
+        "pressure": 1007.05,
+        "light": 21680.7,
+        "air_quality": 35.0,
+        "battery_voltage": 3.896
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37786,
+          24.45432
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:50",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 37.48,
+        "humidity": 54.35,
+        "pressure": 1009.57,
+        "light": 20256.4,
+        "air_quality": 35.0,
+        "battery_voltage": 3.895
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377822,
+          24.454303
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:52",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 36.06,
+        "humidity": 41.2,
+        "pressure": 1009.55,
+        "light": 15847.6,
+        "air_quality": 35.0,
+        "battery_voltage": 3.894
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377853,
+          24.454298
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:54",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 37.75,
+        "humidity": 44.87,
+        "pressure": 1008.17,
+        "light": 15743.1,
+        "air_quality": 35.0,
+        "battery_voltage": 3.893
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377855,
+          24.454303
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:56",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 37.2,
+        "humidity": 46.2,
+        "pressure": 1008.07,
+        "light": 24861.4,
+        "air_quality": 35.0,
+        "battery_voltage": 3.892
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377849,
+          24.454298
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:06:58",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 34.7,
+        "humidity": 39.21,
+        "pressure": 1008.21,
+        "light": 16729.6,
+        "air_quality": 35.0,
+        "battery_voltage": 3.891
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377871,
+          24.454313
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:00",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 35.94,
+        "humidity": 47.09,
+        "pressure": 1006.76,
+        "light": 17911.3,
+        "air_quality": 35.0,
+        "battery_voltage": 3.89
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377892,
+          24.45431
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:02",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 36.78,
+        "humidity": 43.935,
+        "pressure": 1006.425,
+        "light": 21266.75,
+        "air_quality": 35.0,
+        "battery_voltage": 3.889
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377885,
+          24.454345
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:04",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 37.62,
+        "humidity": 40.78,
+        "pressure": 1006.09,
+        "light": 24622.2,
+        "air_quality": 35.0,
+        "battery_voltage": 3.888
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377847,
+          24.454349
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:06",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 34.96,
+        "humidity": 52.09,
+        "pressure": 1006.97,
+        "light": 21680.1,
+        "air_quality": 35.0,
+        "battery_voltage": 3.887
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377863,
+          24.454323
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:08",
+        "has_flag": true,
+        "flags_summary": "flatline_air_quality",
+        "temperature": 39.57,
+        "humidity": 43.33,
+        "pressure": 1009.27,
+        "light": 23306.6,
+        "air_quality": 35.0,
+        "battery_voltage": 3.886
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.3779,
+          24.454301
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.44,
+        "humidity": 47.35,
+        "pressure": 1009.49,
+        "light": 21387.5,
+        "air_quality": 29.7,
+        "battery_voltage": 3.885
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377852,
+          24.454323
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.79,
+        "humidity": 38.41,
+        "pressure": 1008.21,
+        "light": 16714.5,
+        "air_quality": 35.1,
+        "battery_voltage": 3.884
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377905,
+          24.454356
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.37,
+        "humidity": 51.29,
+        "pressure": 1009.36,
+        "light": 15857.6,
+        "air_quality": 42.1,
+        "battery_voltage": 3.883
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377907,
+          24.454309
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.74,
+        "humidity": 52.0,
+        "pressure": 1009.06,
+        "light": 17937.7,
+        "air_quality": 38.1,
+        "battery_voltage": 3.882
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37787,
+          24.454366
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.06,
+        "humidity": 38.64,
+        "pressure": 1008.99,
+        "light": 21686.5,
+        "air_quality": 36.2,
+        "battery_voltage": 3.881
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377893,
+          24.454349
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.74,
+        "humidity": 49.1,
+        "pressure": 1009.05,
+        "light": 16824.8,
+        "air_quality": 26.0,
+        "battery_voltage": 3.88
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377875,
+          24.454313
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.04,
+        "humidity": 51.58,
+        "pressure": 1006.65,
+        "light": 19976.0,
+        "air_quality": 30.5,
+        "battery_voltage": 3.879
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377887,
+          24.454359
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.09,
+        "humidity": 46.17,
+        "pressure": 1008.81,
+        "light": 15931.4,
+        "air_quality": 25.7,
+        "battery_voltage": 3.878
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377881,
+          24.454364
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.3,
+        "humidity": 44.18,
+        "pressure": 1009.49,
+        "light": 20926.8,
+        "air_quality": 32.3,
+        "battery_voltage": 3.877
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377893,
+          24.454378
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.05,
+        "humidity": 42.88,
+        "pressure": 1007.03,
+        "light": 16200.9,
+        "air_quality": 40.5,
+        "battery_voltage": 3.876
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377928,
+          24.454368
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.01,
+        "humidity": 48.01,
+        "pressure": 1006.88,
+        "light": 15562.9,
+        "air_quality": 40.0,
+        "battery_voltage": 3.875
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377876,
+          24.454361
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.47,
+        "humidity": 36.96,
+        "pressure": 1009.51,
+        "light": 16738.3,
+        "air_quality": 32.0,
+        "battery_voltage": 3.874
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377911,
+          24.454367
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.11,
+        "humidity": 37.28,
+        "pressure": 1009.39,
+        "light": 18469.9,
+        "air_quality": 31.4,
+        "battery_voltage": 3.873
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377927,
+          24.454355
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.95,
+        "humidity": 46.09,
+        "pressure": 1009.57,
+        "light": 17918.1,
+        "air_quality": 30.0,
+        "battery_voltage": 3.872
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377933,
+          24.454331
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.2,
+        "humidity": 40.61,
+        "pressure": 1006.78,
+        "light": 23632.3,
+        "air_quality": 25.9,
+        "battery_voltage": 3.871
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377895,
+          24.454387
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.76,
+        "humidity": 51.56,
+        "pressure": 1008.27,
+        "light": 22834.0,
+        "air_quality": 33.3,
+        "battery_voltage": 3.87
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377902,
+          24.454385
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.0,
+        "humidity": 47.6,
+        "pressure": 1009.58,
+        "light": 16229.2,
+        "air_quality": 43.1,
+        "battery_voltage": 3.869
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377891,
+          24.454357
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.26,
+        "humidity": 52.24,
+        "pressure": 1009.61,
+        "light": 21580.1,
+        "air_quality": 30.4,
+        "battery_voltage": 3.868
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377898,
+          24.454338
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.11,
+        "humidity": 38.57,
+        "pressure": 1007.19,
+        "light": 21794.7,
+        "air_quality": 44.5,
+        "battery_voltage": 3.867
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377939,
+          24.454351
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.64,
+        "humidity": 36.35,
+        "pressure": 1007.66,
+        "light": 15320.1,
+        "air_quality": 33.9,
+        "battery_voltage": 3.866
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377901,
+          24.454389
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.67,
+        "humidity": 47.66,
+        "pressure": 1008.94,
+        "light": 22518.2,
+        "air_quality": 43.1,
+        "battery_voltage": 3.865
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377955,
+          24.454354
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.16,
+        "humidity": 40.76,
+        "pressure": 1007.56,
+        "light": 16247.7,
+        "air_quality": 42.4,
+        "battery_voltage": 3.864
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377903,
+          24.454377
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.13,
+        "humidity": 47.56,
+        "pressure": 1007.54,
+        "light": 20601.7,
+        "air_quality": 34.6,
+        "battery_voltage": 3.863
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377939,
+          24.454363
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.36,
+        "humidity": 49.69,
+        "pressure": 1006.81,
+        "light": 18177.9,
+        "air_quality": 25.5,
+        "battery_voltage": 3.862
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377926,
+          24.454395
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:07:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.25,
+        "humidity": 40.45,
+        "pressure": 1008.13,
+        "light": 24103.0,
+        "air_quality": 36.3,
+        "battery_voltage": 3.861
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377939,
+          24.454358
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.02,
+        "humidity": 36.86,
+        "pressure": 1008.37,
+        "light": 17463.4,
+        "air_quality": 26.9,
+        "battery_voltage": 3.86
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377913,
+          24.454355
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.61,
+        "humidity": 45.85,
+        "pressure": 1007.1,
+        "light": 19014.8,
+        "air_quality": 28.4,
+        "battery_voltage": 3.859
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377944,
+          24.454412
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.41,
+        "humidity": 39.13,
+        "pressure": 1007.39,
+        "light": 21554.9,
+        "air_quality": 37.3,
+        "battery_voltage": 3.858
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377946,
+          24.454377
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.71,
+        "humidity": 52.56,
+        "pressure": 1009.23,
+        "light": 18623.2,
+        "air_quality": 32.6,
+        "battery_voltage": 3.857
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377977,
+          24.454391
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.87,
+        "humidity": 35.65,
+        "pressure": 1008.09,
+        "light": 21026.6,
+        "air_quality": 43.1,
+        "battery_voltage": 3.856
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37795,
+          24.454372
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.67,
+        "humidity": 50.45,
+        "pressure": 1008.35,
+        "light": 18737.0,
+        "air_quality": 31.0,
+        "battery_voltage": 3.855
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377983,
+          24.454363
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.43,
+        "humidity": 37.94,
+        "pressure": 1009.76,
+        "light": 23448.5,
+        "air_quality": 32.5,
+        "battery_voltage": 3.854
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377957,
+          24.454392
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.3,
+        "humidity": 43.25,
+        "pressure": 1007.88,
+        "light": 22775.2,
+        "air_quality": 43.3,
+        "battery_voltage": 3.853
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377948,
+          24.454411
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.4,
+        "humidity": 38.41,
+        "pressure": 1009.3,
+        "light": 24936.8,
+        "air_quality": 27.6,
+        "battery_voltage": 3.852
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377961,
+          24.454424
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.31,
+        "humidity": 35.06,
+        "pressure": 1009.32,
+        "light": 20651.2,
+        "air_quality": 27.8,
+        "battery_voltage": 3.851
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377984,
+          24.454413
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.0,
+        "humidity": 36.31,
+        "pressure": 1007.66,
+        "light": 23995.1,
+        "air_quality": 34.0,
+        "battery_voltage": 3.85
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377977,
+          24.454402
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.42,
+        "humidity": 50.75,
+        "pressure": 1009.46,
+        "light": 22288.3,
+        "air_quality": 30.5,
+        "battery_voltage": 3.849
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377998,
+          24.454423
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.25,
+        "humidity": 46.2,
+        "pressure": 1006.81,
+        "light": 16512.7,
+        "air_quality": 28.3,
+        "battery_voltage": 3.848
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377969,
+          24.454429
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.51,
+        "humidity": 44.52,
+        "pressure": 1007.64,
+        "light": 24773.3,
+        "air_quality": 28.4,
+        "battery_voltage": 3.847
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377992,
+          24.454378
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.31,
+        "humidity": 50.2,
+        "pressure": 1007.42,
+        "light": 15909.3,
+        "air_quality": 26.6,
+        "battery_voltage": 3.846
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377995,
+          24.454422
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.49,
+        "humidity": 46.51,
+        "pressure": 1006.41,
+        "light": 24922.3,
+        "air_quality": 37.5,
+        "battery_voltage": 3.845
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377962,
+          24.454383
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.04,
+        "humidity": 53.77,
+        "pressure": 1009.43,
+        "light": 18023.9,
+        "air_quality": 26.9,
+        "battery_voltage": 3.844
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377981,
+          24.454399
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.91,
+        "humidity": 36.43,
+        "pressure": 1007.83,
+        "light": 18486.1,
+        "air_quality": 36.4,
+        "battery_voltage": 3.843
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378007,
+          24.454421
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.42,
+        "humidity": 48.77,
+        "pressure": 1006.45,
+        "light": 18274.5,
+        "air_quality": 26.8,
+        "battery_voltage": 3.842
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377961,
+          24.454431
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.46,
+        "humidity": 46.31,
+        "pressure": 1009.45,
+        "light": 15757.4,
+        "air_quality": 42.0,
+        "battery_voltage": 3.841
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377966,
+          24.454418
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.58,
+        "humidity": 46.25,
+        "pressure": 1006.32,
+        "light": 15477.1,
+        "air_quality": 44.4,
+        "battery_voltage": 3.84
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378011,
+          24.454432
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.7,
+        "humidity": 54.8,
+        "pressure": 1007.14,
+        "light": 20438.5,
+        "air_quality": 40.8,
+        "battery_voltage": 3.839
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378017,
+          24.454431
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.92,
+        "humidity": 48.44,
+        "pressure": 1009.34,
+        "light": 21044.7,
+        "air_quality": 38.7,
+        "battery_voltage": 3.838
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377996,
+          24.454443
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.02,
+        "humidity": 53.48,
+        "pressure": 1008.14,
+        "light": 19325.7,
+        "air_quality": 39.5,
+        "battery_voltage": 3.837
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378023,
+          24.454425
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.98,
+        "humidity": 35.25,
+        "pressure": 1009.38,
+        "light": 21162.2,
+        "air_quality": 34.7,
+        "battery_voltage": 3.836
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378033,
+          24.454452
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.48,
+        "humidity": 44.93,
+        "pressure": 1009.21,
+        "light": 18252.3,
+        "air_quality": 27.2,
+        "battery_voltage": 3.835
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37801,
+          24.454455
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.65,
+        "humidity": 36.07,
+        "pressure": 1006.73,
+        "light": 16623.5,
+        "air_quality": 42.2,
+        "battery_voltage": 3.834
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378029,
+          24.454442
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.09,
+        "humidity": 49.02,
+        "pressure": 1009.47,
+        "light": 19800.3,
+        "air_quality": 41.3,
+        "battery_voltage": 3.833
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378038,
+          24.454428
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.67,
+        "humidity": 35.2,
+        "pressure": 1008.35,
+        "light": 18214.6,
+        "air_quality": 42.9,
+        "battery_voltage": 3.832
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378009,
+          24.454447
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:08:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.68,
+        "humidity": 40.24,
+        "pressure": 1009.34,
+        "light": 22580.4,
+        "air_quality": 30.6,
+        "battery_voltage": 3.831
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378035,
+          24.454468
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:00",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.36,
+        "humidity": 35.44,
+        "pressure": 1006.75,
+        "light": 17657.4,
+        "air_quality": 29.3,
+        "battery_voltage": 3.83
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37804,
+          24.454442
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:02",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.81,
+        "humidity": 51.41,
+        "pressure": 1007.43,
+        "light": 15234.7,
+        "air_quality": 27.2,
+        "battery_voltage": 3.829
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.377997,
+          24.454458
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:04",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.1,
+        "humidity": 50.33,
+        "pressure": 1006.88,
+        "light": 17673.8,
+        "air_quality": 26.6,
+        "battery_voltage": 3.828
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378034,
+          24.454455
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:06",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.7,
+        "humidity": 48.68,
+        "pressure": 1006.35,
+        "light": 15454.8,
+        "air_quality": 44.5,
+        "battery_voltage": 3.827
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378036,
+          24.454463
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:08",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.54,
+        "humidity": 40.3,
+        "pressure": 1009.57,
+        "light": 16630.3,
+        "air_quality": 29.7,
+        "battery_voltage": 3.826
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378004,
+          24.454442
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:10",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.9,
+        "humidity": 36.97,
+        "pressure": 1006.6,
+        "light": 19894.4,
+        "air_quality": 39.4,
+        "battery_voltage": 3.825
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378012,
+          24.454442
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:12",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.15,
+        "humidity": 46.19,
+        "pressure": 1008.71,
+        "light": 18623.7,
+        "air_quality": 39.7,
+        "battery_voltage": 3.824
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378041,
+          24.454424
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:14",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.55,
+        "humidity": 53.6,
+        "pressure": 1007.85,
+        "light": 22273.5,
+        "air_quality": 37.9,
+        "battery_voltage": 3.823
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378036,
+          24.454428
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:16",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.82,
+        "humidity": 45.97,
+        "pressure": 1009.22,
+        "light": 20902.2,
+        "air_quality": 41.2,
+        "battery_voltage": 3.822
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378026,
+          24.45448
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:18",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 38.4,
+        "humidity": 43.85,
+        "pressure": 1008.51,
+        "light": 22053.3,
+        "air_quality": 38.0,
+        "battery_voltage": 3.821
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378073,
+          24.454448
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:20",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.11,
+        "humidity": 36.73,
+        "pressure": 1007.64,
+        "light": 17458.8,
+        "air_quality": 31.0,
+        "battery_voltage": 3.82
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378021,
+          24.454434
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:22",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.58,
+        "humidity": 37.7,
+        "pressure": 1006.71,
+        "light": 18113.9,
+        "air_quality": 31.4,
+        "battery_voltage": 3.819
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378062,
+          24.454487
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:24",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.18,
+        "humidity": 42.06,
+        "pressure": 1007.09,
+        "light": 21691.0,
+        "air_quality": 30.8,
+        "battery_voltage": 3.818
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378027,
+          24.454484
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:26",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.56,
+        "humidity": 54.21,
+        "pressure": 1007.6,
+        "light": 17620.0,
+        "air_quality": 31.2,
+        "battery_voltage": 3.817
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378066,
+          24.454452
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:28",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.14,
+        "humidity": 40.63,
+        "pressure": 1007.43,
+        "light": 24891.1,
+        "air_quality": 26.9,
+        "battery_voltage": 3.816
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378047,
+          24.454488
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:30",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.94,
+        "humidity": 48.63,
+        "pressure": 1009.71,
+        "light": 22689.8,
+        "air_quality": 43.6,
+        "battery_voltage": 3.815
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378087,
+          24.454451
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:32",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.91,
+        "humidity": 37.95,
+        "pressure": 1008.02,
+        "light": 22514.9,
+        "air_quality": 43.6,
+        "battery_voltage": 3.814
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378067,
+          24.454477
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:34",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.25,
+        "humidity": 51.03,
+        "pressure": 1006.65,
+        "light": 16705.3,
+        "air_quality": 33.0,
+        "battery_voltage": 3.813
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378042,
+          24.454447
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:36",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.72,
+        "humidity": 46.81,
+        "pressure": 1007.84,
+        "light": 24157.6,
+        "air_quality": 34.1,
+        "battery_voltage": 3.812
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378097,
+          24.454492
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:38",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.97,
+        "humidity": 49.57,
+        "pressure": 1007.63,
+        "light": 23647.9,
+        "air_quality": 44.3,
+        "battery_voltage": 3.811
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378046,
+          24.454505
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:40",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 36.06,
+        "humidity": 41.5,
+        "pressure": 1007.37,
+        "light": 24104.1,
+        "air_quality": 34.1,
+        "battery_voltage": 3.81
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378092,
+          24.454463
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:42",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 34.92,
+        "humidity": 52.63,
+        "pressure": 1007.74,
+        "light": 22736.3,
+        "air_quality": 34.4,
+        "battery_voltage": 3.809
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378052,
+          24.454472
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:44",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 37.71,
+        "humidity": 48.99,
+        "pressure": 1006.72,
+        "light": 23147.9,
+        "air_quality": 29.4,
+        "battery_voltage": 3.808
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378105,
+          24.454506
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:46",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.74,
+        "humidity": 52.56,
+        "pressure": 1006.39,
+        "light": 16434.3,
+        "air_quality": 33.4,
+        "battery_voltage": 3.807
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37808,
+          24.454507
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:48",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.67,
+        "humidity": 50.41,
+        "pressure": 1006.8,
+        "light": 19122.9,
+        "air_quality": 41.3,
+        "battery_voltage": 3.806
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378062,
+          24.454502
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:50",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 40.54,
+        "humidity": 54.49,
+        "pressure": 1009.79,
+        "light": 17839.9,
+        "air_quality": 43.4,
+        "battery_voltage": 3.805
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378096,
+          24.454502
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:52",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.52,
+        "humidity": 40.48,
+        "pressure": 1007.07,
+        "light": 24259.7,
+        "air_quality": 34.3,
+        "battery_voltage": 3.804
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378067,
+          24.454464
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:54",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.79,
+        "humidity": 45.82,
+        "pressure": 1008.66,
+        "light": 20636.5,
+        "air_quality": 30.0,
+        "battery_voltage": 3.803
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.37808,
+          24.454524
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:56",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 39.15,
+        "humidity": 47.85,
+        "pressure": 1006.25,
+        "light": 21404.7,
+        "air_quality": 35.1,
+        "battery_voltage": 3.802
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          54.378082,
+          24.454523
+        ]
+      },
+      "properties": {
+        "timestamp": "2026-08-01 08:09:58",
+        "has_flag": false,
+        "flags_summary": NaN,
+        "temperature": 35.53,
+        "humidity": 53.88,
+        "pressure": 1008.96,
+        "light": 19971.7,
+        "air_quality": 37.0,
+        "battery_voltage": 3.801
+      }
+    }
+  ]
+}
