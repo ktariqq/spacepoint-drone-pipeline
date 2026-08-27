@@ -13,7 +13,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.01,
         "humidity": 43.54,
         "pressure": 1007.88,
@@ -34,7 +34,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.37,
         "humidity": 51.12,
         "pressure": 1006.69,
@@ -55,7 +55,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.67,
         "humidity": 35.03,
         "pressure": 1007.06,
@@ -76,7 +76,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.52,
         "humidity": 51.65,
         "pressure": 1009.2,
@@ -97,7 +97,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.01,
         "humidity": 37.53,
         "pressure": 1009.55,
@@ -118,7 +118,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.21,
         "humidity": 49.95,
         "pressure": 1006.62,
@@ -139,7 +139,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.64,
         "humidity": 40.13,
         "pressure": 1007.97,
@@ -160,7 +160,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.83,
         "humidity": 43.92,
         "pressure": 1006.3,
@@ -181,7 +181,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.59,
         "humidity": 44.59,
         "pressure": 1009.61,
@@ -202,7 +202,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.47,
         "humidity": 52.16,
         "pressure": 1007.77,
@@ -223,7 +223,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.75,
         "humidity": 46.34,
         "pressure": 1009.86,
@@ -244,7 +244,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.49,
         "humidity": 36.32,
         "pressure": 1008.13,
@@ -265,7 +265,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.93,
         "humidity": 51.45,
         "pressure": 1008.5,
@@ -286,7 +286,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.39,
         "humidity": 45.89,
         "pressure": 1008.77,
@@ -307,7 +307,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.81,
         "humidity": 53.0,
         "pressure": 1007.03,
@@ -328,7 +328,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.17,
         "humidity": 41.16,
         "pressure": 1008.87,
@@ -349,7 +349,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.64,
         "humidity": 53.2,
         "pressure": 1009.45,
@@ -370,7 +370,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.85,
         "humidity": 43.35,
         "pressure": 1010.0,
@@ -391,7 +391,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.98,
         "humidity": 37.09,
         "pressure": 1009.91,
@@ -412,7 +412,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.01,
         "humidity": 40.99,
         "pressure": 1007.46,
@@ -433,7 +433,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.34,
         "humidity": 40.3,
         "pressure": 1007.72,
@@ -454,7 +454,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.42,
         "humidity": 39.74,
         "pressure": 1006.34,
@@ -475,7 +475,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.08,
         "humidity": 53.1,
         "pressure": 1006.81,
@@ -496,7 +496,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.84,
         "humidity": 42.07,
         "pressure": 1008.3,
@@ -517,7 +517,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.18,
         "humidity": 48.11,
         "pressure": 1006.73,
@@ -538,7 +538,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.31,
         "humidity": 36.13,
         "pressure": 1007.83,
@@ -559,7 +559,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.92,
         "humidity": 54.0,
         "pressure": 1008.28,
@@ -580,7 +580,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.03,
         "humidity": 52.53,
         "pressure": 1008.87,
@@ -601,7 +601,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.47,
         "humidity": 49.46,
         "pressure": 1008.28,
@@ -622,7 +622,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:00:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.25,
         "humidity": 36.11,
         "pressure": 1009.13,
@@ -643,7 +643,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.48,
         "humidity": 46.43,
         "pressure": 1006.95,
@@ -664,7 +664,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.98,
         "humidity": 54.41,
         "pressure": 1006.24,
@@ -685,7 +685,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.44,
         "humidity": 46.18,
         "pressure": 1008.28,
@@ -706,7 +706,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.95,
         "humidity": 39.51,
         "pressure": 1007.0,
@@ -727,7 +727,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.48,
         "humidity": 46.03,
         "pressure": 1006.13,
@@ -748,7 +748,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.87,
         "humidity": 37.49,
         "pressure": 1008.93,
@@ -769,7 +769,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.09,
         "humidity": 43.36,
         "pressure": 1008.68,
@@ -790,7 +790,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.15,
         "humidity": 48.05,
         "pressure": 1009.29,
@@ -811,7 +811,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.35,
         "humidity": 37.23,
         "pressure": 1008.18,
@@ -832,7 +832,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.78,
         "humidity": 49.61,
         "pressure": 1009.21,
@@ -853,7 +853,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.63,
         "humidity": 53.12,
         "pressure": 1006.24,
@@ -874,7 +874,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.18,
         "humidity": 43.72,
         "pressure": 1009.52,
@@ -895,7 +895,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.09,
         "humidity": 38.4,
         "pressure": 1007.39,
@@ -916,7 +916,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.27,
         "humidity": 40.31,
         "pressure": 1006.28,
@@ -937,7 +937,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.76,
         "humidity": 43.96,
         "pressure": 1009.47,
@@ -958,7 +958,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.51,
         "humidity": 40.35,
         "pressure": 1009.27,
@@ -979,7 +979,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.66,
         "humidity": 50.83,
         "pressure": 1007.34,
@@ -1000,7 +1000,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.59,
         "humidity": 37.04,
         "pressure": 1008.05,
@@ -1021,7 +1021,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.44,
         "humidity": 39.34,
         "pressure": 1007.29,
@@ -1042,7 +1042,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.75,
         "humidity": 46.82,
         "pressure": 1006.1,
@@ -1063,7 +1063,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.95,
         "humidity": 44.6,
         "pressure": 1008.01,
@@ -1084,7 +1084,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.94,
         "humidity": 35.21,
         "pressure": 1009.09,
@@ -1105,7 +1105,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.68,
         "humidity": 46.98,
         "pressure": 1007.84,
@@ -1126,7 +1126,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.62,
         "humidity": 49.37,
         "pressure": 1008.96,
@@ -1147,7 +1147,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.57,
         "humidity": 37.54,
         "pressure": 1009.14,
@@ -1168,7 +1168,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.79,
         "humidity": 42.4,
         "pressure": 1007.39,
@@ -1189,7 +1189,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.88,
         "humidity": 54.09,
         "pressure": 1008.61,
@@ -1210,7 +1210,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.46,
         "humidity": 54.14,
         "pressure": 1006.25,
@@ -1231,7 +1231,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:01:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.63,
         "humidity": 51.16,
         "pressure": 1008.49,
@@ -1252,7 +1252,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.34,
         "humidity": 43.125,
         "pressure": 1008.57,
@@ -1273,7 +1273,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.82,
         "humidity": 35.09,
         "pressure": 1006.1,
@@ -1294,7 +1294,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.9,
         "humidity": 53.19,
         "pressure": 1006.94,
@@ -1315,7 +1315,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.02,
         "humidity": 50.01,
         "pressure": 1007.27,
@@ -1336,7 +1336,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.14,
         "humidity": 46.83,
         "pressure": 1007.6,
@@ -1357,7 +1357,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.07,
         "humidity": 39.43,
         "pressure": 1007.08,
@@ -1378,7 +1378,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.62,
         "humidity": 43.12,
         "pressure": 1006.22,
@@ -1399,7 +1399,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 31.9,
         "humidity": 50.15,
         "pressure": 1008.03,
@@ -1420,7 +1420,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.24,
         "humidity": 53.97,
         "pressure": 1009.45,
@@ -1441,7 +1441,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.63,
         "humidity": 35.1,
         "pressure": 1009.12,
@@ -1462,7 +1462,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.03,
         "humidity": 43.42,
         "pressure": 1007.36,
@@ -1483,7 +1483,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.42,
         "humidity": 49.6,
         "pressure": 1006.11,
@@ -1504,7 +1504,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.03,
         "humidity": 36.13,
         "pressure": 1009.88,
@@ -1525,7 +1525,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.05,
         "humidity": 42.55,
         "pressure": 1006.46,
@@ -1546,7 +1546,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.46,
         "humidity": 37.56,
         "pressure": 1007.03,
@@ -1567,7 +1567,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.49,
         "humidity": 51.06,
         "pressure": 1008.11,
@@ -1588,7 +1588,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.68,
         "humidity": 40.67,
         "pressure": 1007.94,
@@ -1609,7 +1609,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.7,
         "humidity": 48.58,
         "pressure": 1009.51,
@@ -1630,7 +1630,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.72,
         "humidity": 38.71,
         "pressure": 1008.61,
@@ -1651,7 +1651,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.58,
         "humidity": 37.62,
         "pressure": 1008.84,
@@ -1672,7 +1672,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.07,
         "humidity": 44.85,
         "pressure": 1009.7,
@@ -1693,7 +1693,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.35,
         "humidity": 54.35,
         "pressure": 1007.17,
@@ -1714,7 +1714,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.95,
         "humidity": 42.8,
         "pressure": 1009.61,
@@ -1735,7 +1735,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.94,
         "humidity": 43.65,
         "pressure": 1006.4,
@@ -1756,7 +1756,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.1,
         "humidity": 47.94,
         "pressure": 1007.53,
@@ -1777,7 +1777,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.33,
         "humidity": 44.41,
         "pressure": 1008.76,
@@ -1798,7 +1798,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.75,
         "humidity": 54.9,
         "pressure": 1006.35,
@@ -1819,7 +1819,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.98,
         "humidity": 49.43,
         "pressure": 1006.14,
@@ -1840,7 +1840,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.42,
         "humidity": 43.79,
         "pressure": 1007.29,
@@ -1861,7 +1861,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:02:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.08,
         "humidity": 36.0,
         "pressure": 1009.99,
@@ -1882,7 +1882,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.97,
         "humidity": 52.05,
         "pressure": 1008.58,
@@ -1903,7 +1903,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.71,
         "humidity": 35.98,
         "pressure": 1008.29,
@@ -1924,7 +1924,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.07,
         "humidity": 50.48,
         "pressure": 1008.93,
@@ -1945,7 +1945,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.29,
         "humidity": 54.97,
         "pressure": 1008.25,
@@ -1966,7 +1966,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.26,
         "humidity": 51.97,
         "pressure": 1009.36,
@@ -1987,7 +1987,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.7,
         "humidity": 40.21,
         "pressure": 1009.91,
@@ -2008,7 +2008,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.45,
         "humidity": 52.49,
         "pressure": 1006.97,
@@ -2029,7 +2029,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.32,
         "humidity": 47.17,
         "pressure": 1007.03,
@@ -2050,7 +2050,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.46,
         "humidity": 45.04,
         "pressure": 1007.54,
@@ -2071,7 +2071,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.18,
         "humidity": 54.83,
         "pressure": 1007.74,
@@ -2092,7 +2092,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.87,
         "humidity": 52.8,
         "pressure": 1008.46,
@@ -2113,7 +2113,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.08,
         "humidity": 49.87,
         "pressure": 1008.05,
@@ -2134,7 +2134,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.06,
         "humidity": 49.1,
         "pressure": 1006.27,
@@ -2155,7 +2155,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.81,
         "humidity": 35.95,
         "pressure": 1009.14,
@@ -2176,7 +2176,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.36,
         "humidity": 51.58,
         "pressure": 1009.27,
@@ -2197,7 +2197,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.79,
         "humidity": 40.46,
         "pressure": 1009.15,
@@ -2218,7 +2218,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.97,
         "humidity": 44.65,
         "pressure": 1007.27,
@@ -2239,7 +2239,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.62,
         "humidity": 39.22,
         "pressure": 1008.74,
@@ -2260,7 +2260,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.2,
         "humidity": 43.14,
         "pressure": 1008.85,
@@ -2281,7 +2281,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.69,
         "humidity": 51.11,
         "pressure": 1008.27,
@@ -2302,7 +2302,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.1,
         "humidity": 53.59,
         "pressure": 1006.99,
@@ -2323,7 +2323,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.25,
         "humidity": 54.99,
         "pressure": 1008.76,
@@ -2344,7 +2344,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.39,
         "humidity": 35.69,
         "pressure": 1008.22,
@@ -2365,7 +2365,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.53,
         "humidity": 43.71,
         "pressure": 1007.64,
@@ -2386,7 +2386,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.62,
         "humidity": 44.9,
         "pressure": 1006.56,
@@ -2407,7 +2407,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 32.82,
         "humidity": 37.79,
         "pressure": 1007.48,
@@ -2428,7 +2428,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.33,
         "humidity": 38.32,
         "pressure": 1008.57,
@@ -2449,7 +2449,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.9,
         "humidity": 48.44,
         "pressure": 1008.07,
@@ -2470,7 +2470,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.81,
         "humidity": 54.43,
         "pressure": 1009.36,
@@ -2491,7 +2491,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:03:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.37,
         "humidity": 42.88,
         "pressure": 1008.67,
@@ -2512,7 +2512,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.51,
         "humidity": 41.54,
         "pressure": 1009.43,
@@ -2533,7 +2533,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.04,
         "humidity": 43.29,
         "pressure": 1006.83,
@@ -2554,7 +2554,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.62,
         "humidity": 51.12,
         "pressure": 1007.93,
@@ -2575,7 +2575,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.31,
         "humidity": 36.77,
         "pressure": 1006.83,
@@ -2596,7 +2596,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.33,
         "humidity": 45.79,
         "pressure": 1009.57,
@@ -2617,7 +2617,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.88,
         "humidity": 49.85,
         "pressure": 1009.34,
@@ -2638,7 +2638,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.9,
         "humidity": 38.22,
         "pressure": 1008.02,
@@ -2659,7 +2659,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.27,
         "humidity": 36.47,
         "pressure": 1006.04,
@@ -2680,7 +2680,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.62,
         "humidity": 46.81,
         "pressure": 1007.67,
@@ -2701,7 +2701,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.6,
         "humidity": 47.11,
         "pressure": 1009.45,
@@ -2722,7 +2722,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.57,
         "humidity": 54.5,
         "pressure": 1006.41,
@@ -2743,7 +2743,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.760000000000005,
         "humidity": 54.185,
         "pressure": 1006.43,
@@ -2764,7 +2764,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.95,
         "humidity": 53.87,
         "pressure": 1006.45,
@@ -2785,7 +2785,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.12,
         "humidity": 50.74,
         "pressure": 1006.08,
@@ -2806,7 +2806,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.99,
         "humidity": 38.97,
         "pressure": 1007.23,
@@ -2827,7 +2827,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.36,
         "humidity": 51.34,
         "pressure": 1008.74,
@@ -2848,7 +2848,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.01,
         "humidity": 44.63,
         "pressure": 1009.62,
@@ -2869,7 +2869,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.09,
         "humidity": 41.39,
         "pressure": 1009.42,
@@ -2890,7 +2890,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.73,
         "humidity": 48.2,
         "pressure": 1008.13,
@@ -2911,7 +2911,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.88,
         "humidity": 37.19,
         "pressure": 1006.57,
@@ -2932,7 +2932,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.15,
         "humidity": 45.15,
         "pressure": 1008.12,
@@ -2953,7 +2953,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.44,
         "humidity": 44.43,
         "pressure": 1006.85,
@@ -2974,7 +2974,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.41,
         "humidity": 43.64,
         "pressure": 1009.95,
@@ -2995,7 +2995,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:04:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.08,
         "humidity": 36.71,
         "pressure": 1009.41,
@@ -3016,7 +3016,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.74,
         "humidity": 41.43,
         "pressure": 1009.95,
@@ -3037,7 +3037,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.63,
         "humidity": 49.76,
         "pressure": 1008.27,
@@ -3058,7 +3058,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.71,
         "humidity": 48.67,
         "pressure": 1009.86,
@@ -3079,7 +3079,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.12,
         "humidity": 44.52,
         "pressure": 1007.42,
@@ -3100,7 +3100,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.31,
         "humidity": 54.42,
         "pressure": 1008.99,
@@ -3121,7 +3121,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.43,
         "humidity": 43.16,
         "pressure": 1009.82,
@@ -3142,7 +3142,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.32,
         "humidity": 54.57,
         "pressure": 1007.32,
@@ -3163,7 +3163,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.76,
         "humidity": 51.88,
         "pressure": 1009.63,
@@ -3184,7 +3184,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.92,
         "humidity": 35.93,
         "pressure": 1008.95,
@@ -3205,7 +3205,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.05,
         "humidity": 36.48,
         "pressure": 1008.36,
@@ -3226,7 +3226,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.53,
         "humidity": 45.84,
         "pressure": 1008.82,
@@ -3247,7 +3247,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.23,
         "humidity": 35.21,
         "pressure": 1006.67,
@@ -3268,7 +3268,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.55,
         "humidity": 36.79,
         "pressure": 1007.81,
@@ -3289,7 +3289,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.26,
         "humidity": 54.98,
         "pressure": 1007.72,
@@ -3310,7 +3310,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.35,
         "humidity": 35.53,
         "pressure": 1009.37,
@@ -3331,7 +3331,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.27,
         "humidity": 39.25,
         "pressure": 1006.93,
@@ -3352,7 +3352,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.21,
         "humidity": 48.04,
         "pressure": 1008.58,
@@ -3373,7 +3373,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.78,
         "humidity": 43.18,
         "pressure": 1007.43,
@@ -3394,7 +3394,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.51,
         "humidity": 53.79,
         "pressure": 1007.47,
@@ -3415,7 +3415,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.96,
         "humidity": 52.53,
         "pressure": 1006.46,
@@ -3436,7 +3436,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.67,
         "humidity": 43.39,
         "pressure": 1007.49,
@@ -3457,7 +3457,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.23,
         "humidity": 53.18,
         "pressure": 1009.3,
@@ -3478,7 +3478,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.989999999999995,
         "humidity": 44.870000000000005,
         "pressure": 1009.15,
@@ -3499,7 +3499,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.75,
         "humidity": 36.56,
         "pressure": 1009.0,
@@ -3520,7 +3520,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.89,
         "humidity": 52.19,
         "pressure": 1008.59,
@@ -3541,7 +3541,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.27,
         "humidity": 52.58,
         "pressure": 1006.45,
@@ -3562,7 +3562,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.55,
         "humidity": 35.24,
         "pressure": 1008.84,
@@ -3583,7 +3583,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.03,
         "humidity": 36.47,
         "pressure": 1008.14,
@@ -3604,7 +3604,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.74,
         "humidity": 52.28,
         "pressure": 1006.37,
@@ -3625,7 +3625,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:05:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.16,
         "humidity": 51.16,
         "pressure": 1009.51,
@@ -3646,7 +3646,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.995,
         "humidity": 43.09,
         "pressure": 1009.99,
@@ -3667,7 +3667,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.83,
         "humidity": 42.04,
         "pressure": 1007.16,
@@ -3688,7 +3688,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.41,
         "humidity": 42.26,
         "pressure": 1008.59,
@@ -3709,7 +3709,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.81,
         "humidity": 51.77,
         "pressure": 1009.52,
@@ -3730,7 +3730,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.13,
         "humidity": 54.81,
         "pressure": 1008.93,
@@ -3751,7 +3751,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.19,
         "humidity": 42.09,
         "pressure": 1006.15,
@@ -3772,7 +3772,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.53,
         "humidity": 46.28,
         "pressure": 1007.76,
@@ -3793,7 +3793,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.6,
         "humidity": 54.53,
         "pressure": 1009.0,
@@ -3814,7 +3814,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.63,
         "humidity": 42.9,
         "pressure": 1007.81,
@@ -3835,7 +3835,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.02,
         "humidity": 51.09,
         "pressure": 1008.7,
@@ -3856,7 +3856,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.09,
         "humidity": 46.67,
         "pressure": 1007.05,
@@ -3877,7 +3877,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.82,
         "humidity": 39.17,
         "pressure": 1007.48,
@@ -3898,7 +3898,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.92,
         "humidity": 44.26,
         "pressure": 1009.02,
@@ -3919,7 +3919,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.41,
         "humidity": 51.22,
         "pressure": 1006.34,
@@ -3940,7 +3940,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.79,
         "humidity": 37.82,
         "pressure": 1006.3,
@@ -3961,7 +3961,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.45,
         "humidity": 41.3,
         "pressure": 1009.06,
@@ -3982,7 +3982,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.8,
         "humidity": 35.99,
         "pressure": 1006.84,
@@ -4003,7 +4003,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.98,
         "humidity": 48.63,
         "pressure": 1009.97,
@@ -4024,7 +4024,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.19,
         "humidity": 44.85,
         "pressure": 1006.17,
@@ -4045,7 +4045,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.58,
         "humidity": 48.86,
         "pressure": 1009.43,
@@ -4066,7 +4066,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:06:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 33.84,
         "humidity": 35.9,
         "pressure": 1008.7,
@@ -4381,7 +4381,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.44,
         "humidity": 47.35,
         "pressure": 1009.49,
@@ -4402,7 +4402,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.79,
         "humidity": 38.41,
         "pressure": 1008.21,
@@ -4423,7 +4423,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.37,
         "humidity": 51.29,
         "pressure": 1009.36,
@@ -4444,7 +4444,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.74,
         "humidity": 52.0,
         "pressure": 1009.06,
@@ -4465,7 +4465,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.06,
         "humidity": 38.64,
         "pressure": 1008.99,
@@ -4486,7 +4486,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.74,
         "humidity": 49.1,
         "pressure": 1009.05,
@@ -4507,7 +4507,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.04,
         "humidity": 51.58,
         "pressure": 1006.65,
@@ -4528,7 +4528,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.09,
         "humidity": 46.17,
         "pressure": 1008.81,
@@ -4549,7 +4549,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.3,
         "humidity": 44.18,
         "pressure": 1009.49,
@@ -4570,7 +4570,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.05,
         "humidity": 42.88,
         "pressure": 1007.03,
@@ -4591,7 +4591,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.01,
         "humidity": 48.01,
         "pressure": 1006.88,
@@ -4612,7 +4612,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.47,
         "humidity": 36.96,
         "pressure": 1009.51,
@@ -4633,7 +4633,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.11,
         "humidity": 37.28,
         "pressure": 1009.39,
@@ -4654,7 +4654,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.95,
         "humidity": 46.09,
         "pressure": 1009.57,
@@ -4675,7 +4675,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.2,
         "humidity": 40.61,
         "pressure": 1006.78,
@@ -4696,7 +4696,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.76,
         "humidity": 51.56,
         "pressure": 1008.27,
@@ -4717,7 +4717,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.0,
         "humidity": 47.6,
         "pressure": 1009.58,
@@ -4738,7 +4738,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.26,
         "humidity": 52.24,
         "pressure": 1009.61,
@@ -4759,7 +4759,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.11,
         "humidity": 38.57,
         "pressure": 1007.19,
@@ -4780,7 +4780,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.64,
         "humidity": 36.35,
         "pressure": 1007.66,
@@ -4801,7 +4801,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.67,
         "humidity": 47.66,
         "pressure": 1008.94,
@@ -4822,7 +4822,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.16,
         "humidity": 40.76,
         "pressure": 1007.56,
@@ -4843,7 +4843,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.13,
         "humidity": 47.56,
         "pressure": 1007.54,
@@ -4864,7 +4864,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.36,
         "humidity": 49.69,
         "pressure": 1006.81,
@@ -4885,7 +4885,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:07:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.25,
         "humidity": 40.45,
         "pressure": 1008.13,
@@ -4906,7 +4906,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.02,
         "humidity": 36.86,
         "pressure": 1008.37,
@@ -4927,7 +4927,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.61,
         "humidity": 45.85,
         "pressure": 1007.1,
@@ -4948,7 +4948,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.41,
         "humidity": 39.13,
         "pressure": 1007.39,
@@ -4969,7 +4969,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.71,
         "humidity": 52.56,
         "pressure": 1009.23,
@@ -4990,7 +4990,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.87,
         "humidity": 35.65,
         "pressure": 1008.09,
@@ -5011,7 +5011,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.67,
         "humidity": 50.45,
         "pressure": 1008.35,
@@ -5032,7 +5032,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.43,
         "humidity": 37.94,
         "pressure": 1009.76,
@@ -5053,7 +5053,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.3,
         "humidity": 43.25,
         "pressure": 1007.88,
@@ -5074,7 +5074,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.4,
         "humidity": 38.41,
         "pressure": 1009.3,
@@ -5095,7 +5095,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.31,
         "humidity": 35.06,
         "pressure": 1009.32,
@@ -5116,7 +5116,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.0,
         "humidity": 36.31,
         "pressure": 1007.66,
@@ -5137,7 +5137,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.42,
         "humidity": 50.75,
         "pressure": 1009.46,
@@ -5158,7 +5158,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.25,
         "humidity": 46.2,
         "pressure": 1006.81,
@@ -5179,7 +5179,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.51,
         "humidity": 44.52,
         "pressure": 1007.64,
@@ -5200,7 +5200,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.31,
         "humidity": 50.2,
         "pressure": 1007.42,
@@ -5221,7 +5221,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.49,
         "humidity": 46.51,
         "pressure": 1006.41,
@@ -5242,7 +5242,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.04,
         "humidity": 53.77,
         "pressure": 1009.43,
@@ -5263,7 +5263,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.91,
         "humidity": 36.43,
         "pressure": 1007.83,
@@ -5284,7 +5284,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.42,
         "humidity": 48.77,
         "pressure": 1006.45,
@@ -5305,7 +5305,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.46,
         "humidity": 46.31,
         "pressure": 1009.45,
@@ -5326,7 +5326,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.58,
         "humidity": 46.25,
         "pressure": 1006.32,
@@ -5347,7 +5347,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.7,
         "humidity": 54.8,
         "pressure": 1007.14,
@@ -5368,7 +5368,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.92,
         "humidity": 48.44,
         "pressure": 1009.34,
@@ -5389,7 +5389,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.02,
         "humidity": 53.48,
         "pressure": 1008.14,
@@ -5410,7 +5410,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.98,
         "humidity": 35.25,
         "pressure": 1009.38,
@@ -5431,7 +5431,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.48,
         "humidity": 44.93,
         "pressure": 1009.21,
@@ -5452,7 +5452,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.65,
         "humidity": 36.07,
         "pressure": 1006.73,
@@ -5473,7 +5473,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.09,
         "humidity": 49.02,
         "pressure": 1009.47,
@@ -5494,7 +5494,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.67,
         "humidity": 35.2,
         "pressure": 1008.35,
@@ -5515,7 +5515,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:08:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.68,
         "humidity": 40.24,
         "pressure": 1009.34,
@@ -5536,7 +5536,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:00",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.36,
         "humidity": 35.44,
         "pressure": 1006.75,
@@ -5557,7 +5557,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:02",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.81,
         "humidity": 51.41,
         "pressure": 1007.43,
@@ -5578,7 +5578,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:04",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.1,
         "humidity": 50.33,
         "pressure": 1006.88,
@@ -5599,7 +5599,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:06",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.7,
         "humidity": 48.68,
         "pressure": 1006.35,
@@ -5620,7 +5620,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:08",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.54,
         "humidity": 40.3,
         "pressure": 1009.57,
@@ -5641,7 +5641,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:10",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.9,
         "humidity": 36.97,
         "pressure": 1006.6,
@@ -5662,7 +5662,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:12",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.15,
         "humidity": 46.19,
         "pressure": 1008.71,
@@ -5683,7 +5683,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:14",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.55,
         "humidity": 53.6,
         "pressure": 1007.85,
@@ -5704,7 +5704,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:16",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.82,
         "humidity": 45.97,
         "pressure": 1009.22,
@@ -5725,7 +5725,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:18",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 38.4,
         "humidity": 43.85,
         "pressure": 1008.51,
@@ -5746,7 +5746,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:20",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.11,
         "humidity": 36.73,
         "pressure": 1007.64,
@@ -5767,7 +5767,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:22",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.58,
         "humidity": 37.7,
         "pressure": 1006.71,
@@ -5788,7 +5788,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:24",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.18,
         "humidity": 42.06,
         "pressure": 1007.09,
@@ -5809,7 +5809,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:26",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.56,
         "humidity": 54.21,
         "pressure": 1007.6,
@@ -5830,7 +5830,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:28",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.14,
         "humidity": 40.63,
         "pressure": 1007.43,
@@ -5851,7 +5851,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:30",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.94,
         "humidity": 48.63,
         "pressure": 1009.71,
@@ -5872,7 +5872,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:32",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.91,
         "humidity": 37.95,
         "pressure": 1008.02,
@@ -5893,7 +5893,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:34",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.25,
         "humidity": 51.03,
         "pressure": 1006.65,
@@ -5914,7 +5914,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:36",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.72,
         "humidity": 46.81,
         "pressure": 1007.84,
@@ -5935,7 +5935,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:38",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.97,
         "humidity": 49.57,
         "pressure": 1007.63,
@@ -5956,7 +5956,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:40",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 36.06,
         "humidity": 41.5,
         "pressure": 1007.37,
@@ -5977,7 +5977,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:42",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 34.92,
         "humidity": 52.63,
         "pressure": 1007.74,
@@ -5998,7 +5998,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:44",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 37.71,
         "humidity": 48.99,
         "pressure": 1006.72,
@@ -6019,7 +6019,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:46",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.74,
         "humidity": 52.56,
         "pressure": 1006.39,
@@ -6040,7 +6040,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:48",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.67,
         "humidity": 50.41,
         "pressure": 1006.8,
@@ -6061,7 +6061,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:50",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 40.54,
         "humidity": 54.49,
         "pressure": 1009.79,
@@ -6082,7 +6082,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:52",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.52,
         "humidity": 40.48,
         "pressure": 1007.07,
@@ -6103,7 +6103,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:54",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.79,
         "humidity": 45.82,
         "pressure": 1008.66,
@@ -6124,7 +6124,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:56",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 39.15,
         "humidity": 47.85,
         "pressure": 1006.25,
@@ -6145,7 +6145,7 @@
       "properties": {
         "timestamp": "2026-08-01 08:09:58",
         "has_flag": false,
-        "flags_summary": NaN,
+        "flags_summary": null,
         "temperature": 35.53,
         "humidity": 53.88,
         "pressure": 1008.96,
