@@ -158,7 +158,7 @@ else:
 st.subheader("Cleaned Readings")
 
 table_df = df[df["has_flag"]] if show_flagged_only else df
-st.dataframe(table_df, use_container_width=True)
+st.dataframe(table_df, width="stretch")
 
 st.subheader("Export")
 

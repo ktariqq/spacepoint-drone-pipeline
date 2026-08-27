@@ -1,3 +1,9 @@
+[server]
+enableStaticServing = true
+enableCORS = true
+corsAllowedOrigins = ["https://web.geolibre.app"]
+
+
 [theme]
 primaryColor = "#653F84"
 backgroundColor = "#231134"

@@ -29,6 +29,15 @@ def embed_image_as_base64(path: Path) -> str:
     return f"data:image/png;base64,{encoded}"
 
 
+def load_summary(mission_name: str) -> dict:
+    """Loads just the summary JSON, without generating a report - used
+    by the Report Generator page to prefill the editable section text
+    boxes before the user clicks Generate."""
+    summary_path = DATA_DIR / f"{mission_name}_summary.json"
+    with open(summary_path) as f:
+        return json.load(f)
+
+
 def render_mission_map_plot(mission_name: str) -> str | None:
     """Static plot of the mission's GPS points colored by temperature,
     as a stand-in for the interactive map in a downloaded/printed report.
@@ -148,10 +157,8 @@ def load_image_analysis(mission_name: str) -> list[dict]:
     return entries
 
 
-def generate_report(mission_name: str, use_ai: bool = False) -> Path:
-    summary_path = DATA_DIR / f"{mission_name}_summary.json"
-    with open(summary_path) as f:
-        summary = json.load(f)
+def generate_report(mission_name: str, use_ai: bool = False, section_overrides: dict | None = None) -> Path:
+    summary = load_summary(mission_name)
 
     bbox = summary["bounding_box"]
     location = "No GPS data"
@@ -171,9 +178,23 @@ def generate_report(mission_name: str, use_ai: bool = False) -> Path:
     mission_map_image = render_mission_map_plot(mission_name)
     image_analysis = load_image_analysis(mission_name)
 
-    ai_sections = generate_ai_sections(summary) if use_ai else {
-        "objective": None, "observations": None, "limitations": None, "conclusion": None
-    }
+    # Section overrides (user-edited text) always win, since anything
+    # that came through the editable text boxes has already been
+    # reviewed by a person - it's never shown with the "AI-drafted,
+    # review before submitting" label, whether or not it started as an
+    # AI draft
+    if section_overrides:
+        ai_sections = {
+            key: (value.strip() if value and value.strip() else None)
+            for key, value in section_overrides.items()
+        }
+        ai_generated_flag = False
+    elif use_ai:
+        ai_sections = generate_ai_sections(summary)
+        ai_generated_flag = True
+    else:
+        ai_sections = {"objective": None, "observations": None, "limitations": None, "conclusion": None}
+        ai_generated_flag = False
 
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("report_template.html")
@@ -190,7 +211,7 @@ def generate_report(mission_name: str, use_ai: bool = False) -> Path:
         chart_images=chart_images,
         image_analysis=image_analysis,
         mission_map_image=mission_map_image,
-        ai_generated=use_ai,
+        ai_generated=ai_generated_flag,
         **ai_sections,
     )
 

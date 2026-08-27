@@ -6,6 +6,10 @@ __pycache__/
 *.py[cod]
 *.pyo
 
+# Temporary/generated Python files
+*.log
+*.tmp
+
 # Virtual environments
 .venv/
 venv/
@@ -22,7 +26,7 @@ env/
 # Generated data
 data/raw/*
 data/cleaned/*
-data/geo/*
+#data/geo/*
 data/image_analysis/*
 
 # Keep directories in Git

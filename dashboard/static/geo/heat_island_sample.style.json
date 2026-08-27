@@ -1,0 +1,51 @@
+{
+  "version": 8,
+  "layers": [
+    {
+      "id": "mission-points",
+      "type": "circle",
+      "source": "heat_island_sample",
+      "paint": {
+        "circle-radius": 5,
+        "circle-opacity": 0.9,
+        "circle-stroke-width": 0.6,
+        "circle-stroke-color": "#ffffff",
+        "circle-color": [
+          "case",
+          [
+            "==",
+            [
+              "get",
+              "temperature"
+            ],
+            null
+          ],
+          "#888888",
+          [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "to-number",
+              [
+                "get",
+                "temperature"
+              ]
+            ],
+            33.68,
+            "#3b0f70",
+            37.375,
+            "#8c2981",
+            41.07,
+            "#de4968",
+            44.765,
+            "#fe9f6d",
+            48.46,
+            "#fcfdbf"
+          ]
+        ]
+      }
+    }
+  ]
+}

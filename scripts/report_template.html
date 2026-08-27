@@ -4,45 +4,67 @@
 <meta charset="UTF-8">
 <title>{{ mission_name }} - Mission Report</title>
 <style>
-    body { font-family: sans-serif; background-color: #231134; color: #D7D2CB; padding: 40px; }
-    h1, h2 { color: #FFFFFF; }
-    h1 { border-bottom: 2px solid #653F84; padding-bottom: 10px; }
-    .section { background-color: #2b1642; border: 1px solid #653F84; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-    .fill-in { border: 1px dashed #653F84; padding: 15px; color: #9d92ad; font-style: italic; }
-    .ai-label { font-size: 11px; color: #9d92ad; margin-bottom: 6px; }
-    table { width: 100%; border-collapse: collapse; }
-    td, th { padding: 6px; border-bottom: 1px solid #653F84; text-align: left; }
-    img { 
-    width: 500px; 
-    height: auto;
-    display: block;
-    margin: 10px auto 0;
-    border-radius: 6px; 
+    :root {
+        --bg: #231134;
+        --panel: #2b1642;
+        --accent: #653F84;
+        --accent-light: #9461E5;
+        --text: #D7D2CB;
+        --text-dim: #9d92ad;
+        --white: #FFFFFF;
     }
+
+    body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); padding: 40px; max-width: 900px; margin: 0 auto; }
+
+    h1 { color: var(--white); border-bottom: 2px solid var(--accent); padding-bottom: 14px; margin-bottom: 24px; }
+    h2 { color: var(--white); font-size: 16px; letter-spacing: 0.02em; margin: 0 0 14px 0; }
+    h3 { font-size: 13px; color: var(--text); margin: 14px 0 6px 0; }
+
+    /* Overview stat cards, instead of a plain table */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 28px; }
+    .stat-card { background: var(--panel); border: 1px solid var(--accent); border-radius: 8px; padding: 14px 16px; }
+    .stat-label { font-size: 10px; letter-spacing: 0.08em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 4px; }
+    .stat-value { font-size: 18px; color: var(--white); font-weight: 600; }
+
+    /* Standard data section */
+    .section { background-color: var(--panel); border: 1px solid var(--accent); border-radius: 8px; padding: 20px 22px; margin-bottom: 18px; }
+
+    /* Written/judgment sections get a brighter accent border to stand out from auto-generated data */
+    .section.written { border-left: 4px solid var(--accent-light); }
+
+    .fill-in { border: 1px dashed var(--accent); border-radius: 6px; padding: 15px; color: var(--text-dim); font-style: italic; }
+    .ai-label { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    table { width: 100%; border-collapse: collapse; }
+    td, th { padding: 8px 6px; border-bottom: 1px solid rgba(101, 63, 132, 0.4); text-align: left; }
+    tr:last-child td { border-bottom: none; }
+
+    /* Grid for charts and analyzed images, instead of a stacked full-width column */
+    .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+    .media-item { background: rgba(0,0,0,0.15); border-radius: 8px; padding: 10px; }
+    .media-item img { width: 100%; height: auto; display: block; border-radius: 6px; }
+    .media-item h3 { text-align: center; }
 </style>
 </head>
 <body>
 
 <h1>SpacePoint Mission Report: {{ mission_name }}</h1>
 
-<div class="section">
-    <h2>Mission Overview</h2>
-    <table>
-        <tr><td>Location</td><td>{{ location }}</td></tr>
-        <tr><td>Date</td><td>{{ start_time }}</td></tr>
-        <tr><td>Duration</td><td>{{ duration_minutes }} minutes</td></tr>
-        <tr><td>Samples collected</td><td>{{ sample_count }}</td></tr>
-        <tr><td>Flagged readings</td><td>{{ flagged_row_count }}</td></tr>
-    </table>
+<div class="stat-grid">
+    <div class="stat-card"><div class="stat-label">Location</div><div class="stat-value">{{ location }}</div></div>
+    <div class="stat-card"><div class="stat-label">Date</div><div class="stat-value">{{ start_time }}</div></div>
+    <div class="stat-card"><div class="stat-label">Duration</div><div class="stat-value">{{ duration_minutes }} min</div></div>
+    <div class="stat-card"><div class="stat-label">Samples</div><div class="stat-value">{{ sample_count }}</div></div>
+    <div class="stat-card"><div class="stat-label">Flagged</div><div class="stat-value">{{ flagged_row_count }}</div></div>
 </div>
 
-<div class="section">
+<div class="section written">
     <h2>Objective</h2>
     {% if objective %}
         {% if ai_generated %}<p class="ai-label">AI-drafted — review before submitting</p>{% endif %}
         <p>{{ objective }}</p>
     {% else %}
-        <div class="fill-in">[ Fill in: what this mission was trying to find out ]</div>
+        <div class="fill-in">Fill in: what this mission was trying to find out</div>
     {% endif %}
 </div>
 
@@ -63,68 +85,74 @@
 <div class="section">
     <h2>Charts</h2>
     {% if chart_images %}
-        {% for chart in chart_images %}
-        <img src="{{ chart }}" alt="Sensor chart">
-        {% endfor %}
+        <div class="media-grid">
+            {% for chart in chart_images %}
+            <div class="media-item"><img src="{{ chart }}" alt="Sensor chart"></div>
+            {% endfor %}
+        </div>
     {% else %}
-        <div class="fill-in">[ No charts found — run the cleaning script for this mission first ]</div>
+        <div class="fill-in">No charts found — run the cleaning script for this mission first</div>
     {% endif %}
 </div>
 
 <div class="section">
     <h2>Map</h2>
     {% if mission_map_image %}
-        <img src="{{ mission_map_image }}" alt="Mission flight path">
+        <div class="media-grid"><div class="media-item"><img src="{{ mission_map_image }}" alt="Mission flight path"></div></div>
         <p class="ai-label">Static plot of GPS points colored by temperature — see the Mission Map page in the app for the full interactive version.</p>
     {% else %}
-        <div class="fill-in">[ Insert a screenshot or link to the mission map here ]</div>
+        <div class="fill-in">Insert a screenshot or link to the mission map here</div>
     {% endif %}
 </div>
 
 <div class="section">
     <h2>Image Analysis</h2>
     {% if image_analysis %}
-        {% for entry in image_analysis %}
-        <h3 style="font-size:14px;color:#D7D2CB;">{{ entry.name }}</h3>
-        <img src="{{ entry.image }}" alt="Annotated image">
-        <table>
-            <tr><td>Vegetation</td><td>{{ entry.stats.vegetation_pct }}%</td></tr>
-            <tr><td>Bright surface</td><td>{{ entry.stats.bright_surface_pct }}%</td></tr>
-            <tr><td>Land cover breakdown</td><td>{{ entry.stats.land_cover_breakdown }}</td></tr>
-        </table>
-        {% endfor %}
+        <div class="media-grid">
+            {% for entry in image_analysis %}
+            <div class="media-item">
+                <h3>{{ entry.name }}</h3>
+                <img src="{{ entry.image }}" alt="Annotated image">
+                <table>
+                    <tr><td>Vegetation</td><td>{{ entry.stats.vegetation_pct }}%</td></tr>
+                    <tr><td>Bright surface</td><td>{{ entry.stats.bright_surface_pct }}%</td></tr>
+                    <tr><td>Land cover</td><td>{{ entry.stats.land_cover_breakdown }}</td></tr>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
     {% else %}
-        <div class="fill-in">[ Insert Task 10 annotated images and vegetation/land cover stats here — or save an analysis for this mission on the Image Tool page ]</div>
+        <div class="fill-in">Insert annotated images and vegetation/land cover stats here — or save an analysis for this mission on the Image Tool page</div>
     {% endif %}
 </div>
 
-<div class="section">
+<div class="section written">
     <h2>Observations</h2>
     {% if observations %}
         {% if ai_generated %}<p class="ai-label">AI-drafted — review before submitting</p>{% endif %}
         <p>{{ observations }}</p>
     {% else %}
-        <div class="fill-in">[ Fill in: what stood out in this mission's data ]</div>
+        <div class="fill-in">Fill in: what stood out in this mission's data</div>
     {% endif %}
 </div>
 
-<div class="section">
+<div class="section written">
     <h2>Limitations</h2>
     {% if limitations %}
         {% if ai_generated %}<p class="ai-label">AI-drafted — review before submitting</p>{% endif %}
         <p>{{ limitations }}</p>
     {% else %}
-        <div class="fill-in">[ Fill in: anything that affects how much to trust this data ]</div>
+        <div class="fill-in">Fill in: anything that affects how much to trust this data</div>
     {% endif %}
 </div>
 
-<div class="section">
+<div class="section written">
     <h2>Conclusion</h2>
     {% if conclusion %}
         {% if ai_generated %}<p class="ai-label">AI-drafted — review before submitting</p>{% endif %}
         <p>{{ conclusion }}</p>
     {% else %}
-        <div class="fill-in">[ Fill in: what this mission tells us, and what to do next ]</div>
+        <div class="fill-in">Fill in: what this mission tells us, and what to do next</div>
     {% endif %}
 </div>
 
