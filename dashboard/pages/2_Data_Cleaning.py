@@ -220,6 +220,15 @@ if st.button("Run Cleaning", type="primary"):
             encoding="utf-8",
         )
 
+        # Immediately mirror the GeoJSON to the GeoLibre-servable static
+        # folder too, so the mission is fetchable without waiting for the
+        # Mission Map page to render it first.
+        try:
+            from geolibre_static import write_geojson_to_static
+            write_geojson_to_static(mission_name, geojson_data)
+        except Exception as exc:
+            st.caption(f"(Static copy for GeoLibre will be created when you open Mission Map: {exc})")
+
     # -----------------------------------------------------------------
     # Success
     # -----------------------------------------------------------------

@@ -5,20 +5,16 @@ GeoLibre-based GIS viewer for SpacePoint drone missions.
 Author: Kommal
 """
 
-import json
 import sys
 from pathlib import Path
-from urllib.parse import quote
 
 import numpy as np
 import streamlit as st
 
-
 # ---------------------------------------------------------------------
-# Project paths
+# Project paths — resolved from this file's location, never from CWD
 # ---------------------------------------------------------------------
 
-# This file is: dashboard/pages/3_Mission_Map.py
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 DASHBOARD_DIR = PROJECT_ROOT / "dashboard"
 
@@ -26,26 +22,10 @@ DATA_DIR = PROJECT_ROOT / "data"
 GEO_DIR = DATA_DIR / "geo"
 CLEANED_DIR = DATA_DIR / "cleaned"
 
-# IMPORTANT (fixed):
-# Streamlit's static serving only serves ./static relative to the file
-# that was actually launched (dashboard/Dashboard.py), NOT the project
-# root. See: https://docs.streamlit.io/develop/concepts/configuration/serving-static-files
-STATIC_DIR = DASHBOARD_DIR / "static"
-STATIC_GEO_DIR = STATIC_DIR / "geo"
-
-
-# ---------------------------------------------------------------------
-# Project imports
-# ---------------------------------------------------------------------
-
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(DASHBOARD_DIR))
 
-from dashboard.heat_interpolation import (
-    compute_idw_grid,
-    render_heat_overlay_png,
-)
-
+from dashboard.heat_interpolation import compute_idw_grid, render_heat_overlay_png
 from dashboard.branding import (
     apply_page_config,
     render_header,
@@ -55,103 +35,26 @@ from dashboard.branding import (
     render_section_header,
     render_technical_metadata,
 )
-
-
-# ---------------------------------------------------------------------
-# Configuration
-# ---------------------------------------------------------------------
+from dashboard.geolibre_static import (
+    get_static_url,
+    write_geojson_to_static,
+    write_style_to_static,
+    validate_geojson,
+    build_point_style,
+    ensure_static_geo_dir,
+)
 
 apply_page_config("Mission Map")
 render_sidebar_logo()
 apply_custom_css()
 render_header("Mission Map")
 
-# A simple, readable 5-stop ramp (magma-ish) used for point color-coding
-COLOR_STOPS = ["#3b0f70", "#8c2981", "#de4968", "#fe9f6d", "#fcfdbf"]
 COLORABLE_SENSORS = ["temperature", "humidity", "pressure", "light", "air_quality"]
 
 
 # ---------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------
-
-def get_browser_origin() -> str:
-    """Origin the app is currently being accessed through (localhost or Streamlit Cloud)."""
-    try:
-        headers = st.context.headers
-    except Exception:
-        headers = {}
-
-    forwarded_host = headers.get("X-Forwarded-Host")
-    host = forwarded_host or headers.get("Host") or "localhost:8501"
-
-    forwarded_proto = headers.get("X-Forwarded-Proto")
-    scheme = forwarded_proto.split(",")[0].strip() if forwarded_proto else "http"
-
-    return f"{scheme}://{host}"
-
-
-def get_static_url(filename: str) -> str:
-    """Browser-accessible URL for a file placed in dashboard/static/geo/."""
-    origin = get_browser_origin()
-    return f"{origin}/app/static/geo/{quote(filename, safe='')}"
-
-
-def copy_geojson_to_static(mission_name: str, geojson_data: dict) -> Path:
-    """Copy the mission GeoJSON into dashboard/static/geo — the copy GeoLibre reads."""
-    STATIC_GEO_DIR.mkdir(parents=True, exist_ok=True)
-    static_path = STATIC_GEO_DIR / f"{mission_name}.geojson"
-    static_path.write_text(
-        json.dumps(geojson_data, indent=2, allow_nan=False),
-        encoding="utf-8",
-    )
-    return static_path
-
-
-def build_point_style(mission_name: str, property_name: str, vmin: float, vmax: float) -> dict:
-    """
-    MapLibre/GeoLibre style JSON that color-codes points by `property_name`.
-    GeoLibre binds a style layer to loaded data by the GeoJSON's filename stem,
-    so `source` must equal `mission_name` (no `sources` block needed).
-    """
-    if vmax <= vmin:
-        vmax = vmin + 1  # avoid a degenerate interpolation range
-
-    stops = []
-    for i, color in enumerate(COLOR_STOPS):
-        value = vmin + (vmax - vmin) * i / (len(COLOR_STOPS) - 1)
-        stops.extend([value, color])
-
-    return {
-        "version": 8,
-        "layers": [
-            {
-                "id": "mission-points",
-                "type": "circle",
-                "source": mission_name,
-                "paint": {
-                    "circle-radius": 5,
-                    "circle-opacity": 0.9,
-                    "circle-stroke-width": 0.6,
-                    "circle-stroke-color": "#ffffff",
-                    "circle-color": [
-                        "case",
-                        ["==", ["get", property_name], None],
-                        "#888888",
-                        ["interpolate", ["linear"], ["to-number", ["get", property_name]], *stops],
-                    ],
-                },
-            }
-        ],
-    }
-
-
-def copy_style_to_static(mission_name: str, style_data: dict) -> Path:
-    STATIC_GEO_DIR.mkdir(parents=True, exist_ok=True)
-    static_path = STATIC_GEO_DIR / f"{mission_name}.style.json"
-    static_path.write_text(json.dumps(style_data, indent=2), encoding="utf-8")
-    return static_path
-
 
 def get_available_missions() -> list[str]:
     missions = set()
@@ -166,14 +69,13 @@ def load_mission_geojson(mission_name: str) -> dict | None:
     geojson_path = GEO_DIR / f"{mission_name}.geojson"
     if geojson_path.exists():
         try:
+            import json
             with open(geojson_path, encoding="utf-8") as f:
                 return json.load(f)
         except Exception as exc:
             st.error(f"Could not read mission GeoJSON: {exc}")
             return None
-
-    session_geojson = st.session_state.get("mission_geojson", {})
-    return session_geojson.get(mission_name)
+    return st.session_state.get("mission_geojson", {}).get(mission_name)
 
 
 def load_mission_summary(mission_name: str) -> dict | None:
@@ -181,10 +83,31 @@ def load_mission_summary(mission_name: str) -> dict | None:
     if not summary_path.exists():
         return None
     try:
+        import json
         with open(summary_path, encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return None
+
+
+def collect_sensor_values(geojson_data: dict, property_name: str):
+    feats, values = [], []
+    for feature in geojson_data.get("features", []):
+        properties = feature.get("properties", {})
+        if property_name not in properties:
+            continue
+        value = properties.get(property_name)
+        if value is None:
+            continue
+        try:
+            value = float(value)
+            if not np.isfinite(value):
+                continue
+        except (TypeError, ValueError):
+            continue
+        values.append(value)
+        feats.append(feature)
+    return feats, values
 
 
 # ---------------------------------------------------------------------
@@ -193,7 +116,7 @@ def load_mission_summary(mission_name: str) -> dict | None:
 
 GEO_DIR.mkdir(parents=True, exist_ok=True)
 CLEANED_DIR.mkdir(parents=True, exist_ok=True)
-STATIC_GEO_DIR.mkdir(parents=True, exist_ok=True)
+ensure_static_geo_dir()
 
 
 # ---------------------------------------------------------------------
@@ -216,18 +139,16 @@ if geojson_data is None:
     render_sidebar_status()
     st.stop()
 
-if not isinstance(geojson_data, dict):
-    st.error("The mission file is not a valid GeoJSON object.")
+is_valid, validation_error = validate_geojson(geojson_data)
+if not is_valid:
+    st.error(f"This mission's GeoJSON isn't valid, so it can't be sent to GeoLibre: {validation_error}")
     render_sidebar_status()
     st.stop()
 
-if not geojson_data.get("features"):
-    st.info("This mission has no valid GPS points to plot. Spatial coordinates are required for the map.")
-    render_sidebar_status()
-    st.stop()
-
-# Make the GeoJSON available to the browser (fixed path)
-static_geojson_path = copy_geojson_to_static(selected_mission, geojson_data)
+# Regenerate the static copy on every view. This makes it self-healing
+# after a Streamlit Cloud restart (bundled missions live in data/geo, which
+# is in git) and picks up any edits from this session immediately.
+static_geojson_path = write_geojson_to_static(selected_mission, geojson_data)
 
 summary = load_mission_summary(selected_mission)
 
@@ -274,34 +195,13 @@ heat_max = None
 heat_sensor = None
 style_url = None
 
-
-def collect_sensor_values(property_name: str):
-    values, feats = [], []
-    for feature in geojson_data.get("features", []):
-        properties = feature.get("properties", {})
-        if property_name not in properties:
-            continue
-        value = properties.get(property_name)
-        if value is None:
-            continue
-        try:
-            value = float(value)
-            if not np.isfinite(value):
-                continue
-        except (TypeError, ValueError):
-            continue
-        values.append(value)
-        feats.append(feature)
-    return feats, values
-
-
 if view_mode == "Points":
     color_sensor = st.selectbox("Color points by", COLORABLE_SENSORS, index=0)
-    _, values = collect_sensor_values(color_sensor)
+    _, values = collect_sensor_values(geojson_data, color_sensor)
 
     if values:
         style_data = build_point_style(selected_mission, color_sensor, min(values), max(values))
-        style_path = copy_style_to_static(selected_mission, style_data)
+        style_path = write_style_to_static(selected_mission, style_data)
         style_url = get_static_url(style_path.name)
     else:
         st.caption(f"No valid '{color_sensor}' readings to color by — showing default styling.")
@@ -311,7 +211,7 @@ else:
         "Interpolate", ["temperature", "humidity", "pressure", "light", "air_quality"], index=0
     )
 
-    valid_features, _ = collect_sensor_values(heat_sensor)
+    valid_features, _ = collect_sensor_values(geojson_data, heat_sensor)
 
     if len(valid_features) < 2:
         st.warning("Not enough valid readings to interpolate a heat surface for this sensor.")
@@ -336,21 +236,23 @@ else:
         float(points[:, 0].min()), float(points[:, 0].max()),
         float(points[:, 1].min()), float(points[:, 1].max()),
     )
+
+    # Existing IDW heatmap calculation — unchanged.
     grid = compute_idw_grid(points, values, bounds)
     heat_overlay_uri = render_heat_overlay_png(grid)
     heat_bounds = bounds
     heat_min = float(np.nanmin(grid))
     heat_max = float(np.nanmax(grid))
 
-    # Still color-code the raw points on the GeoLibre map by the same sensor,
-    # so it's not just a flat marker set while you interpret the IDW surface.
+    # Color the raw points on the GeoLibre map by the same sensor too, so
+    # it isn't a flat marker set while you read the IDW surface alongside it.
     style_data = build_point_style(selected_mission, heat_sensor, heat_min, heat_max)
-    style_path = copy_style_to_static(selected_mission, style_data)
+    style_path = write_style_to_static(selected_mission, style_data)
     style_url = get_static_url(style_path.name)
 
 
 # ---------------------------------------------------------------------
-# Technical metadata + summary (unchanged)
+# Technical metadata + summary — unchanged
 # ---------------------------------------------------------------------
 
 render_technical_metadata(
@@ -381,6 +283,8 @@ if summary:
 render_section_header("Mission GIS Workspace" if view_mode == "Points" else "Interpolated Sensor Surface")
 st.caption("Explore the mission data against satellite imagery and other GIS layers using GeoLibre.")
 
+from urllib.parse import quote
+
 geojson_url = get_static_url(f"{selected_mission}.geojson")
 
 params = [
@@ -404,11 +308,11 @@ with st.expander("GeoLibre connection details", expanded=False):
         st.code(style_url, language="text")
     st.write("GeoLibre URL:")
     st.code(geolibre_url, language="text")
-    st.caption(
-        "On Streamlit Community Cloud, files written while the app is running "
-        "aren't guaranteed to persist across sessions — if this breaks only on "
-        "Cloud and not locally, that's why."
-    )
+    if not geolibre_url.split("data=")[1].startswith("https%3A"):
+        st.warning(
+            "The data URL isn't HTTPS. GeoLibre (served over HTTPS) will refuse "
+            "to load it as mixed content. This is expected on localhost only."
+        )
 
 st.iframe(geolibre_url, height=760)
 
@@ -416,10 +320,10 @@ if view_mode == "Heat Surface (IDW)":
     st.image(heat_overlay_uri, caption=f"IDW surface: {heat_sensor} (bounds {heat_bounds})")
     st.caption(f"IDW surface: {heat_sensor} (range {heat_min:.1f}–{heat_max:.1f})")
     st.caption(
-        "This overlay is a flat PNG rendered by SpacePoint's own IDW pipeline — "
-        "GeoLibre's `data`/`style` parameters don't have a simple way to place an "
-        "arbitrary bounded PNG on the map (that needs a georeferenced COG), so it's "
-        "shown alongside the map rather than draped on top of it."
+        "This overlay is a flat PNG from SpacePoint's own IDW pipeline, shown "
+        "alongside GeoLibre rather than draped on the map — GeoLibre's data/style "
+        "parameters don't have a simple way to place an arbitrary bounded PNG "
+        "(that needs a georeferenced COG)."
     )
 
 render_sidebar_status()

@@ -13,8 +13,8 @@ from pathlib import Path
 import pandas as pd
 
 # scripts/generate_geojson.py -> project root -> dashboard/static/geo
-# (fixed: was a bare relative "static/geo", resolved against whatever the
-# current working directory happened to be when you ran the script)
+# Must match dashboard/geolibre_static.py's STATIC_GEO_DIR. Resolved from
+# this file's own location, not the current working directory.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 STATIC_GEO_DIR = PROJECT_ROOT / "dashboard" / "static" / "geo"
 
