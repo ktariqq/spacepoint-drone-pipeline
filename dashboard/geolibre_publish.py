@@ -2,25 +2,29 @@
 SpacePoint - GeoLibre data publishing
 Author: Kommal
 
-GeoLibre (https://web.geolibre.app) is a separate origin, so loading a
-project via its `url=` parameter requires the browser to fetch() it
-cross-origin, which needs Access-Control-Allow-Origin on the response.
-Streamlit's own static file server has no documented guarantee of that for
-a third-party fetch (see streamlit/streamlit#8808 - a Streamlit-hosted
-static JSON fed into a third-party iframe app, unresolved). JSONBin.io
-documents CORS enabled on every endpoint, so we publish there instead -
-automatically, from Python, with no manual upload by the user.
+GeoLibre (https://web.geolibre.app) is a separate origin. For it to load a
+mission's GeoJSON/style via its `data=`/`style=` parameters, the browser has
+to fetch() those URLs cross-origin, which requires the response to carry
+Access-Control-Allow-Origin. Streamlit's static file server has no
+documented guarantee of that for a third-party fetch, and there's a
+confirmed community report of exactly this pattern failing on Streamlit
+Community Cloud (streamlit/streamlit#8808). So: publish the mission JSON
+to JSONBin.io instead, which documents CORS enabled on every endpoint.
+One-time setup: a free account + a Master Key stored as a secret.
 
-One-time setup: a free JSONBin.io account and a Master Key, stored as a
-secret (JSONBIN_MASTER_KEY). If it's missing, everything falls back to
-Streamlit's own static folder so the app doesn't crash - but that fallback
-is only reliable for opening the link yourself, not for GeoLibre.
+If no key is configured, this falls back to Streamlit's own static folder
+so the app doesn't crash - but that fallback is NOT guaranteed to work
+inside GeoLibre, only for opening the link yourself, and the UI says so.
 """
 
 import streamlit as st
 import requests
 
-from geolibre_static import write_project_to_static, get_static_url
+from geolibre_static import (
+    write_geojson_to_static,
+    write_style_to_static,
+    get_static_url,
+)
 
 JSONBIN_BASE = "https://api.jsonbin.io/v3/b"
 
@@ -33,6 +37,13 @@ def _get_master_key() -> str | None:
 
 
 def _publish_json(payload: dict, cache_key: str) -> str | None:
+    """
+    Create-or-update a public JSONBin bin for this payload. The bin id is
+    cached in session_state per cache_key so re-viewing the same mission in
+    the same session updates the existing bin instead of creating a new one
+    on every rerun. Returns a public, CORS-enabled, meta-stripped read URL,
+    or None if no key is configured or the request failed.
+    """
     api_key = _get_master_key()
     if not api_key:
         return None
@@ -43,9 +54,11 @@ def _publish_json(payload: dict, cache_key: str) -> str | None:
 
     try:
         if existing_id:
-            resp = requests.put(f"{JSONBIN_BASE}/{existing_id}", json=payload, headers=headers, timeout=10)
+            resp = requests.put(
+                f"{JSONBIN_BASE}/{existing_id}", json=payload, headers=headers, timeout=10
+            )
         else:
-            headers["X-Bin-Private"] = "false"
+            headers["X-Bin-Private"] = "false"  # must be public: GeoLibre's fetch carries no auth header
             resp = requests.post(JSONBIN_BASE, json=payload, headers=headers, timeout=10)
 
         if resp.status_code not in (200, 201):
@@ -59,10 +72,18 @@ def _publish_json(payload: dict, cache_key: str) -> str | None:
         return None
 
 
-def publish_project(mission_name: str, project_data: dict) -> tuple[str, bool]:
+def publish_geojson(mission_name: str, geojson_data: dict) -> tuple[str, bool]:
     """Returns (url, is_cors_verified)."""
-    write_project_to_static(mission_name, project_data)  # local copy, debug link only
-    hosted_url = _publish_json(project_data, f"project:{mission_name}")
+    write_geojson_to_static(mission_name, geojson_data)  # local copy, for the debug link only
+    hosted_url = _publish_json(geojson_data, f"geojson:{mission_name}")
     if hosted_url:
         return hosted_url, True
-    return get_static_url(f"{mission_name}.geolibre.json"), False
+    return get_static_url(f"{mission_name}.geojson"), False
+
+
+def publish_style(mission_name: str, style_data: dict) -> tuple[str, bool]:
+    write_style_to_static(mission_name, style_data)
+    hosted_url = _publish_json(style_data, f"style:{mission_name}")
+    if hosted_url:
+        return hosted_url, True
+    return get_static_url(f"{mission_name}.style.json"), False

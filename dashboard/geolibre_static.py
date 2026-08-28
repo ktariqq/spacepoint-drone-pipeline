@@ -3,14 +3,14 @@ SpacePoint - GeoLibre static file helpers
 Author: Kommal
 
 Centralizes the one thing that has to be gotten right everywhere a mission
-GeoJSON file is exposed to the browser for GeoLibre: Streamlit's static
-file serving only serves ./static relative to the *launched* script
+GeoJSON/style file is exposed to the browser for GeoLibre: Streamlit's
+static file serving only serves ./static relative to the *launched* script
 (dashboard/Dashboard.py), at the URL path /app/static/<file>. See:
 https://docs.streamlit.io/develop/concepts/configuration/serving-static-files
 
-Note: this module's URLs are used as a local debug/fallback path. The URL
-actually fed to GeoLibre comes from geolibre_publish.py (JSONBin), for the
-CORS reasons documented there.
+Note: as of the JSONBin-based publishing setup (geolibre_publish.py), the
+URLs built here are used as a local debug/fallback path, not necessarily
+what's actually fed to GeoLibre — see geolibre_publish.py for why.
 """
 
 import json
@@ -19,6 +19,8 @@ from urllib.parse import quote
 
 import streamlit as st
 
+# This file lives at dashboard/geolibre_static.py, so its own folder IS
+# the app directory Streamlit launches from (dashboard/Dashboard.py).
 DASHBOARD_DIR = Path(__file__).resolve().parent
 STATIC_DIR = DASHBOARD_DIR / "static"
 STATIC_GEO_DIR = STATIC_DIR / "geo"
@@ -32,6 +34,17 @@ def ensure_static_geo_dir() -> Path:
 
 
 def get_browser_origin() -> str:
+    """
+    The scheme+host the visitor's browser is actually using.
+
+    Reverse-proxy headers like X-Forwarded-Proto aren't reliably forwarded
+    on every deployment target, and a stale "http" fallback is exactly what
+    broke this in production (browsers block a https page from fetching
+    mixed-content http data). So: trust an explicit forwarded scheme if one
+    is present, otherwise infer it from whether the host looks like local
+    dev — every real deployment target, Streamlit Community Cloud included,
+    serves over HTTPS; only localhost genuinely uses HTTP.
+    """
     try:
         headers = st.context.headers or {}
     except Exception:
@@ -61,15 +74,15 @@ def write_geojson_to_static(mission_name: str, geojson_data: dict) -> Path:
     return path
 
 
-def write_project_to_static(mission_name: str, project_data: dict) -> Path:
+def write_style_to_static(mission_name: str, style_data: dict) -> Path:
     ensure_static_geo_dir()
-    path = STATIC_GEO_DIR / f"{mission_name}.geolibre.json"
-    path.write_text(json.dumps(project_data, indent=2), encoding="utf-8")
+    path = STATIC_GEO_DIR / f"{mission_name}.style.json"
+    path.write_text(json.dumps(style_data, indent=2), encoding="utf-8")
     return path
 
 
 def validate_geojson(geojson_data) -> tuple[bool, str]:
-    """Minimal structural check before it goes into a GeoLibre project."""
+    """Minimal structural check before handing a URL to GeoLibre."""
     if not isinstance(geojson_data, dict):
         return False, "Not a JSON object."
     if geojson_data.get("type") != "FeatureCollection":
@@ -82,3 +95,46 @@ def validate_geojson(geojson_data) -> tuple[bool, str]:
         if not geometry or "coordinates" not in geometry:
             return False, "A feature is missing geometry/coordinates."
     return True, ""
+
+
+def build_point_style(property_name: str, vmin: float, vmax: float) -> dict:
+    """
+    MapLibre/GeoLibre style JSON that color-codes points by `property_name`.
+
+    No `source` is set on the layer: per GeoLibre's docs, matching a style
+    layer to one specific file by its filename "stem" only matters when a
+    single style needs to route different rules to different files inside
+    a multi-file ZIP. We're always loading exactly one dataset, so a layer
+    with no `source` applies to "every imported file" — which for one file
+    is exactly the behavior we want.
+    """
+    color_stops = ["#3b0f70", "#8c2981", "#de4968", "#fe9f6d", "#fcfdbf"]
+    if vmax <= vmin:
+        vmax = vmin + 1
+
+    stops = []
+    for i, color in enumerate(color_stops):
+        value = vmin + (vmax - vmin) * i / (len(color_stops) - 1)
+        stops.extend([value, color])
+
+    return {
+        "version": 8,
+        "layers": [
+            {
+                "id": "mission-points",
+                "type": "circle",
+                "paint": {
+                    "circle-radius": 5,
+                    "circle-opacity": 0.9,
+                    "circle-stroke-width": 0.6,
+                    "circle-stroke-color": "#ffffff",
+                    "circle-color": [
+                        "case",
+                        ["==", ["get", property_name], None],
+                        "#888888",
+                        ["interpolate", ["linear"], ["to-number", ["get", property_name]], *stops],
+                    ],
+                },
+            }
+        ],
+    }

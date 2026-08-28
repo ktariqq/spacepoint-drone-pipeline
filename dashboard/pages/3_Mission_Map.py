@@ -36,14 +36,17 @@ from dashboard.branding import (
     render_section_header,
     render_technical_metadata,
 )
-from dashboard.geolibre_static import validate_geojson, get_static_url
-from dashboard.geolibre_project import style_geojson_features, build_project, OPENFREEMAP_STYLES
-from dashboard.geolibre_publish import publish_project
+from dashboard.geolibre_static import validate_geojson, build_point_style, get_static_url
+from dashboard.geolibre_publish import publish_geojson, publish_style
 
 apply_page_config("Mission Map")
 render_sidebar_logo()
 apply_custom_css()
 render_header("Mission Map")
+
+# Properties that live on every point but are never sensor readings -
+# excluded when working out what can be used to color the points
+NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
 
 
 # ---------------------------------------------------------------------
@@ -104,12 +107,11 @@ def collect_sensor_values(geojson_data: dict, property_name: str):
     return feats, values
 
 
-NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
-
-
 def get_colorable_sensors(geojson_data: dict) -> list[str]:
     """Any numeric property present on the mission's points can be used
-    to color them - not the fixed set from the original schema."""
+    to color them - detected from the data itself, not a fixed list, so
+    this works whether the mission has BME280-style readings or the
+    entirely different columns from an arbitrary CSV like a Kaggle dataset."""
     if not geojson_data.get("features"):
         return []
     sample_properties = geojson_data["features"][0].get("properties", {})
@@ -155,6 +157,13 @@ if not is_valid:
 
 summary = load_mission_summary(selected_mission)
 
+colorable_sensors = get_colorable_sensors(geojson_data)
+
+if not colorable_sensors:
+    st.warning("No numeric sensor properties were found on this mission's points.")
+    render_sidebar_status()
+    st.stop()
+
 
 # ---------------------------------------------------------------------
 # Mission bounds
@@ -191,32 +200,24 @@ lat_min, lat_max = float(all_coords[:, 1].min()), float(all_coords[:, 1].max())
 
 view_mode = st.radio("View", ["Points", "Heat Surface (IDW)"], horizontal=True)
 
-colorable_sensors = get_colorable_sensors(geojson_data)
-
-if not colorable_sensors:
-    st.warning("No numeric sensor properties found on this mission's points.")
-    render_sidebar_status()
-    st.stop()
-
 heat_overlay_uri = None
 heat_bounds = None
 heat_min = None
 heat_max = None
 heat_sensor = None
+style_data = None
 
 if view_mode == "Points":
-    col_a, col_b = st.columns(2)
-    with col_a:
-        color_sensor = st.selectbox("Color points by", colorable_sensors, index=0)
-    with col_b:
-        basemap_choice = st.selectbox("Basemap", list(OPENFREEMAP_STYLES.keys()), index=0)
+    color_sensor = st.selectbox("Color points by", colorable_sensors, index=0)
+    _, values = collect_sensor_values(geojson_data, color_sensor)
+
+    if values:
+        style_data = build_point_style(color_sensor, min(values), max(values))
+    else:
+        st.caption(f"No valid '{color_sensor}' readings to color by — showing default styling.")
 
 else:
-    col_a, col_b = st.columns(2)
-    with col_a:
-        heat_sensor = st.selectbox("Interpolate", colorable_sensors, index=0)
-    with col_b:
-        basemap_choice = st.selectbox("Basemap", list(OPENFREEMAP_STYLES.keys()), index=0)
+    heat_sensor = st.selectbox("Interpolate", colorable_sensors, index=0)
 
     valid_features, _ = collect_sensor_values(geojson_data, heat_sensor)
 
@@ -251,6 +252,10 @@ else:
     heat_min = float(np.nanmin(grid))
     heat_max = float(np.nanmax(grid))
 
+    # Color the raw points on the GeoLibre map by the same sensor too, so
+    # it isn't a flat marker set while you read the IDW surface alongside it.
+    style_data = build_point_style(heat_sensor, heat_min, heat_max)
+
 
 # ---------------------------------------------------------------------
 # Technical metadata + summary — unchanged
@@ -278,57 +283,47 @@ if summary:
 
 
 # ---------------------------------------------------------------------
-# Build + publish the GeoLibre project
+# Publish geojson/style, then build the GeoLibre URL
 # ---------------------------------------------------------------------
 
 render_section_header("Mission GIS Workspace" if view_mode == "Points" else "Interpolated Sensor Surface")
-st.caption("Explore the mission data against satellite imagery and other GIS layers using GeoLibre. Click a point to see its details.")
+st.caption("Explore the mission data against satellite imagery and other GIS layers using GeoLibre.")
 
-color_property = heat_sensor if view_mode == "Heat Surface (IDW)" else color_sensor
-_, color_values = collect_sensor_values(geojson_data, color_property)
+geojson_url, geojson_cors_ok = publish_geojson(selected_mission, geojson_data)
 
-if color_values:
-    vmin, vmax = min(color_values), max(color_values)
-else:
-    vmin, vmax = 0.0, 1.0
-    st.caption(f"No valid '{color_property}' readings to color by — points will show default styling.")
+style_url = None
+style_cors_ok = True
+if style_data is not None:
+    style_url, style_cors_ok = publish_style(selected_mission, style_data)
 
-styled_geojson = style_geojson_features(geojson_data, color_property, vmin, vmax, selected_mission)
+params = [f"data={quote(geojson_url, safe=':/')}", "layout=viewer", "theme=dark", "welcome=0"]
+if style_url:
+    params.append(f"style={quote(style_url, safe=':/')}")
 
-project_data = build_project(
-    selected_mission,
-    styled_geojson,
-    OPENFREEMAP_STYLES[basemap_choice],
-    lon_min, lon_max, lat_min, lat_max,
-)
-
-project_url, project_cors_ok = publish_project(selected_mission, project_data)
-
-params = [
-    f"url={quote(project_url, safe=':/')}",
-    "layout=viewer",
-    "panels=collapsed",
-    "theme=dark",
-    "welcome=0",
-]
 geolibre_url = "https://web.geolibre.app/?" + "&".join(params)
 
 with st.expander("GeoLibre connection details", expanded=False):
-    st.write("Project URL fed to GeoLibre:")
-    st.code(project_url, language="text")
+    st.write("GeoJSON URL fed to GeoLibre:")
+    st.code(geojson_url, language="text")
 
-    if not project_cors_ok:
+    if not geojson_cors_ok:
         st.warning(
             "No JSONBIN_MASTER_KEY is configured, so this is falling back to Streamlit's "
             "own static URL, which is not confirmed to work inside GeoLibre due to CORS. "
             "Add the secret to enable reliable hosting."
         )
 
+    if style_url:
+        st.write("Style URL fed to GeoLibre:")
+        st.code(style_url, language="text")
+        if not style_cors_ok:
+            st.warning("Style is also falling back to the unverified static URL for the same reason.")
+
     st.write("GeoLibre URL:")
     st.code(geolibre_url, language="text")
 
-    st.write("Local debug copy (open this yourself to confirm the raw project JSON — not what GeoLibre fetches when JSONBin is configured):")
-    st.code(get_static_url(f"{selected_mission}.geolibre.json"), language="text")
+    st.write("Local debug copy (open this yourself to confirm the raw GeoJSON — this is not what GeoLibre fetches when JSONBin is configured):")
+    st.code(get_static_url(f"{selected_mission}.geojson"), language="text")
 
 st.iframe(geolibre_url, height=760)
 
