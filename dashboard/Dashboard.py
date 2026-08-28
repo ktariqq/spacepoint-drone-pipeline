@@ -2,12 +2,11 @@
 SpacePoint - Environmental Data Dashboard
 Author: Kommal
 
-Reads the cleaned CSV and summary JSON and shows a mission dashboard:
-summary, current readings, charts over time, warnings, a data table,
-and a CSV download.
-
-Run it with:
-    streamlit run dashboard/Dashboard.py
+Reads the cleaned CSV and summary JSON and shows a mission dashboard.
+Sensor readings/charts adapt to whatever columns were actually
+detected for this mission (see column_detection.py) - there's no
+fixed list of expected sensor names, so this works whether the
+mission has BME280-style readings or something else entirely.
 """
 
 import json
@@ -46,13 +45,26 @@ def load_summary(mission_name: str) -> dict:
         return json.load(f)
 
 
-def build_warnings(df: pd.DataFrame, temp_threshold: float) -> list[str]:
+def find_temperature_column(sensor_columns: list[str]) -> str | None:
+    """Looks for a column that's plausibly a temperature reading, by
+    name, rather than assuming one is literally called 'temperature' -
+    keeps the high-temperature warning working on datasets that named
+    it something else (e.g. 'Temperature_C')."""
+    for col in sensor_columns:
+        if "temp" in col.lower():
+            return col
+    return None
+
+
+def build_warnings(df: pd.DataFrame, sensor_columns: list[str], temp_threshold: float) -> list[str]:
     """Scans the cleaned data for anything worth flagging on the dashboard."""
     warnings = []
 
-    high_temp_rows = df[df["temperature"] > temp_threshold]
-    if len(high_temp_rows) > 0:
-        warnings.append(f"High temperature: {len(high_temp_rows)} readings above {temp_threshold}°C")
+    temp_col = find_temperature_column(sensor_columns)
+    if temp_col:
+        high_temp_rows = df[df[temp_col] > temp_threshold]
+        if len(high_temp_rows) > 0:
+            warnings.append(f"High {temp_col}: {len(high_temp_rows)} readings above {temp_threshold}")
 
     if "flag_gps_loss" in df.columns:
         gps_loss_count = int(df["flag_gps_loss"].sum())
@@ -90,9 +102,9 @@ st.sidebar.header("Controls")
 selected_mission = st.sidebar.selectbox("Mission", missions)
 
 temp_threshold = st.sidebar.slider(
-    "High temperature warning threshold (°C)",
-    min_value=20.0,
-    max_value=60.0,
+    "High temperature warning threshold",
+    min_value=0.0,
+    max_value=200.0,
     value=DEFAULT_TEMP_THRESHOLD,
     step=1.0,
 )
@@ -101,6 +113,7 @@ show_flagged_only = st.sidebar.checkbox("Show only flagged rows in table")
 
 df = load_cleaned_data(selected_mission)
 summary = load_summary(selected_mission)
+sensor_columns = summary.get("sensor_columns") or list(summary["sensor_stats"].keys())
 
 st.subheader("Mission Summary")
 
@@ -120,34 +133,29 @@ col4.metric("Duration", f"{duration_minutes:.1f} min")
 
 st.subheader("Sensor Readings")
 
-stats = summary["sensor_stats"]
-
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("Temperature (avg)", f"{stats['temperature']['mean']} °C")
-col2.metric("Humidity (avg)", f"{stats['humidity']['mean']} %")
-col3.metric("Pressure (avg)", f"{stats['pressure']['mean']} hPa")
-col4.metric("Air Quality (avg)", f"{stats['air_quality']['mean']}")
+if not sensor_columns:
+    st.info("No numeric sensor columns were detected for this mission.")
+else:
+    metric_cols = st.columns(min(4, len(sensor_columns)))
+    for i, col_name in enumerate(sensor_columns[:4]):
+        stats = summary["sensor_stats"][col_name]
+        metric_cols[i].metric(f"{col_name} (avg)", stats["mean"])
 
 st.subheader("Readings Over Time")
 
-chart_df = df.set_index("timestamp")
-
-col1, col2 = st.columns(2)
-with col1:
-    st.caption("Temperature (°C)")
-    st.line_chart(chart_df["temperature"])
-    st.caption("Pressure (hPa)")
-    st.line_chart(chart_df["pressure"])
-
-with col2:
-    st.caption("Humidity (%)")
-    st.line_chart(chart_df["humidity"])
-    st.caption("Air Quality")
-    st.line_chart(chart_df["air_quality"])
+if not sensor_columns:
+    st.info("No numeric sensor columns to chart for this mission.")
+else:
+    chart_df = df.set_index("timestamp")
+    cols = st.columns(2)
+    for i, col_name in enumerate(sensor_columns):
+        with cols[i % 2]:
+            st.caption(col_name)
+            st.line_chart(chart_df[col_name])
 
 st.subheader("Warnings")
 
-warnings = build_warnings(df, temp_threshold)
+warnings = build_warnings(df, sensor_columns, temp_threshold)
 
 if warnings:
     for message in warnings:

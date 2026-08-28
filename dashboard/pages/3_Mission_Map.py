@@ -44,7 +44,6 @@ render_sidebar_logo()
 apply_custom_css()
 render_header("Mission Map")
 
-COLORABLE_SENSORS = ["temperature", "humidity", "pressure", "light", "air_quality"]
 
 
 # ---------------------------------------------------------------------
@@ -103,6 +102,20 @@ def collect_sensor_values(geojson_data: dict, property_name: str):
         values.append(value)
         feats.append(feature)
     return feats, values
+
+NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
+
+
+def get_colorable_sensors(geojson_data: dict) -> list[str]:
+    """Any numeric property present on the mission's points can be used
+    to color them - not the fixed set from the original schema."""
+    if not geojson_data.get("features"):
+        return []
+    sample_properties = geojson_data["features"][0].get("properties", {})
+    return [
+        key for key, value in sample_properties.items()
+        if key not in NON_SENSOR_PROPERTY_KEYS and isinstance(value, (int, float))
+    ]
 
 
 # ---------------------------------------------------------------------
@@ -174,8 +187,14 @@ lat_min, lat_max = float(all_coords[:, 1].min()), float(all_coords[:, 1].max())
 # ---------------------------------------------------------------------
 # View controls
 # ---------------------------------------------------------------------
-
 view_mode = st.radio("View", ["Points", "Heat Surface (IDW)"], horizontal=True)
+
+colorable_sensors = get_colorable_sensors(geojson_data)
+
+if not colorable_sensors:
+    st.warning("No numeric sensor properties found on this mission's points.")
+    render_sidebar_status()
+    st.stop()
 
 heat_overlay_uri = None
 heat_bounds = None
@@ -185,7 +204,7 @@ heat_sensor = None
 style_data = None
 
 if view_mode == "Points":
-    color_sensor = st.selectbox("Color points by", COLORABLE_SENSORS, index=0)
+    color_sensor = st.selectbox("Color points by", colorable_sensors, index=0)
     _, values = collect_sensor_values(geojson_data, color_sensor)
 
     if values:
@@ -194,9 +213,7 @@ if view_mode == "Points":
         st.caption(f"No valid '{color_sensor}' readings to color by — showing default styling.")
 
 else:
-    heat_sensor = st.selectbox(
-        "Interpolate", ["temperature", "humidity", "pressure", "light", "air_quality"], index=0
-    )
+    heat_sensor = st.selectbox("Interpolate", colorable_sensors, index=0)
 
     valid_features, _ = collect_sensor_values(geojson_data, heat_sensor)
 
@@ -234,7 +251,6 @@ else:
     # Color the raw points on the GeoLibre map by the same sensor too, so
     # it isn't a flat marker set while you read the IDW surface alongside it.
     style_data = build_point_style(heat_sensor, heat_min, heat_max)
-
 
 # ---------------------------------------------------------------------
 # Technical metadata + summary — unchanged

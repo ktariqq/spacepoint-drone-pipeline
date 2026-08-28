@@ -12,17 +12,31 @@ from pathlib import Path
 
 import pandas as pd
 
-# scripts/generate_geojson.py -> project root -> dashboard/static/geo
-# Must match dashboard/geolibre_static.py's STATIC_GEO_DIR. Resolved from
-# this file's own location, not the current working directory.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 STATIC_GEO_DIR = PROJECT_ROOT / "dashboard" / "static" / "geo"
 
-SENSOR_COLUMNS = ["temperature", "humidity", "pressure", "light", "air_quality", "battery_voltage"]
+# Columns that are never sensor readings, even sitting right next to
+# them in the cleaned CSV
+NON_SENSOR_COLUMNS = {"timestamp", "latitude", "longitude", "has_flag", "flags_summary"}
+
+
+def get_sensor_columns(df: pd.DataFrame) -> list[str]:
+    """Any numeric column that isn't a fixed non-sensor column or a
+    flag_* column counts as a sensor reading to carry into the map's
+    popups - works for whatever columns this mission actually has."""
+    columns = []
+    for col in df.columns:
+        if col in NON_SENSOR_COLUMNS or col.startswith("flag_"):
+            continue
+        if pd.api.types.is_numeric_dtype(df[col]):
+            columns.append(col)
+    return columns
 
 
 def build_geojson(df: pd.DataFrame) -> dict:
+    sensor_columns = get_sensor_columns(df)
     features = []
+
     for _, row in df.iterrows():
         if pd.isna(row["latitude"]) or pd.isna(row["longitude"]):
             continue
@@ -40,7 +54,7 @@ def build_geojson(df: pd.DataFrame) -> dict:
         if "surface_type" in row and pd.notna(row["surface_type"]):
             properties["surface_type"] = str(row["surface_type"])
 
-        for column in SENSOR_COLUMNS:
+        for column in sensor_columns:
             value = row.get(column)
             properties[column] = None if pd.isna(value) else float(value)
 
