@@ -39,11 +39,30 @@ def color_for_value(value: float, vmin: float, vmax: float) -> str:
     return COLOR_STOPS[idx]  # flat bucket color; good enough for a quick visual read
 
 
+NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
+
+# Cosmetic units for sensors we happen to recognize by name - purely
+# decorative. Anything we don't recognize still shows up in the
+# description, just without a unit suffix, so this stays generic for
+# whatever column names a given mission actually has.
+KNOWN_UNITS = {
+    "temperature": "°C",
+    "humidity": "%",
+    "pressure": "hPa",
+    "battery_voltage": "V",
+}
+
+
 def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, vmax: float, mission_name: str) -> dict:
     """
     Returns a NEW geojson dict (does not mutate the input) where every
     feature gets simplestyle-spec marker-color/title/description added
     to its properties, so GeoLibre's per-feature styling picks it up.
+
+    Builds the description from whatever numeric sensor properties this
+    mission actually has - not a fixed list - so it works whether the
+    mission came from the original sensor-logger schema or an arbitrary
+    CSV picked up by column_detection.py.
     """
     styled_features = []
     for feature in geojson_data.get("features", []):
@@ -66,15 +85,13 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
         properties["title"] = f"{mission_name} — {timestamp}" if timestamp else mission_name
 
         summary_bits = []
-        for label, key, unit in [
-            ("Temp", "temperature", "°C"),
-            ("Humidity", "humidity", "%"),
-            ("Pressure", "pressure", "hPa"),
-            ("Air quality", "air_quality", ""),
-        ]:
-            v = properties.get(key)
-            if v is not None:
-                summary_bits.append(f"{label} {v}{unit}")
+        for key, val in properties.items():
+            if key in NON_SENSOR_PROPERTY_KEYS or key.startswith("flag_") or key.startswith("marker-"):
+                continue
+            if val is None or not isinstance(val, (int, float)):
+                continue
+            unit = KNOWN_UNITS.get(key, "")
+            summary_bits.append(f"{key}: {val}{unit}")
         properties["description"] = " · ".join(summary_bits) if summary_bits else ""
 
         styled_features.append({**feature, "properties": properties})
