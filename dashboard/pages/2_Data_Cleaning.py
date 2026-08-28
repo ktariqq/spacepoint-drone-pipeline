@@ -1,5 +1,7 @@
 """
+
 SpacePoint - Data Cleaning
+
 Author: Kommal
 
 Runs the cleaning pipeline on a raw mission file from inside the app:
@@ -7,6 +9,7 @@ cleans the data, writes the cleaned CSV/summary/plots, and builds the
 GeoJSON used by the Mission Map page.
 
 Works both locally and on Streamlit Cloud.
+
 """
 
 import json
@@ -16,40 +19,31 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-
 # ---------------------------------------------------------------------
 # Project paths
 # ---------------------------------------------------------------------
-
 # __file__ = dashboard/pages/2_Data_Cleaning.py
 # parents[0] = dashboard/pages
 # parents[1] = dashboard
 # parents[2] = Tasks 7-14 (project root)
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DASHBOARD_DIR = PROJECT_ROOT / "dashboard"
 SCRIPTS_DIR = PROJECT_ROOT / "scripts"
-
 RAW_DIR = PROJECT_ROOT / "data" / "raw"
 CLEANED_DIR = PROJECT_ROOT / "data" / "cleaned"
 GEO_DIR = PROJECT_ROOT / "data" / "geo"
 
-
 # ---------------------------------------------------------------------
 # Make project modules importable
 # ---------------------------------------------------------------------
-
 if str(DASHBOARD_DIR) not in sys.path:
     sys.path.insert(0, str(DASHBOARD_DIR))
-
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
-
 
 # ---------------------------------------------------------------------
 # Project imports
 # ---------------------------------------------------------------------
-
 from branding import (
     apply_page_config,
     render_header,
@@ -59,69 +53,53 @@ from branding import (
     render_section_header,
     render_technical_metadata,
 )
-
 from clean_mission_data import clean_mission_data
 from generate_geojson import build_geojson
-
 
 # ---------------------------------------------------------------------
 # Page configuration
 # ---------------------------------------------------------------------
-
 apply_page_config("Data Cleaning")
 render_sidebar_logo()
 apply_custom_css()
 render_header("Data Cleaning")
 
-
 # ---------------------------------------------------------------------
 # Choose input source
 # ---------------------------------------------------------------------
-
 render_section_header("Choose a Raw Mission File")
-
 source_mode = st.radio(
     "Source",
     ["Existing file", "Upload new file"],
     horizontal=True,
 )
 
-
 # ---------------------------------------------------------------------
 # Existing local/repository file
 # ---------------------------------------------------------------------
-
 if source_mode == "Existing file":
-
     raw_files = sorted(RAW_DIR.glob("*.csv"))
-
     if not raw_files:
         st.warning(
             "No raw mission files found in data/raw. "
             "Upload a CSV instead."
         )
         st.stop()
-
     selected_name = st.selectbox(
         "Raw mission file",
         [f.name for f in raw_files],
     )
-
     input_path = RAW_DIR / selected_name
     default_mission_name = input_path.stem
-
 
 # ---------------------------------------------------------------------
 # Uploaded file
 # ---------------------------------------------------------------------
-
 else:
-
     uploaded = st.file_uploader(
         "Upload a raw mission CSV",
         type=["csv"],
     )
-
     if uploaded is None:
         st.info("Upload a CSV to continue.")
         st.stop()
@@ -129,33 +107,24 @@ else:
     # Streamlit Cloud/local temporary storage.
     # Save the uploaded file into data/raw for this running instance.
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-
     input_path = RAW_DIR / uploaded.name
     input_path.write_bytes(uploaded.getvalue())
-
     st.success(f"Loaded: {uploaded.name}")
-
     default_mission_name = Path(uploaded.name).stem
-
 
 # ---------------------------------------------------------------------
 # Mission name
 # ---------------------------------------------------------------------
-
 mission_name = st.text_input(
     "Mission name (used for output filenames)",
     value=default_mission_name,
 )
 
-
 # ---------------------------------------------------------------------
 # Run cleaning
 # ---------------------------------------------------------------------
-
 if st.button("Run Cleaning", type="primary"):
-
     mission_name = mission_name.strip()
-
     if not mission_name:
         st.error("Enter a mission name.")
         st.stop()
@@ -163,11 +132,9 @@ if st.button("Run Cleaning", type="primary"):
     with st.spinner(
         "Cleaning data and generating map data..."
     ):
-
         # -------------------------------------------------------------
         # Run existing cleaning pipeline
         # -------------------------------------------------------------
-
         report = clean_mission_data(
             input_path,
             output_dir=CLEANED_DIR,
@@ -177,7 +144,6 @@ if st.button("Run Cleaning", type="primary"):
         # -------------------------------------------------------------
         # Read cleaned CSV
         # -------------------------------------------------------------
-
         cleaned_path = (
             CLEANED_DIR
             / f"{mission_name}_cleaned.csv"
@@ -198,7 +164,6 @@ if st.button("Run Cleaning", type="primary"):
         # -------------------------------------------------------------
         # Generate GeoJSON
         # -------------------------------------------------------------
-
         geojson_data = build_geojson(cleaned_df)
 
         GEO_DIR.mkdir(
@@ -220,19 +185,9 @@ if st.button("Run Cleaning", type="primary"):
             encoding="utf-8",
         )
 
-        # Immediately mirror the GeoJSON to the GeoLibre-servable static
-        # folder too, so the mission is fetchable without waiting for the
-        # Mission Map page to render it first.
-        try:
-            from geolibre_static import write_geojson_to_static
-            write_geojson_to_static(mission_name, geojson_data)
-        except Exception as exc:
-            st.caption(f"(Static copy for GeoLibre will be created when you open Mission Map: {exc})")
-
     # -----------------------------------------------------------------
     # Success
     # -----------------------------------------------------------------
-
     st.success(
         f"Cleaning complete for '{mission_name}'."
     )
@@ -240,7 +195,6 @@ if st.button("Run Cleaning", type="primary"):
     # -----------------------------------------------------------------
     # Cleaning report
     # -----------------------------------------------------------------
-
     render_section_header("Cleaning Report")
 
     col1, col2, col3 = st.columns(3)
@@ -275,13 +229,10 @@ if st.button("Run Cleaning", type="primary"):
     # -----------------------------------------------------------------
     # Data quality information
     # -----------------------------------------------------------------
-
     if report.hard_range_violations:
-
         render_section_header(
             "Out-of-Range Values Nulled"
         )
-
         st.write(
             report.hard_range_violations
         )
@@ -293,11 +244,9 @@ if st.button("Run Cleaning", type="primary"):
     }
 
     if long_gaps:
-
         render_section_header(
             "Long Gaps Left as Missing"
         )
-
         st.write(long_gaps)
 
     anomalies = {
@@ -307,11 +256,9 @@ if st.button("Run Cleaning", type="primary"):
     }
 
     if anomalies:
-
         render_section_header(
             "Statistical Anomalies Flagged"
         )
-
         st.write(anomalies)
 
     flatlines = {
@@ -321,17 +268,14 @@ if st.button("Run Cleaning", type="primary"):
     }
 
     if flatlines:
-
         render_section_header(
             "Possible Stuck Sensors"
         )
-
         st.write(flatlines)
 
     # -----------------------------------------------------------------
     # Output metadata
     # -----------------------------------------------------------------
-
     render_technical_metadata(
         {
             "CLEANED CSV": str(
@@ -354,9 +298,7 @@ if st.button("Run Cleaning", type="primary"):
         "Mission Map, and Report Generator pages."
     )
 
-
 # ---------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------
-
 render_sidebar_status()

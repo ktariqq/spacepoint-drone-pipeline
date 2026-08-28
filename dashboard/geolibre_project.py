@@ -2,17 +2,19 @@
 SpacePoint - GeoLibre project (.geolibre.json) builder
 Author: Kommal
 
-Builds a GeoLibre project document instead of relying on data=/style= URL
-parameters. Per GeoLibre's documented project format
+Builds a GeoLibre project document rather than relying on data=/style=
+URL parameters - that path never actually applied per-point color (the
+style-layer/source matching didn't bind the way it needed to). Per
+GeoLibre's documented project format
 (https://github.com/opengeos/GeoLibre/blob/main/docs/project-format.md):
 
-- mapView.bbox lets us open already framed on the mission's extent.
-- basemapStyleUrl points at a real basemap so it looks the same every time
-  instead of whatever GeoLibre's own default happens to be.
+- mapView.bbox opens already framed on the mission's extent.
+- basemapStyleUrl sets a specific basemap so it's consistent every time.
 - A geojson layer's style.simpleStyleEnabled flag turns on per-feature
-  simplestyle-spec overrides (marker-color, etc.) — this is the documented
-  mechanism, and doesn't depend on a separate style file being matched up
-  correctly, which is what silently failed before.
+  simplestyle-spec overrides (marker-color, title, description) - this
+  is the documented mechanism for per-point coloring and click labels.
+- The `layers` array we build IS the entire set of layers GeoLibre shows
+  on open - nothing else appears, so there's no "default view" to fight.
 """
 
 import uuid
@@ -21,12 +23,25 @@ import numpy as np
 
 COLOR_STOPS = ["#3b0f70", "#8c2981", "#de4968", "#fe9f6d", "#fcfdbf"]
 
+# Real, public, key-free OpenFreeMap basemap styles.
 OPENFREEMAP_STYLES = {
     "Dark": "https://tiles.openfreemap.org/styles/dark",
     "Liberty": "https://tiles.openfreemap.org/styles/liberty",
     "Positron": "https://tiles.openfreemap.org/styles/positron",
     "Bright": "https://tiles.openfreemap.org/styles/bright",
     "Fiord": "https://tiles.openfreemap.org/styles/fiord",
+}
+
+NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
+
+# Cosmetic units for sensors we recognize by name - purely decorative.
+# Anything unrecognized still shows up in the description, just without
+# a unit suffix, so this works for whatever columns a mission has.
+KNOWN_UNITS = {
+    "temperature": "°C",
+    "humidity": "%",
+    "pressure": "hPa",
+    "battery_voltage": "V",
 }
 
 
@@ -36,33 +51,17 @@ def color_for_value(value: float, vmin: float, vmax: float) -> str:
     t = max(0.0, min(1.0, (value - vmin) / (vmax - vmin)))
     n = len(COLOR_STOPS) - 1
     idx = min(int(t * n), n - 1)
-    return COLOR_STOPS[idx]  # flat bucket color; good enough for a quick visual read
-
-
-NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
-
-# Cosmetic units for sensors we happen to recognize by name - purely
-# decorative. Anything we don't recognize still shows up in the
-# description, just without a unit suffix, so this stays generic for
-# whatever column names a given mission actually has.
-KNOWN_UNITS = {
-    "temperature": "°C",
-    "humidity": "%",
-    "pressure": "hPa",
-    "battery_voltage": "V",
-}
+    return COLOR_STOPS[idx]
 
 
 def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, vmax: float, mission_name: str) -> dict:
     """
-    Returns a NEW geojson dict (does not mutate the input) where every
-    feature gets simplestyle-spec marker-color/title/description added
-    to its properties, so GeoLibre's per-feature styling picks it up.
-
-    Builds the description from whatever numeric sensor properties this
-    mission actually has - not a fixed list - so it works whether the
-    mission came from the original sensor-logger schema or an arbitrary
-    CSV picked up by column_detection.py.
+    Returns a NEW geojson dict (does not mutate the input). Every feature
+    gets simplestyle-spec marker-color/title/description added to its
+    properties. The description is built from whatever numeric sensor
+    properties this mission actually has - not a fixed list - so it works
+    for both the original sensor-logger schema and any CSV picked up by
+    column_detection.py.
     """
     styled_features = []
     for feature in geojson_data.get("features", []):
@@ -99,6 +98,32 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
     return {**geojson_data, "features": styled_features}
 
 
+def build_satellite_reference_layer(visible: bool = False) -> dict:
+    """
+    Optional extra raster layer using Esri World Imagery - public, keyless,
+    a standard reference-imagery source. Off by default; toggled on from
+    Mission Map. To add a real SAR/hyperspectral/other source later (e.g.
+    a Sentinel Hub or Copernicus WMS layer you have access to), copy this
+    layer's shape and change "type" to "wms" or "cog" per GeoLibre's
+    project format, with your own source URL.
+    """
+    return {
+        "id": str(uuid.uuid4()),
+        "name": "Satellite Imagery (Esri World Imagery)",
+        "type": "xyz",
+        "source": {
+            "type": "xyz",
+            "tiles": [
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            ],
+        },
+        "visible": visible,
+        "opacity": 1,
+        "style": {},
+        "metadata": {"attribution": "Esri, Maxar, Earthstar Geographics"},
+    }
+
+
 def build_project(
     mission_name: str,
     styled_geojson: dict,
@@ -107,11 +132,12 @@ def build_project(
     lon_max: float,
     lat_min: float,
     lat_max: float,
+    extra_layers: list[dict] | None = None,
 ) -> dict:
     layer_id = str(uuid.uuid4())
     center = [(lon_min + lon_max) / 2, (lat_min + lat_max) / 2]
 
-    layer = {
+    mission_layer = {
         "id": layer_id,
         "name": mission_name,
         "type": "geojson",
@@ -130,6 +156,11 @@ def build_project(
         "geojson": styled_geojson,
     }
 
+    # Extra layers (e.g. satellite reference) listed first so the mission
+    # points render on top of them.
+    layers = list(extra_layers or []) + [mission_layer]
+    styles = {layer["id"]: layer["style"] for layer in layers if layer.get("style")}
+
     return {
         "version": "0.1.0",
         "name": mission_name,
@@ -143,7 +174,7 @@ def build_project(
         "basemapStyleUrl": basemap_style_url,
         "basemapVisible": True,
         "basemapOpacity": 1,
-        "layers": [layer],
-        "styles": {layer_id: layer["style"]},
+        "layers": layers,
+        "styles": styles,
         "metadata": {"source": "SpacePoint Mission Map"},
     }
