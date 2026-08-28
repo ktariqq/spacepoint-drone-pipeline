@@ -7,6 +7,10 @@ GeoJSON/style file is exposed to the browser for GeoLibre: Streamlit's
 static file serving only serves ./static relative to the *launched* script
 (dashboard/Dashboard.py), at the URL path /app/static/<file>. See:
 https://docs.streamlit.io/develop/concepts/configuration/serving-static-files
+
+Note: as of the JSONBin-based publishing setup (geolibre_publish.py), the
+URLs built here are used as a local debug/fallback path, not necessarily
+what's actually fed to GeoLibre — see geolibre_publish.py for why.
 """
 
 import json
@@ -93,12 +97,17 @@ def validate_geojson(geojson_data) -> tuple[bool, str]:
     return True, ""
 
 
-def build_point_style(mission_name: str, property_name: str, vmin: float, vmax: float) -> dict:
+def build_point_style(property_name: str, vmin: float, vmax: float) -> dict:
     """
     MapLibre/GeoLibre style JSON that color-codes points by `property_name`.
-    GeoLibre binds a style layer to loaded data by the GeoJSON's filename
-    stem, so `source` must equal `mission_name` — no `sources` block needed
-    (per GeoLibre's "Export GeoLibre URL style" behavior).
+
+    No `source` is set on the layer: per GeoLibre's docs, matching a style
+    layer to one specific file by its filename "stem" only matters when a
+    single style needs to route different rules to different files inside
+    a multi-file ZIP. We're always loading exactly one dataset (and, once
+    published via JSONBin, that dataset has no ".geojson" filename stem to
+    match against anyway), so a layer with no `source` applies to "every
+    imported file" — which for one file is exactly the behavior we want.
     """
     color_stops = ["#3b0f70", "#8c2981", "#de4968", "#fe9f6d", "#fcfdbf"]
     if vmax <= vmin:
@@ -115,7 +124,6 @@ def build_point_style(mission_name: str, property_name: str, vmin: float, vmax: 
             {
                 "id": "mission-points",
                 "type": "circle",
-                "source": mission_name,
                 "paint": {
                     "circle-radius": 5,
                     "circle-opacity": 0.9,

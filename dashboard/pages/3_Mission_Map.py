@@ -7,6 +7,7 @@ Author: Kommal
 
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 import numpy as np
 import streamlit as st
@@ -35,14 +36,8 @@ from dashboard.branding import (
     render_section_header,
     render_technical_metadata,
 )
-from dashboard.geolibre_static import (
-    get_static_url,
-    write_geojson_to_static,
-    write_style_to_static,
-    validate_geojson,
-    build_point_style,
-    ensure_static_geo_dir,
-)
+from dashboard.geolibre_static import validate_geojson, build_point_style, get_static_url
+from dashboard.geolibre_publish import publish_geojson, publish_style
 
 apply_page_config("Mission Map")
 render_sidebar_logo()
@@ -116,7 +111,6 @@ def collect_sensor_values(geojson_data: dict, property_name: str):
 
 GEO_DIR.mkdir(parents=True, exist_ok=True)
 CLEANED_DIR.mkdir(parents=True, exist_ok=True)
-ensure_static_geo_dir()
 
 
 # ---------------------------------------------------------------------
@@ -144,11 +138,6 @@ if not is_valid:
     st.error(f"This mission's GeoJSON isn't valid, so it can't be sent to GeoLibre: {validation_error}")
     render_sidebar_status()
     st.stop()
-
-# Regenerate the static copy on every view. This makes it self-healing
-# after a Streamlit Cloud restart (bundled missions live in data/geo, which
-# is in git) and picks up any edits from this session immediately.
-static_geojson_path = write_geojson_to_static(selected_mission, geojson_data)
 
 summary = load_mission_summary(selected_mission)
 
@@ -193,16 +182,14 @@ heat_bounds = None
 heat_min = None
 heat_max = None
 heat_sensor = None
-style_url = None
+style_data = None
 
 if view_mode == "Points":
     color_sensor = st.selectbox("Color points by", COLORABLE_SENSORS, index=0)
     _, values = collect_sensor_values(geojson_data, color_sensor)
 
     if values:
-        style_data = build_point_style(selected_mission, color_sensor, min(values), max(values))
-        style_path = write_style_to_static(selected_mission, style_data)
-        style_url = get_static_url(style_path.name)
+        style_data = build_point_style(color_sensor, min(values), max(values))
     else:
         st.caption(f"No valid '{color_sensor}' readings to color by — showing default styling.")
 
@@ -246,9 +233,7 @@ else:
 
     # Color the raw points on the GeoLibre map by the same sensor too, so
     # it isn't a flat marker set while you read the IDW surface alongside it.
-    style_data = build_point_style(selected_mission, heat_sensor, heat_min, heat_max)
-    style_path = write_style_to_static(selected_mission, style_data)
-    style_url = get_static_url(style_path.name)
+    style_data = build_point_style(heat_sensor, heat_min, heat_max)
 
 
 # ---------------------------------------------------------------------
@@ -277,42 +262,47 @@ if summary:
 
 
 # ---------------------------------------------------------------------
-# Map section
+# Publish geojson/style, then build the GeoLibre URL
 # ---------------------------------------------------------------------
 
 render_section_header("Mission GIS Workspace" if view_mode == "Points" else "Interpolated Sensor Surface")
 st.caption("Explore the mission data against satellite imagery and other GIS layers using GeoLibre.")
 
-from urllib.parse import quote
+geojson_url, geojson_cors_ok = publish_geojson(selected_mission, geojson_data)
 
-geojson_url = get_static_url(f"{selected_mission}.geojson")
+style_url = None
+style_cors_ok = True
+if style_data is not None:
+    style_url, style_cors_ok = publish_style(selected_mission, style_data)
 
-params = [
-    f"data={quote(geojson_url, safe=':/')}",
-    "layout=viewer",
-    "theme=dark",
-    "welcome=0",
-]
+params = [f"data={quote(geojson_url, safe=':/')}", "layout=viewer", "theme=dark", "welcome=0"]
 if style_url:
     params.append(f"style={quote(style_url, safe=':/')}")
 
 geolibre_url = "https://web.geolibre.app/?" + "&".join(params)
 
 with st.expander("GeoLibre connection details", expanded=False):
-    st.write("Local GeoJSON path:")
-    st.code(str(static_geojson_path), language="text")
-    st.write("Browser-facing GeoJSON URL:")
+    st.write("GeoJSON URL fed to GeoLibre:")
     st.code(geojson_url, language="text")
+
+    if not geojson_cors_ok:
+        st.warning(
+            "No JSONBIN_MASTER_KEY is configured, so this is falling back to Streamlit's "
+            "own static URL, which is not confirmed to work inside GeoLibre due to CORS. "
+            "Add the secret to enable reliable hosting."
+        )
+
     if style_url:
-        st.write("Browser-facing style URL:")
+        st.write("Style URL fed to GeoLibre:")
         st.code(style_url, language="text")
+        if not style_cors_ok:
+            st.warning("Style is also falling back to the unverified static URL for the same reason.")
+
     st.write("GeoLibre URL:")
     st.code(geolibre_url, language="text")
-    if not geolibre_url.split("data=")[1].startswith("https%3A"):
-        st.warning(
-            "The data URL isn't HTTPS. GeoLibre (served over HTTPS) will refuse "
-            "to load it as mixed content. This is expected on localhost only."
-        )
+
+    st.write("Local debug copy (open this yourself to confirm the raw GeoJSON — this is not what GeoLibre fetches when JSONBin is configured):")
+    st.code(get_static_url(f"{selected_mission}.geojson"), language="text")
 
 st.iframe(geolibre_url, height=760)
 
