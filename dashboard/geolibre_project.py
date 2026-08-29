@@ -15,8 +15,19 @@ GeoLibre's documented project format
   is the documented mechanism for per-point coloring and click labels.
 - The `layers` array we build IS the entire set of layers GeoLibre shows
   on open - nothing else appears, so there's no "default view" to fight.
+
+Per-feature properties are kept deliberately minimal (marker-color,
+title, description showing only the colored sensor) because JSONBin's
+free tier caps a single record at 100KB - a mission with a few hundred
+points can hit that ceiling fast if every sensor field is duplicated
+into every feature's description. fit_project_to_size() is a safety net
+on top of that: if a mission is still too large after trimming, it
+automatically thins the points in the HOSTED copy only (never the
+underlying GeoJSON/CSV/reports) until it fits, so this can't silently
+break again on a bigger dataset.
 """
 
+import json
 import uuid
 
 import numpy as np
@@ -35,14 +46,19 @@ OPENFREEMAP_STYLES = {
 NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
 
 # Cosmetic units for sensors we recognize by name - purely decorative.
-# Anything unrecognized still shows up in the description, just without
-# a unit suffix, so this works for whatever columns a mission has.
 KNOWN_UNITS = {
     "temperature": "°C",
     "humidity": "%",
     "pressure": "hPa",
     "battery_voltage": "V",
 }
+
+# JSONBin's free tier hard-caps a record at 100KB, which is why this
+# existed originally. Supabase's free tier allows 50MB per file, so this
+# threshold is now a generous safety net for the JSONBin fallback path,
+# not something that should ever trigger under normal use with Supabase
+# configured.
+MAX_HOSTED_BYTES = 45_000_000
 
 
 def color_for_value(value: float, vmin: float, vmax: float) -> str:
@@ -57,47 +73,31 @@ def color_for_value(value: float, vmin: float, vmax: float) -> str:
 def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, vmax: float, mission_name: str) -> dict:
     """
     Returns a NEW geojson dict (does not mutate the input). Every feature
-    gets simplestyle-spec marker-color/title/description properties.
-
-    Properties are TRIMMED to only what GeoLibre needs to render and label
-    each point (marker-color, marker-size, title, description) rather than
-    keeping every original sensor field alongside them. The description
-    already summarizes every numeric sensor reading, so re-publishing the
-    raw fields too would roughly double payload size for no visual benefit
-    - and JSONBin's free tier caps a single bin at 100KB, which a mission
-    with a few hundred points can realistically exceed if every original
-    property is duplicated on top of the new ones.
+    gets simplestyle-spec marker-color/title/description properties -
+    kept minimal on purpose (see module docstring for why).
     """
+    unit = KNOWN_UNITS.get(property_name, "")
     styled_features = []
+
     for feature in geojson_data.get("features", []):
         properties = feature.get("properties", {})
         value = properties.get(property_name)
 
         color = "#888888"
+        description = ""
         try:
             if value is not None:
                 v = float(value)
                 if np.isfinite(v):
                     color = color_for_value(v, vmin, vmax)
+                    description = f"{property_name}: {round(v, 1)}{unit}"
         except (TypeError, ValueError):
             pass
 
-        timestamp = properties.get("timestamp", "")
-        title = f"{mission_name} — {timestamp}" if timestamp else mission_name
-
-        summary_bits = []
-        for key, val in properties.items():
-            if key in NON_SENSOR_PROPERTY_KEYS or key.startswith("flag_"):
-                continue
-            if val is None or not isinstance(val, (int, float)):
-                continue
-            unit = KNOWN_UNITS.get(key, "")
-            summary_bits.append(f"{key}: {val}{unit}")
-        description = " · ".join(summary_bits) if summary_bits else ""
+        title = properties.get("timestamp") or mission_name
 
         trimmed_properties = {
             "marker-color": color,
-            "marker-size": "small",
             "title": title,
             "description": description,
         }
@@ -189,3 +189,37 @@ def build_project(
         "styles": styles,
         "metadata": {"source": "SpacePoint Mission Map"},
     }
+
+
+def _project_size_bytes(project_data: dict) -> int:
+    return len(json.dumps(project_data).encode("utf-8"))
+
+
+def fit_project_to_size(project_data: dict, max_bytes: int = MAX_HOSTED_BYTES) -> tuple[dict, bool]:
+    """
+    If the project (specifically its mission geojson layer - the one
+    carrying a "geojson" key) is too large for JSONBin's free-tier limit,
+    thin its points evenly until it fits. Only affects this hosted copy -
+    the underlying data/geo/<mission>.geojson, cleaned CSV, and reports
+    are never touched. Returns (project_data, was_thinned).
+    """
+    mission_layer = next((l for l in project_data["layers"] if "geojson" in l), None)
+    if mission_layer is None:
+        return project_data, False
+
+    features = mission_layer["geojson"]["features"]
+    original_count = len(features)
+    was_thinned = False
+
+    while _project_size_bytes(project_data) > max_bytes and len(features) > 20:
+        was_thinned = True
+        features = features[::2]  # keep every other point - halves size each pass
+        mission_layer["geojson"] = {**mission_layer["geojson"], "features": features}
+
+    if was_thinned:
+        mission_layer["metadata"] = {
+            **mission_layer.get("metadata", {}),
+            "note": f"Downsampled from {original_count} to {len(features)} points to fit free hosting size limits.",
+        }
+
+    return project_data, was_thinned

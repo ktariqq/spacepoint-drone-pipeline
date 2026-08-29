@@ -37,6 +37,7 @@ from dashboard.geolibre_project import (
     style_geojson_features,
     build_project,
     build_satellite_reference_layer,
+    fit_project_to_size,
     OPENFREEMAP_STYLES,
 )
 from dashboard.geolibre_publish import publish_project
@@ -303,6 +304,14 @@ project_data = build_project(
     lon_min, lon_max, lat_min, lat_max,
     extra_layers=extra_layers,
 )
+
+project_data, was_thinned = fit_project_to_size(project_data)
+if was_thinned:
+    st.caption(
+        "This mission has enough points that the hosted copy was automatically "
+        "thinned to fit the free hosting size limit — your cleaned data and "
+        "reports are unaffected, only what's shown in GeoLibre."
+    )
 
 project_url, project_cors_ok, publish_error = publish_project(selected_mission, project_data)
 
