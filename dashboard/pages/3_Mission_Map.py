@@ -46,6 +46,11 @@ render_sidebar_logo()
 apply_custom_css()
 render_header("Mission Map")
 
+# ---------------------------------------------------------------------
+# TEMPORARY DEBUG LINE - remove once JSONBIN_MASTER_KEY is confirmed working
+# ---------------------------------------------------------------------
+st.error(f"[DEBUG] JSONBIN_MASTER_KEY seen by app: {repr(st.secrets.get('JSONBIN_MASTER_KEY'))}")
+
 NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
 
 
