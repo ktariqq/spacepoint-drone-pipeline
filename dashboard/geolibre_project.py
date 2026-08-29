@@ -57,15 +57,20 @@ def color_for_value(value: float, vmin: float, vmax: float) -> str:
 def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, vmax: float, mission_name: str) -> dict:
     """
     Returns a NEW geojson dict (does not mutate the input). Every feature
-    gets simplestyle-spec marker-color/title/description added to its
-    properties. The description is built from whatever numeric sensor
-    properties this mission actually has - not a fixed list - so it works
-    for both the original sensor-logger schema and any CSV picked up by
-    column_detection.py.
+    gets simplestyle-spec marker-color/title/description properties.
+
+    Properties are TRIMMED to only what GeoLibre needs to render and label
+    each point (marker-color, marker-size, title, description) rather than
+    keeping every original sensor field alongside them. The description
+    already summarizes every numeric sensor reading, so re-publishing the
+    raw fields too would roughly double payload size for no visual benefit
+    - and JSONBin's free tier caps a single bin at 100KB, which a mission
+    with a few hundred points can realistically exceed if every original
+    property is duplicated on top of the new ones.
     """
     styled_features = []
     for feature in geojson_data.get("features", []):
-        properties = dict(feature.get("properties", {}))
+        properties = feature.get("properties", {})
         value = properties.get(property_name)
 
         color = "#888888"
@@ -77,23 +82,31 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
         except (TypeError, ValueError):
             pass
 
-        properties["marker-color"] = color
-        properties["marker-size"] = "small"
-
         timestamp = properties.get("timestamp", "")
-        properties["title"] = f"{mission_name} — {timestamp}" if timestamp else mission_name
+        title = f"{mission_name} — {timestamp}" if timestamp else mission_name
 
         summary_bits = []
         for key, val in properties.items():
-            if key in NON_SENSOR_PROPERTY_KEYS or key.startswith("flag_") or key.startswith("marker-"):
+            if key in NON_SENSOR_PROPERTY_KEYS or key.startswith("flag_"):
                 continue
             if val is None or not isinstance(val, (int, float)):
                 continue
             unit = KNOWN_UNITS.get(key, "")
             summary_bits.append(f"{key}: {val}{unit}")
-        properties["description"] = " · ".join(summary_bits) if summary_bits else ""
+        description = " · ".join(summary_bits) if summary_bits else ""
 
-        styled_features.append({**feature, "properties": properties})
+        trimmed_properties = {
+            "marker-color": color,
+            "marker-size": "small",
+            "title": title,
+            "description": description,
+        }
+
+        styled_features.append({
+            "type": feature.get("type", "Feature"),
+            "geometry": feature.get("geometry"),
+            "properties": trimmed_properties,
+        })
 
     return {**geojson_data, "features": styled_features}
 
@@ -156,8 +169,6 @@ def build_project(
         "geojson": styled_geojson,
     }
 
-    # Extra layers (e.g. satellite reference) listed first so the mission
-    # points render on top of them.
     layers = list(extra_layers or []) + [mission_layer]
     styles = {layer["id"]: layer["style"] for layer in layers if layer.get("style")}
 

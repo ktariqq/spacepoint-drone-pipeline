@@ -11,9 +11,11 @@ JSONBin.io documents CORS enabled on every endpoint, so we publish there
 instead - automatically, from Python, no manual upload by the user.
 
 One-time setup: a free JSONBin.io account and a Master Key, stored as a
-secret (JSONBIN_MASTER_KEY). If it's missing, this falls back to
-Streamlit's own static folder so the app doesn't crash - but that
-fallback is only reliable for opening the link yourself, not for GeoLibre.
+secret (JSONBIN_MASTER_KEY). If publishing fails for any reason - missing
+key, bad key, payload too large, network error - this falls back to
+Streamlit's own static folder so the app doesn't crash, and surfaces the
+real reason rather than a generic message, since a fallback with no
+explanation is nearly impossible to debug.
 """
 
 import streamlit as st
@@ -31,10 +33,11 @@ def _get_master_key() -> str | None:
         return None
 
 
-def _publish_json(payload: dict, cache_key: str) -> str | None:
+def _publish_json(payload: dict, cache_key: str) -> tuple[str | None, str | None]:
+    """Returns (url, error_message). Exactly one of these is None."""
     api_key = _get_master_key()
     if not api_key:
-        return None
+        return None, "No JSONBIN_MASTER_KEY is configured."
 
     bin_ids = st.session_state.setdefault("jsonbin_ids", {})
     existing_id = bin_ids.get(cache_key)
@@ -46,22 +49,25 @@ def _publish_json(payload: dict, cache_key: str) -> str | None:
         else:
             headers["X-Bin-Private"] = "false"
             resp = requests.post(JSONBIN_BASE, json=payload, headers=headers, timeout=10)
+    except Exception as exc:
+        return None, f"Request to JSONBin failed: {exc}"
 
-        if resp.status_code not in (200, 201):
-            return None
+    if resp.status_code not in (200, 201):
+        return None, f"JSONBin returned HTTP {resp.status_code}: {resp.text[:300]}"
 
+    try:
         bin_id = resp.json()["metadata"]["id"]
-        bin_ids[cache_key] = bin_id
-        return f"{JSONBIN_BASE}/{bin_id}?meta=false"
+    except Exception as exc:
+        return None, f"Unexpected JSONBin response shape ({exc}): {resp.text[:300]}"
 
-    except Exception:
-        return None
+    bin_ids[cache_key] = bin_id
+    return f"{JSONBIN_BASE}/{bin_id}?meta=false", None
 
 
-def publish_project(mission_name: str, project_data: dict) -> tuple[str, bool]:
-    """Returns (url, is_cors_verified)."""
+def publish_project(mission_name: str, project_data: dict) -> tuple[str, bool, str | None]:
+    """Returns (url, is_cors_verified, error_message_if_any)."""
     write_project_to_static(mission_name, project_data)  # local copy, debug link only
-    hosted_url = _publish_json(project_data, f"project:{mission_name}")
+    hosted_url, error = _publish_json(project_data, f"project:{mission_name}")
     if hosted_url:
-        return hosted_url, True
-    return get_static_url(f"{mission_name}.geolibre.json"), False
+        return hosted_url, True, None
+    return get_static_url(f"{mission_name}.geolibre.json"), False, error

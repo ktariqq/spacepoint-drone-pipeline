@@ -46,11 +46,6 @@ render_sidebar_logo()
 apply_custom_css()
 render_header("Mission Map")
 
-# ---------------------------------------------------------------------
-# TEMPORARY DEBUG LINE - remove once JSONBIN_MASTER_KEY is confirmed working
-# ---------------------------------------------------------------------
-st.error(f"[DEBUG] JSONBIN_MASTER_KEY seen by app: {repr(st.secrets.get('JSONBIN_MASTER_KEY'))}")
-
 NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
 
 
@@ -309,7 +304,7 @@ project_data = build_project(
     extra_layers=extra_layers,
 )
 
-project_url, project_cors_ok = publish_project(selected_mission, project_data)
+project_url, project_cors_ok, publish_error = publish_project(selected_mission, project_data)
 
 params = [
     f"url={quote(project_url, safe=':/')}",
@@ -326,9 +321,9 @@ with st.expander("GeoLibre connection details", expanded=False):
 
     if not project_cors_ok:
         st.warning(
-            "No JSONBIN_MASTER_KEY is configured, so this is falling back to Streamlit's "
-            "own static URL, which is not confirmed to work inside GeoLibre due to CORS. "
-            "Add the secret to enable reliable hosting."
+            f"Falling back to Streamlit's own static URL, which is not confirmed to "
+            f"work inside GeoLibre due to CORS. Reason JSONBin publishing didn't succeed: "
+            f"{publish_error}"
         )
 
     st.write("GeoLibre URL:")
