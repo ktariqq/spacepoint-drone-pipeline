@@ -53,17 +53,6 @@ from dashboard.geolibre_project import (
     OPENFREEMAP_STYLES,
 )
 from dashboard.geolibre_publish import publish_project
-from dashboard.satellite_layers import (
-    build_sentinel_hub_layer,
-    build_landsat_thermal_layer,
-    build_sentinel1_sar_layer,
-    sentinel_hub_instance_id,
-    SENTINEL2_FALSECOLOR_ID,
-    SENTINEL2_NDVI_ID,
-    SENTINEL2_SWIR_ID,
-    LANDSAT_THERMAL_ID,
-    SENTINEL1_SAR_ID,
-)
 from dashboard.components.geolibre_bridge import geolibre_bridge
 
 apply_page_config("Mission Map")
@@ -155,11 +144,13 @@ def preferred_sensor(colorable_sensors: list[str], preferred: str = "temperature
             return sensor
     return colorable_sensors[0]
 
+
 def _get_secret_bool(name: str) -> bool:
     try:
         return bool(st.secrets.get(name, False))
     except Exception:
         return False
+
 
 @st.cache_data(show_spinner=False)
 def _cached_heat_contours(mission_name: str, sensor_name: str, points_tuple, values_tuple, bounds):
@@ -269,38 +260,18 @@ with col2:
         ),
     )
 
-# --- Satellite Imagery checkbox section: replace with: ---
 render_section_header("Satellite Imagery")
 col3, col4 = st.columns(2)
 with col3:
     show_esri = st.checkbox("Esri Satellite", value=True)
     show_eox_truecolor = st.checkbox("Sentinel-2 True Color (EOX)", value=False)
 with col4:
-    sh_ready = sentinel_hub_instance_id() is not None
-
-    show_falsecolor = st.checkbox(
-        "Sentinel-2 False Color / NIR", value=False, disabled=not sh_ready,
-        help=None if sh_ready else "Requires SENTINELHUB_INSTANCE_ID in secrets.",
-    )
-    show_ndvi = st.checkbox(
-        "Sentinel-2 NDVI", value=False, disabled=not sh_ready,
-        help=None if sh_ready else "Requires SENTINELHUB_INSTANCE_ID in secrets.",
-    )
-    show_swir = st.checkbox(
-        "Sentinel-2 SWIR", value=False, disabled=not sh_ready,
-        help=None if sh_ready else "Requires SENTINELHUB_INSTANCE_ID in secrets.",
-    )
-    # No key required for these two - Planetary Computer's STAC + SAS
-    # APIs are anonymously accessible, so they're never disabled here.
-    show_landsat_thermal = st.checkbox("Landsat Thermal", value=False)
-    show_sentinel1_sar = st.checkbox("Sentinel-1 SAR", value=False)
-
-if not sh_ready:
     st.caption(
-        "Sentinel-2 False Color / NDVI / SWIR need SENTINELHUB_INSTANCE_ID "
-        "(free — dataspace.copernicus.eu → Sentinel Hub dashboard → Configuration "
-        "Utility). Landsat Thermal and Sentinel-1 SAR need no key — Planetary "
-        "Computer's STAC and SAS APIs are public."
+        "For Sentinel-2 spectral bands, Landsat, Sentinel-1 SAR, and more, use "
+        "GeoLibre's own **Processing → Planetary Computer** panel or "
+        "**Plugins → Web Services** (NASA Earthdata, Historical Imagery) below — "
+        "the full toolbar is now enabled, so those panels are one click away, "
+        "browsing the same catalogs directly rather than through custom code here."
     )
 
 col5, col6 = st.columns(2)
@@ -354,7 +325,11 @@ if summary:
 structural_key = f"{selected_mission}::{color_sensor}::{heat_sensor}"
 
 render_section_header("Mission GIS Workspace")
-st.caption("Explore the mission data against satellite imagery and other GIS layers using GeoLibre. Click a point to see its details.")
+st.caption(
+    "Explore the mission data against satellite imagery and other GIS layers using GeoLibre. "
+    "Click a point to see its details. Use the Processing and Plugins menus above the map for "
+    "additional imagery catalogs (Planetary Computer, NASA Earthdata, Historical Imagery)."
+)
 
 _, color_values = collect_sensor_values(geojson_data, color_sensor)
 if color_values:
@@ -405,43 +380,17 @@ elif show_heatmap:
 def _build_full_layer_set():
     layers = []
 
-    # Imagery (bottom)
-    imagery_layers = []
-    imagery_layers.append(build_satellite_reference_layer(visible=show_esri))
-    imagery_layers.append(build_sentinel2_layer(visible=show_eox_truecolor))
-
-    for kind, layer_id, label, want in (
-        ("false_color", SENTINEL2_FALSECOLOR_ID, "Sentinel-2 False Color / NIR", show_falsecolor),
-        ("ndvi", SENTINEL2_NDVI_ID, "Sentinel-2 NDVI", show_ndvi),
-        ("swir", SENTINEL2_SWIR_ID, "Sentinel-2 SWIR", show_swir),
-    ):
-        if sh_ready:
-            layer, error = build_sentinel_hub_layer(kind, layer_id, label, visible=want)
-            if layer:
-                imagery_layers.append(layer)
-            elif want:
-                st.warning(f"{label}: {error}")
-
-    # Always built (regardless of checkbox) so later toggling is a live,
-    # zero-reload visibility change instead of a rebuild — same pattern
-    # as the heatmap. bbox = this mission's current area, so the imagery
-    # requested always matches wherever the student is looking, globally.
-    bbox = (lon_min, lat_min, lon_max, lat_max)
-
-    layer, error = build_landsat_thermal_layer(bbox, visible=show_landsat_thermal)
-    if layer:
-        imagery_layers.append(layer)
-    elif show_landsat_thermal:
-        st.warning(f"Landsat Thermal: {error}")
-
-    layer, error = build_sentinel1_sar_layer(bbox, visible=show_sentinel1_sar)
-    if layer:
-        imagery_layers.append(layer)
-    elif show_sentinel1_sar:
-        st.warning(f"Sentinel-1 SAR: {error}")
-
-    # More than one opaque raster overlay makes them impossible to compare -
-    # blend anything after the first so both remain visible together.
+    # Imagery (bottom). Only Esri + EOX are built here now - both are
+    # plain, documented "xyz" sources per GeoLibre's project format and
+    # have worked reliably throughout. Everything else (Sentinel-2 bands,
+    # Landsat, Sentinel-1 SAR, historical imagery) is now added by the
+    # student directly through GeoLibre's own built-in panels (Processing
+    # → Planetary Computer, Plugins → Web Services), which are exposed by
+    # the fuller toolbar below - see layout=compact.
+    imagery_layers = [
+        build_satellite_reference_layer(visible=show_esri),
+        build_sentinel2_layer(visible=show_eox_truecolor),
+    ]
     if len(imagery_layers) > 1:
         for extra_layer in imagery_layers[1:]:
             extra_layer["opacity"] = 0.6
@@ -492,14 +441,16 @@ publish_error = st.session_state["_geolibre_publish_error"]
 
 params = [
     f"url={quote(project_url, safe=':/')}",
-    "layout=viewer",
+    # FIXED: "viewer" is GeoLibre's deliberately locked-down read-only
+    # chrome (Layers, View, Controls, basemaps, search/identify only —
+    # per GeoLibre's own docs, authoring UI including Processing, Add
+    # Data, and Plugins is hidden by design). "compact" is "the complete
+    # authoring toolbar in a smaller space" - this is what exposes the
+    # Processing menu's Planetary Computer panel, Plugins → Web Services,
+    # Historical Imagery, etc. shown in the app when opened directly.
+    "layout=compact",
     "theme=dark",
     "welcome=0",
-    # panels intentionally left unset (not "panels=collapsed") — with
-    # panels collapsed, click-to-inspect results have nowhere to
-    # display, which was very likely why points looked "unclickable."
-    # If you still want a minimal chrome, try "panels=expanded" instead
-    # and confirm popups appear before collapsing them again.
 ]
 geolibre_url = "https://web.geolibre.app/?" + "&".join(params)
 
@@ -544,11 +495,6 @@ layer_visibility = {
     heatmap_layer_id(selected_mission): show_heatmap,
     ESRI_LAYER_ID: show_esri,
     EOX_TRUECOLOR_LAYER_ID: show_eox_truecolor,
-    SENTINEL2_FALSECOLOR_ID: show_falsecolor,
-    SENTINEL2_NDVI_ID: show_ndvi,
-    SENTINEL2_SWIR_ID: show_swir,
-    LANDSAT_THERMAL_ID: show_landsat_thermal,
-    SENTINEL1_SAR_ID: show_sentinel1_sar,
 }
 
 geolibre_bridge(
