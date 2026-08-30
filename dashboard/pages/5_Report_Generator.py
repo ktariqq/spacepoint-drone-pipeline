@@ -28,6 +28,7 @@ from branding import (
 
 sys.path.append(str(Path(__file__).resolve().parent.parent.parent / "scripts"))
 from generate_report import generate_report, generate_ai_sections, load_summary
+from generate_pdf import html_to_pdf_bytes
 
 DATA_DIR = Path("data/cleaned")
 IMAGE_ANALYSIS_DIR = Path("data/image_analysis")
@@ -192,14 +193,25 @@ st.caption("Builds the polished, downloadable HTML version from what's written a
 
 if st.button("Generate Report", type="primary"):
     report_path = generate_report(selected_mission, section_overrides=st.session_state.report_sections)
-    st.success(f"Report generated: {report_path.name}")
-
     html_content = report_path.read_text()
-    st.download_button(
-        label="Download report (HTML)",
-        data=html_content,
-        file_name=report_path.name,
-        mime="text/html",
-    )
+
+    pdf_bytes, pdf_error = html_to_pdf_bytes(html_content)
+
+    if pdf_bytes:
+        st.success(f"Report generated: {report_path.stem}.pdf")
+        st.download_button(
+            label="Download report (PDF)",
+            data=pdf_bytes,
+            file_name=f"{report_path.stem}.pdf",
+            mime="application/pdf",
+        )
+    else:
+        st.error(f"Could not convert the report to PDF: {pdf_error}")
+        st.download_button(
+            label="Download report (HTML) — PDF conversion failed",
+            data=html_content,
+            file_name=report_path.name,
+            mime="text/html",
+        )
 
 render_sidebar_status()

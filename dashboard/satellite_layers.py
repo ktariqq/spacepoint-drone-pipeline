@@ -4,46 +4,50 @@ Author: Kommal
 
 Sentinel-2 False Color / NIR, NDVI, SWIR
 -----------------------------------------
-Copernicus Data Space Ecosystem's Sentinel Hub OGC WMS service. This is
-a plain OGC WMS GetMap endpoint - per Copernicus's own docs, the
-configuration's INSTANCE ID is what authenticates OGC requests; OGC WMS
-has no standard auth mechanism and Sentinel Hub does not support
-OAuth/password on it (they explicitly point people to the Process API
-for that). So this reads ONLY SENTINELHUB_INSTANCE_ID from st.secrets -
-no OAuth client, no access token, nothing to refresh. Adding OAuth here
-would be unnecessary complexity the WMS endpoint can't use anyway.
+FIXED (this revision): switched from WMS GetMap (bbox-based) to Sentinel
+Hub's WMTS GetTile. GeoLibre's own XYZ tile-URL resolver only substitutes
+{z}/{x}/{y} - it does NOT implement MapLibre's WMS `{bbox-epsg-3857}`
+raster-source templating, so the previous WMS approach sent the literal,
+unsubstituted string "{bbox-epsg-3857}" to Sentinel Hub, which correctly
+rejected it (400). WMTS addresses tiles by TILEMATRIX/TILEROW/TILECOL,
+which map directly onto plain {z}/{y}/{x} - the same mechanism the
+existing (working) Esri and EOX layers already use.
 
-Get an instance ID: https://dataspace.copernicus.eu -> Sentinel Hub
-dashboard -> Configuration Utility -> new configuration from the
-"Sentinel-2 L2A" template -> copy the Instance ID.
+Reference request shape (Sentinel Hub docs):
+https://services.sentinel-hub.com/ogc/wmts/<INSTANCE_ID>?REQUEST=GetTile
+    &TILEMATRIXSET=PopularWebMercator512&LAYER=FALSE-COLOR
+    &TILEMATRIX=14&TILEROW=3065&TILECOL=4758&TIME=...
+We use PopularWebMercator256 (256px tiles, matching the tile size every
+other layer in this project already uses) - override via the optional
+SENTINELHUB_TILEMATRIXSET secret if your account's GetCapabilities
+document names it differently.
 
-We build the tile URL with MapLibre GL's documented `{bbox-epsg-3857}`
-raster-source template variable, so every tile request carries the
-CURRENT tile's real bounding box - genuinely global/dynamic, not a
-fixed area.
+Still reads ONLY SENTINELHUB_INSTANCE_ID - no OAuth client, no access
+token. The instance id itself authenticates OGC (WMS/WMTS) requests per
+Copernicus's own docs; Sentinel Hub does not support OAuth on OGC
+endpoints (they point people to the Process API for that, which we don't
+use), so adding OAuth here would be unnecessary complexity the OGC
+endpoint can't use anyway.
 
 Landsat Thermal / Sentinel-1 SAR
 ----------------------------------
-No subscription key required. Flow, all public/anonymous:
-  1. STAC search (https://planetarycomputer.microsoft.com/api/stac/v1/search)
-     against the mission's current bounding box + a rolling recent
-     date window -> best matching scene (lowest cloud cover).
-  2. SAS token retrieval (https://planetarycomputer.microsoft.com/api/sas/v1/token/{collection})
-     - anonymous, short-lived, cached with a TTL shorter than the
-     token's own expiry so it's re-fetched before going stale. Never
-     hardcoded, never persisted.
-  3. The signed asset URL is handed to Planetary Computer's public
-     item tiler (/api/data/v1/item/tiles/...), which renders XYZ tiles
-     dynamically for that scene at whatever pan/zoom the student is at.
+FIXED (this revision): removed client-side SAS-token signing entirely.
+Previously we fetched a SAS token, appended it to the raw asset URL, and
+baked that *signed* URL into the published GeoLibre project - since SAS
+tokens expire (~45-60 min) and the project is published once and reused
+for the life of the browser session, any tile requested after expiry got
+a 422 from the blob store. Root fix: Planetary Computer's own item tiler
+accepts `collection=` + `item=` (a STAC item id) directly and performs
+the asset signing server-side, per tile request - there is now no
+client-held, expiring credential at all, so nothing can ever go stale.
+This is the same mechanism Planetary Computer's own Explorer web app
+uses. STAC search (to pick which scene/item to reference) is unchanged
+and still runs against the mission's current bounding box - genuinely
+dynamic/global, not a fixed area.
 
-An optional PC_SUBSCRIPTION_KEY, if present, is forwarded server-side
-to raise rate limits on the STAC/SAS calls only - it is never embedded
-in the tile URL sent to the browser. The SAS token itself DOES end up
-in that tile URL (that's the entire point of a SAS token: a short-lived,
-read-only, revocable-by-expiry credential Microsoft explicitly designed
-for client-side/public map use) - this is a materially different thing
-from a subscription key or OAuth secret, neither of which ever leaves
-the server in this implementation.
+No subscription key required for either the STAC search or the tiler.
+An optional PC_SUBSCRIPTION_KEY, if present, is forwarded server-side to
+raise rate limits on our STAC search calls only.
 """
 
 from __future__ import annotations
@@ -55,16 +59,18 @@ import requests
 import streamlit as st
 
 # ---------------------------------------------------------------------
-# Sentinel Hub (OGC WMS - instance-id auth only, no OAuth)
+# Sentinel Hub (OGC WMTS - instance-id auth only, no OAuth)
 # ---------------------------------------------------------------------
 
-SENTINEL_HUB_WMS_BASE = "https://sh.dataspace.copernicus.eu/ogc/wms/{instance_id}"
+SENTINEL_HUB_WMTS_BASE = "https://sh.dataspace.copernicus.eu/ogc/wmts/{instance_id}"
 
 DEFAULT_SH_LAYER_NAMES = {
     "false_color": "2_FALSE_COLOR",
     "ndvi": "3_NDVI",
     "swir": "4_SWIR",
 }
+
+DEFAULT_SH_TILEMATRIXSET = "PopularWebMercator256"
 
 SENTINEL2_FALSECOLOR_ID = "sentinel2-falsecolor-sh"
 SENTINEL2_NDVI_ID = "sentinel2-ndvi-sh"
@@ -91,6 +97,10 @@ def _sh_layer_name(kind: str) -> str:
     return override or DEFAULT_SH_LAYER_NAMES[kind]
 
 
+def _sh_tilematrixset() -> str:
+    return _get_secret("SENTINELHUB_TILEMATRIXSET") or DEFAULT_SH_TILEMATRIXSET
+
+
 def build_sentinel_hub_layer(kind: str, layer_id: str, name: str, visible: bool = False) -> tuple[dict | None, str | None]:
     """kind: one of "false_color", "ndvi", "swir"."""
     instance_id = sentinel_hub_instance_id()
@@ -98,16 +108,19 @@ def build_sentinel_hub_layer(kind: str, layer_id: str, name: str, visible: bool 
         return None, "SENTINELHUB_INSTANCE_ID is not configured in secrets."
 
     sh_layer = _sh_layer_name(kind)
+    tilematrixset = _sh_tilematrixset()
     end = _dt.datetime.utcnow().date()
     start = end - _dt.timedelta(days=30)
 
-    base_url = SENTINEL_HUB_WMS_BASE.format(instance_id=instance_id)
+    base_url = SENTINEL_HUB_WMTS_BASE.format(instance_id=instance_id)
     tile_url = (
-        f"{base_url}?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0"
-        f"&LAYERS={sh_layer}&STYLES=&FORMAT=image/png&TRANSPARENT=true"
-        f"&CRS=EPSG:3857&WIDTH=256&HEIGHT=256"
-        f"&TIME={start.isoformat()}/{end.isoformat()}&MAXCC=40"
-        "&BBOX={bbox-epsg-3857}"
+        base_url
+        + "?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0"
+        + "&LAYER=" + quote(sh_layer)
+        + "&STYLE=default&FORMAT=image/png"
+        + "&TILEMATRIXSET=" + quote(tilematrixset)
+        + "&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}"
+        + f"&TIME={start.isoformat()}/{end.isoformat()}&MAXCC=40"
     )
 
     return {
@@ -130,17 +143,19 @@ def build_sentinel_hub_layer(kind: str, layer_id: str, name: str, visible: bool 
 
 
 # ---------------------------------------------------------------------
-# Planetary Computer (public STAC + anonymous SAS - no key required)
+# Planetary Computer (public STAC search + server-signed item tiler)
 # ---------------------------------------------------------------------
 
 PC_STAC_SEARCH_URL = "https://planetarycomputer.microsoft.com/api/stac/v1/search"
-PC_SAS_TOKEN_URL = "https://planetarycomputer.microsoft.com/api/sas/v1/token/{collection}"
 PC_TILER_ITEM_URL = "https://planetarycomputer.microsoft.com/api/data/v1/item/tiles/WebMercatorQuad/{z}/{x}/{y}@1x"
 
 
 def pc_subscription_key() -> str | None:
-    """Optional. Only raises rate limits on our own STAC/SAS calls -
-    everything works anonymously without it."""
+    """Optional. Only raises rate limits on our own STAC search calls -
+    everything works anonymously without it. Never sent as part of the
+    tile URL's asset-access mechanism (there's no client-side signing
+    left to gate) - only as an optional param the tiler/STAC API accept
+    for higher throughput."""
     return _get_secret("PC_SUBSCRIPTION_KEY")
 
 
@@ -154,7 +169,9 @@ def _stac_search_best_item(collection: str, bbox: tuple, query: dict | None, day
     """bbox: (min_lon, min_lat, max_lon, max_lat) - the mission's current
     bounding box, i.e. the "requested geographic area" the imagery must
     match. Re-run automatically (cache expires every 15 min) if the
-    mission/area changes, so this never locks onto one fixed area."""
+    mission/area changes, so this never locks onto one fixed area.
+    Returns (item_dict_or_None, error_message_or_None). We only need the
+    item's id from here on - no asset href, no signing."""
     end = _dt.datetime.utcnow().date()
     start = end - _dt.timedelta(days=days_back)
     body = {
@@ -182,26 +199,6 @@ def _stac_search_best_item(collection: str, bbox: tuple, query: dict | None, day
     return features_sorted[0], None
 
 
-@st.cache_data(ttl=1800, show_spinner=False)
-def _get_sas_token(collection: str) -> tuple[str | None, str | None]:
-    """Anonymous, short-lived SAS token - no account needed. Cached for
-    30 min (PC tokens are typically valid ~1h), so this refreshes well
-    before expiry on the next rerun rather than reusing a stale/expired
-    signed URL. Nothing here is ever hardcoded."""
-    try:
-        resp = requests.get(PC_SAS_TOKEN_URL.format(collection=collection), headers=_pc_headers(), timeout=15)
-    except Exception as exc:
-        return None, f"SAS token request failed: {exc}"
-
-    if resp.status_code != 200:
-        return None, f"SAS token endpoint returned HTTP {resp.status_code}: {resp.text[:300]}"
-
-    token = resp.json().get("token")
-    if not token:
-        return None, "SAS token endpoint returned no token."
-    return token, None
-
-
 def _build_pc_item_layer(
     layer_id: str,
     name: str,
@@ -218,22 +215,18 @@ def _build_pc_item_layer(
     if not item:
         return None, error
 
-    href = item.get("assets", {}).get(asset, {}).get("href")
-    if not href:
-        return None, f"Matching {collection} scene has no '{asset}' asset."
+    item_id = item.get("id")
+    if not item_id:
+        return None, f"Matching {collection} scene has no item id."
 
-    token, error = _get_sas_token(collection)
-    if not token:
-        return None, error
-
-    signed_href = href + ("&" if "?" in href else "?") + token
-
+    # collection= + item= : Planetary Computer's tiler resolves and signs
+    # the asset itself, server-side, on EVERY tile request. Nothing here
+    # can ever go stale - there is no expiring token embedded in this URL.
     tile_url = (
-        f"{PC_TILER_ITEM_URL}?url={quote(signed_href, safe='')}"
-        f"&assets={asset}&rescale={rescale}&colormap_name={colormap_name}&format=png"
+        PC_TILER_ITEM_URL
+        + f"?collection={quote(collection)}&item={quote(item_id)}"
+        + f"&assets={quote(asset)}&rescale={rescale}&colormap_name={colormap_name}&format=png"
     )
-    # Server-side only, optional, never the mechanism granting tile access
-    # (the SAS token above already does that) - just a higher rate limit.
     key = pc_subscription_key()
     if key:
         tile_url += f"&subscription-key={quote(key)}"
@@ -247,8 +240,8 @@ def _build_pc_item_layer(
         "opacity": 1,
         "style": {},
         "metadata": {
-            "attribution": f"{collection} scene {item.get('id')} via Microsoft Planetary Computer "
-                           "(anonymous STAC search + SAS-signed access)"
+            "attribution": f"{collection} scene {item_id} via Microsoft Planetary Computer "
+                           "(asset signed fresh by PC's own tiler on every tile request)"
         },
     }, None
 

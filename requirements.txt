@@ -7,3 +7,4 @@ Pillow
 jinja2
 google-genai
 requests
+xhtml2pdf

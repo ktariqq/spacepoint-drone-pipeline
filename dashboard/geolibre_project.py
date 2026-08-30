@@ -109,11 +109,17 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
     Returns a NEW geojson dict (does not mutate the input). Every feature
     gets simplestyle-spec marker-color/title/description properties -
     kept minimal on purpose to stay well under hosting size limits.
+
+    FIXED: each feature now also gets a top-level GeoJSON "id" (not just
+    a properties field). MapLibre-based click/hover interactivity - which
+    GeoLibre is built on - generally needs a stable feature.id to resolve
+    which feature a click landed on; without it, points can render fine
+    but never be individually selectable/clickable.
     """
     unit = KNOWN_UNITS.get(property_name, "")
     styled_features = []
 
-    for feature in geojson_data.get("features", []):
+    for index, feature in enumerate(geojson_data.get("features", [])):
         properties = feature.get("properties", {})
         value = properties.get(property_name)
 
@@ -138,6 +144,7 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
 
         styled_features.append({
             "type": feature.get("type", "Feature"),
+            "id": index,
             "geometry": feature.get("geometry"),
             "properties": trimmed_properties,
         })

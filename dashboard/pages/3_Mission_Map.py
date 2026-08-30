@@ -155,6 +155,11 @@ def preferred_sensor(colorable_sensors: list[str], preferred: str = "temperature
             return sensor
     return colorable_sensors[0]
 
+def _get_secret_bool(name: str) -> bool:
+    try:
+        return bool(st.secrets.get(name, False))
+    except Exception:
+        return False
 
 @st.cache_data(show_spinner=False)
 def _cached_heat_contours(mission_name: str, sensor_name: str, points_tuple, values_tuple, bounds):
@@ -498,31 +503,37 @@ params = [
 ]
 geolibre_url = "https://web.geolibre.app/?" + "&".join(params)
 
-with st.expander("GeoLibre connection details", expanded=False):
-    st.write("Project URL fed to GeoLibre:")
-    st.code(project_url, language="text")
+# Hidden from regular users on purpose: this panel exposes the published
+# project URL and (if Supabase/JSONBin aren't configured) a fallback
+# static-file URL — internal debugging info, not something to surface to
+# students. Set SPACEPOINT_DEBUG_MAP = true in secrets to see it again
+# (e.g. while diagnosing a publishing issue yourself).
+if _get_secret_bool("SPACEPOINT_DEBUG_MAP"):
+    with st.expander("GeoLibre connection details", expanded=False):
+        st.write("Project URL fed to GeoLibre:")
+        st.code(project_url, language="text")
 
-    if not project_cors_ok:
-        st.warning(
-            f"Falling back to Streamlit's own static URL, which is not confirmed to "
-            f"work inside GeoLibre due to CORS. Reason hosted publishing didn't succeed: "
-            f"{publish_error}"
+        if not project_cors_ok:
+            st.warning(
+                f"Falling back to Streamlit's own static URL, which is not confirmed to "
+                f"work inside GeoLibre due to CORS. Reason hosted publishing didn't succeed: "
+                f"{publish_error}"
+            )
+
+        st.write("GeoLibre URL:")
+        st.code(geolibre_url, language="text")
+
+        st.write("Local debug copy (open this yourself to confirm the raw project JSON):")
+        st.code(get_static_url(f"{selected_mission}.geolibre.json"), language="text")
+
+        st.caption(
+            "Live checkbox sync uses GeoLibre's postMessage embed API "
+            "(https://geolibre.app/user-guide/embedding/), which only works if "
+            "web.geolibre.app has allowlisted this app's origin via "
+            "GEOLIBRE_EMBED_ORIGINS on their end — outside SpacePoint's control. "
+            "If it's not allowlisted, layer toggles still update without a full "
+            "page refresh, but reload just the map pane (camera resets)."
         )
-
-    st.write("GeoLibre URL:")
-    st.code(geolibre_url, language="text")
-
-    st.write("Local debug copy (open this yourself to confirm the raw project JSON):")
-    st.code(get_static_url(f"{selected_mission}.geolibre.json"), language="text")
-
-    st.caption(
-        "Live checkbox sync uses GeoLibre's postMessage embed API "
-        "(https://geolibre.app/user-guide/embedding/), which only works if "
-        "web.geolibre.app has allowlisted this app's origin via "
-        "GEOLIBRE_EMBED_ORIGINS on their end — outside SpacePoint's control. "
-        "If it's not allowlisted, layer toggles still update without a full "
-        "page refresh, but reload just the map pane (camera resets)."
-    )
 
 # Deterministic ids -> current desired visibility, sent to the bridge
 # on EVERY rerun. Only ids whose value actually changed get a live
