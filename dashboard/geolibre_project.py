@@ -2,29 +2,38 @@
 SpacePoint - GeoLibre project (.geolibre.json) builder
 Author: Kommal
 
-Builds a GeoLibre project document rather than relying on data=/style=
-URL parameters - that path never actually applied per-point color (the
-style-layer/source matching didn't bind the way it needed to). Per
-GeoLibre's documented project format
-(https://github.com/opengeos/GeoLibre/blob/main/docs/project-format.md):
+Builds a GeoLibre project document. Per GeoLibre's documented project
+format (https://github.com/opengeos/GeoLibre/blob/main/docs/project-format.md):
 
 - mapView.bbox opens already framed on the mission's extent.
-- basemapStyleUrl sets a specific basemap so it's consistent every time.
+- basemapStyleUrl is the ONE permanent dark base map - never a selectable
+  option (per spec, there is no basemap picker; satellite imagery is a
+  toggleable overlay ABOVE this base, not a replacement for it).
 - A geojson layer's style.simpleStyleEnabled flag turns on per-feature
-  simplestyle-spec overrides (marker-color, title, description) - this
-  is the documented mechanism for per-point coloring and click labels.
+  simplestyle-spec overrides (marker-color/fill/stroke, title,
+  description) - this is the documented mechanism used for points, the
+  flight path line, and the heatmap contour polygons alike.
 - The `layers` array we build IS the entire set of layers GeoLibre shows
-  on open - nothing else appears, so there's no "default view" to fight.
+  on open, in bottom-to-top order: imagery overlays first, then the
+  heatmap, then the flight path, then drone observation points last (on
+  top, so they stay clickable over everything beneath them).
 
-Per-feature properties are kept deliberately minimal (marker-color,
-title, description showing only the colored sensor) because JSONBin's
-free tier caps a single record at 100KB - a mission with a few hundred
-points can hit that ceiling fast if every sensor field is duplicated
-into every feature's description. fit_project_to_size() is a safety net
-on top of that: if a mission is still too large after trimming, it
-automatically thins the points in the HOSTED copy only (never the
-underlying GeoJSON/CSV/reports) until it fits, so this can't silently
-break again on a bigger dataset.
+Satellite imagery sources, and why each one is or isn't included:
+
+- Esri World Imagery: public, key-free, global, already working -
+  unchanged.
+- EOX Sentinel-2 cloudless (https://s2maps.eu): a real, documented,
+  key-free global WMTS mosaic (CC BY 4.0, attribution required),
+  confirmed directly against EOX's own service before use here. This is
+  an annual CLOUD-FREE COMPOSITE, not a live single-date acquisition.
+- Sentinel-2 False Color/NIR, NDVI, SWIR; Landsat Thermal; Sentinel-1
+  SAR: NOT implemented. I could not find a free, keyless, global,
+  publicly documented tile service for any of these - the real options
+  (Copernicus Data Space Ecosystem, Sentinel Hub, USGS/NASA Earthdata)
+  all require an authenticated account/API key, which the brief
+  explicitly ruled out inventing or hardcoding. Rather than fake these
+  layers, they're shown in the UI as disabled checkboxes with the reason
+  stated - see 3_Mission_Map.py.
 """
 
 import json
@@ -34,7 +43,9 @@ import numpy as np
 
 COLOR_STOPS = ["#3b0f70", "#8c2981", "#de4968", "#fe9f6d", "#fcfdbf"]
 
-# Real, public, key-free OpenFreeMap basemap styles.
+# Real, public, key-free OpenFreeMap basemap styles. Only "Dark" is ever
+# used now - kept as a dict (rather than a bare string) in case a future,
+# explicitly-requested change wants a different single permanent base.
 OPENFREEMAP_STYLES = {
     "Dark": "https://tiles.openfreemap.org/styles/dark",
     "Liberty": "https://tiles.openfreemap.org/styles/liberty",
@@ -43,7 +54,11 @@ OPENFREEMAP_STYLES = {
     "Fiord": "https://tiles.openfreemap.org/styles/fiord",
 }
 
-NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
+# "altitude" is a real measurement but a flight parameter, not an
+# environmental reading - excluded so it can't silently become the
+# default colored/interpolated field instead of temperature (this was a
+# real bug: column order put it first in some missions).
+NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type", "altitude"}
 
 # Cosmetic units for sensors we recognize by name - purely decorative.
 KNOWN_UNITS = {
@@ -55,9 +70,7 @@ KNOWN_UNITS = {
 
 # JSONBin's free tier hard-caps a record at 100KB, which is why this
 # existed originally. Supabase's free tier allows 50MB per file, so this
-# threshold is now a generous safety net for the JSONBin fallback path,
-# not something that should ever trigger under normal use with Supabase
-# configured.
+# threshold is now a generous safety net for the JSONBin fallback path.
 MAX_HOSTED_BYTES = 45_000_000
 
 
@@ -74,7 +87,7 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
     """
     Returns a NEW geojson dict (does not mutate the input). Every feature
     gets simplestyle-spec marker-color/title/description properties -
-    kept minimal on purpose (see module docstring for why).
+    kept minimal on purpose to stay well under hosting size limits.
     """
     unit = KNOWN_UNITS.get(property_name, "")
     styled_features = []
@@ -111,18 +124,123 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
     return {**geojson_data, "features": styled_features}
 
 
+def style_heat_contours(contour_geojson: dict, levels: list[float]) -> dict:
+    """
+    Colors each contour-band polygon by its value range. Returns a NEW
+    geojson dict with simplestyle fill/stroke properties set, using the
+    same color ramp as the drone points for visual consistency.
+    """
+    vmin, vmax = levels[0], levels[-1]
+    styled_features = []
+    for feature in contour_geojson.get("features", []):
+        props = feature.get("properties", {})
+        band_min = props.get("value_min", vmin)
+        band_max = props.get("value_max", vmax)
+        mid = (band_min + band_max) / 2
+        color = color_for_value(mid, vmin, vmax)
+        styled_features.append({
+            "type": feature.get("type", "Feature"),
+            "geometry": feature.get("geometry"),
+            "properties": {
+                **props,
+                "fill": color,
+                "fill-opacity": 0.55,
+                "stroke": color,
+                "stroke-opacity": 0,
+            },
+        })
+    return {**contour_geojson, "features": styled_features}
+
+
+def build_points_layer(mission_name: str, styled_geojson: dict, visible: bool = True) -> dict:
+    """The drone observation points - always last in the layers array so
+    it stays on top and clickable over any imagery/heatmap beneath it."""
+    return {
+        "id": str(uuid.uuid4()),
+        "name": mission_name,
+        "type": "geojson",
+        "source": {"type": "geojson"},
+        "visible": visible,
+        "opacity": 1,
+        "style": {
+            "simpleStyleEnabled": True,
+            "circleRadius": 5,
+            "fillColor": "#fe9f6d",
+            "strokeColor": "#ffffff",
+            "strokeWidth": 1,
+            "fillOpacity": 0.9,
+        },
+        "metadata": {},
+        "geojson": styled_geojson,
+    }
+
+
+def build_flight_path_layer(mission_name: str, geojson_data: dict, visible: bool = True) -> dict:
+    """A LineString connecting mission points in their existing
+    (already time-sorted, per clean_mission_data.py) order."""
+    coordinates = [
+        f["geometry"]["coordinates"]
+        for f in geojson_data.get("features", [])
+        if f.get("geometry", {}).get("coordinates")
+    ]
+
+    features = []
+    if len(coordinates) >= 2:
+        features.append({
+            "type": "Feature",
+            "geometry": {"type": "LineString", "coordinates": coordinates},
+            "properties": {"stroke": "#8B5CF6", "stroke-width": 2, "stroke-opacity": 0.85},
+        })
+
+    return {
+        "id": str(uuid.uuid4()),
+        "name": f"{mission_name} - Flight Path",
+        "type": "geojson",
+        "source": {"type": "geojson"},
+        "visible": visible,
+        "opacity": 1,
+        "style": {
+            "simpleStyleEnabled": True,
+            "strokeColor": "#8B5CF6",
+            "strokeWidth": 2,
+        },
+        "metadata": {},
+        "geojson": {"type": "FeatureCollection", "features": features},
+    }
+
+
+def build_heatmap_layer(mission_name: str, styled_contour_geojson: dict, visible: bool = False) -> dict:
+    """The IDW-interpolated surface, rendered as real georeferenced
+    contour-band polygons - a genuine GeoLibre layer, not a separate
+    image. Placed before the points/flight-path layers in the layers
+    array so it renders beneath them."""
+    return {
+        "id": str(uuid.uuid4()),
+        "name": f"{mission_name} - Temperature Heatmap",
+        "type": "geojson",
+        "source": {"type": "geojson"},
+        "visible": visible,
+        "opacity": 1,
+        "style": {
+            "simpleStyleEnabled": True,
+            "fillColor": "#4FD1C5",
+            "fillOpacity": 0.55,
+            "strokeWidth": 0,
+        },
+        "metadata": {},
+        "geojson": styled_contour_geojson,
+    }
+
+
 def build_satellite_reference_layer(visible: bool = False) -> dict:
     """
-    Optional extra raster layer using Esri World Imagery - public, keyless,
-    a standard reference-imagery source. Off by default; toggled on from
-    Mission Map. To add a real SAR/hyperspectral/other source later (e.g.
-    a Sentinel Hub or Copernicus WMS layer you have access to), copy this
-    layer's shape and change "type" to "wms" or "cog" per GeoLibre's
-    project format, with your own source URL.
+    Esri World Imagery - public, keyless, a standard reference-imagery
+    source. Already working; kept unchanged. Now used as an OVERLAY on
+    top of the permanent dark base map, not a selectable basemap.
     """
     return {
         "id": str(uuid.uuid4()),
-        "name": "Satellite Imagery (Esri World Imagery)",
+        "name": "Esri Satellite",
         "type": "xyz",
         "source": {
             "type": "xyz",
@@ -137,39 +255,44 @@ def build_satellite_reference_layer(visible: bool = False) -> dict:
     }
 
 
+def build_sentinel2_layer(visible: bool = False) -> dict:
+    """
+    EOX Sentinel-2 cloudless global mosaic (2024 edition) -
+    https://s2maps.eu - a real, documented, key-free WMTS service,
+    consumed here as XYZ-style tiles. Free for non-commercial use with
+    attribution (CC BY 4.0; contains modified Copernicus Sentinel data).
+    This is a cloud-free ANNUAL MOSAIC composited from Sentinel-2
+    imagery, not a live/on-demand single-date acquisition - stated here
+    so that limitation isn't silently hidden from anyone using the layer.
+    """
+    return {
+        "id": str(uuid.uuid4()),
+        "name": "Sentinel-2 True Color (EOX cloudless)",
+        "type": "xyz",
+        "source": {
+            "type": "xyz",
+            "tiles": ["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg"],
+        },
+        "visible": visible,
+        "opacity": 1,
+        "style": {},
+        "metadata": {
+            "attribution": "Sentinel-2 cloudless — s2maps.eu by EOX IT Services GmbH "
+                           "(Contains modified Copernicus Sentinel data 2024)"
+        },
+    }
+
+
 def build_project(
     mission_name: str,
-    styled_geojson: dict,
+    layers: list[dict],
     basemap_style_url: str,
     lon_min: float,
     lon_max: float,
     lat_min: float,
     lat_max: float,
-    extra_layers: list[dict] | None = None,
 ) -> dict:
-    layer_id = str(uuid.uuid4())
     center = [(lon_min + lon_max) / 2, (lat_min + lat_max) / 2]
-
-    mission_layer = {
-        "id": layer_id,
-        "name": mission_name,
-        "type": "geojson",
-        "source": {"type": "geojson"},
-        "visible": True,
-        "opacity": 1,
-        "style": {
-            "simpleStyleEnabled": True,
-            "circleRadius": 5,
-            "fillColor": "#fe9f6d",
-            "strokeColor": "#ffffff",
-            "strokeWidth": 1,
-            "fillOpacity": 0.9,
-        },
-        "metadata": {},
-        "geojson": styled_geojson,
-    }
-
-    layers = list(extra_layers or []) + [mission_layer]
     styles = {layer["id"]: layer["style"] for layer in layers if layer.get("style")}
 
     return {
@@ -195,30 +318,31 @@ def _project_size_bytes(project_data: dict) -> int:
     return len(json.dumps(project_data).encode("utf-8"))
 
 
-def fit_project_to_size(project_data: dict, max_bytes: int = MAX_HOSTED_BYTES) -> tuple[dict, bool]:
+def fit_project_to_size(project_data: dict, target_layer_id: str, max_bytes: int = MAX_HOSTED_BYTES) -> tuple[dict, bool]:
     """
-    If the project (specifically its mission geojson layer - the one
-    carrying a "geojson" key) is too large for JSONBin's free-tier limit,
-    thin its points evenly until it fits. Only affects this hosted copy -
-    the underlying data/geo/<mission>.geojson, cleaned CSV, and reports
-    are never touched. Returns (project_data, was_thinned).
+    If the project is too large for JSONBin's free-tier fallback limit,
+    thin the points in ONE specific layer (identified by id - always the
+    drone-observations layer, never the flight path or heatmap contours,
+    which are much smaller and shouldn't be touched). Only affects this
+    hosted copy - the underlying data/geo/<mission>.geojson, cleaned CSV,
+    and reports are never touched. Returns (project_data, was_thinned).
     """
-    mission_layer = next((l for l in project_data["layers"] if "geojson" in l), None)
-    if mission_layer is None:
+    target_layer = next((l for l in project_data["layers"] if l.get("id") == target_layer_id), None)
+    if target_layer is None or "geojson" not in target_layer:
         return project_data, False
 
-    features = mission_layer["geojson"]["features"]
+    features = target_layer["geojson"]["features"]
     original_count = len(features)
     was_thinned = False
 
     while _project_size_bytes(project_data) > max_bytes and len(features) > 20:
         was_thinned = True
-        features = features[::2]  # keep every other point - halves size each pass
-        mission_layer["geojson"] = {**mission_layer["geojson"], "features": features}
+        features = features[::2]
+        target_layer["geojson"] = {**target_layer["geojson"], "features": features}
 
     if was_thinned:
-        mission_layer["metadata"] = {
-            **mission_layer.get("metadata", {}),
+        target_layer["metadata"] = {
+            **target_layer.get("metadata", {}),
             "note": f"Downsampled from {original_count} to {len(features)} points to fit free hosting size limits.",
         }
 

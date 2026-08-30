@@ -22,7 +22,7 @@ CLEANED_DIR = DATA_DIR / "cleaned"
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(DASHBOARD_DIR))
 
-from dashboard.heat_interpolation import compute_idw_grid, render_heat_overlay_png
+from dashboard.heat_interpolation import compute_idw_grid, build_heat_contours_geojson
 from dashboard.branding import (
     apply_page_config,
     render_header,
@@ -35,9 +35,16 @@ from dashboard.branding import (
 from dashboard.geolibre_static import validate_geojson, get_static_url
 from dashboard.geolibre_project import (
     style_geojson_features,
-    build_project,
+    style_heat_contours,
+    build_points_layer,
+    build_flight_path_layer,
+    build_heatmap_layer,
     build_satellite_reference_layer,
+    build_sentinel2_layer,
+    build_project,
     fit_project_to_size,
+    KNOWN_UNITS,
+    COLOR_STOPS,
     OPENFREEMAP_STYLES,
 )
 from dashboard.geolibre_publish import publish_project
@@ -47,7 +54,10 @@ render_sidebar_logo()
 apply_custom_css()
 render_header("Mission Map")
 
-NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type"}
+# "altitude" is a real measurement but a flight parameter, not an
+# environmental reading - excluded so it can't silently become the
+# default colored/interpolated field instead of temperature.
+NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type", "altitude"}
 
 
 # ---------------------------------------------------------------------
@@ -110,9 +120,9 @@ def collect_sensor_values(geojson_data: dict, property_name: str):
 
 def get_colorable_sensors(geojson_data: dict) -> list[str]:
     """Any numeric property present on the mission's points can be used
-    to color them - detected from the data itself, not a fixed list, so
-    this works for the original sensor-logger schema and for arbitrary
-    CSVs picked up by column_detection.py."""
+    to color/interpolate - detected from the data itself, not a fixed
+    list, so this works for the original sensor-logger schema and for
+    arbitrary CSVs picked up by column_detection.py."""
     if not geojson_data.get("features"):
         return []
     sample_properties = geojson_data["features"][0].get("properties", {})
@@ -120,6 +130,27 @@ def get_colorable_sensors(geojson_data: dict) -> list[str]:
         key for key, value in sample_properties.items()
         if key not in NON_SENSOR_PROPERTY_KEYS and isinstance(value, (int, float))
     ]
+
+
+def preferred_sensor(colorable_sensors: list[str], preferred: str = "temperature") -> str:
+    """Defaults to temperature if this mission has it - never assumes
+    it does, and never silently falls back to whatever happens to be
+    first in the properties dict (that was the altitude bug)."""
+    for sensor in colorable_sensors:
+        if sensor.lower() == preferred:
+            return sensor
+    return colorable_sensors[0]
+
+
+@st.cache_data(show_spinner=False)
+def _cached_heat_contours(mission_name: str, sensor_name: str, points_tuple, values_tuple, bounds):
+    """Caches the IDW grid + contour extraction so toggling unrelated
+    checkboxes (satellite layers, flight path, etc.) doesn't recompute
+    this on every Streamlit rerun - only mission/sensor/data changes do."""
+    points_arr = np.array(points_tuple, dtype=float)
+    values_arr = np.array(values_tuple, dtype=float)
+    grid = compute_idw_grid(points_arr, values_arr, bounds)
+    return build_heat_contours_geojson(grid, bounds)
 
 
 # ---------------------------------------------------------------------
@@ -196,60 +227,61 @@ lat_min, lat_max = float(all_coords[:, 1].min()), float(all_coords[:, 1].max())
 
 
 # ---------------------------------------------------------------------
-# View controls
+# Layer controls
 # ---------------------------------------------------------------------
 
-view_mode = st.radio("View", ["Points", "Heat Surface (IDW)"], horizontal=True)
+render_section_header("Mission Data")
+col1, col2 = st.columns(2)
+with col1:
+    show_points = st.checkbox("Drone Observations", value=True)
+    show_flight_path = st.checkbox("Flight Path", value=True)
+with col2:
+    show_heatmap = st.checkbox("Temperature Heatmap", value=False)
+    st.checkbox(
+        "AI Classification",
+        value=False,
+        disabled=True,
+        help=(
+            "Not wired up yet: images uploaded on the Image Tool page aren't geotagged "
+            "in the current pipeline, so there's no coordinate to place a classification "
+            "result at on this map. Faking a location would be worse than leaving it off."
+        ),
+    )
 
-col_a, col_b = st.columns(2)
-with col_a:
-    basemap_choice = st.selectbox("Basemap", list(OPENFREEMAP_STYLES.keys()), index=0)
-with col_b:
-    show_satellite_layer = st.checkbox("Add satellite imagery reference layer", value=False)
+render_section_header("Satellite Imagery")
+col3, col4 = st.columns(2)
+with col3:
+    show_esri = st.checkbox("Esri Satellite", value=True)
+    show_sentinel2 = st.checkbox("Sentinel-2 True Color", value=False)
+with col4:
+    st.checkbox("Sentinel-2 False Color / NIR", value=False, disabled=True)
+    st.checkbox("Sentinel-2 NDVI", value=False, disabled=True)
+    st.checkbox("Sentinel-2 SWIR", value=False, disabled=True)
+    st.checkbox("Landsat Thermal", value=False, disabled=True)
+    st.checkbox("Sentinel-1 SAR", value=False, disabled=True)
+st.caption(
+    "The disabled layers above need an authenticated service (Copernicus Data Space, "
+    "Sentinel Hub, or USGS/NASA Earthdata) rather than a free keyless public tile "
+    "endpoint, so they're shown but not implemented — see geolibre_project.py."
+)
 
-heat_overlay_uri = None
-heat_bounds = None
-heat_min = None
-heat_max = None
+col5, col6 = st.columns(2)
+with col5:
+    color_sensor = st.selectbox(
+        "Color points by", colorable_sensors,
+        index=colorable_sensors.index(preferred_sensor(colorable_sensors)),
+    )
+
 heat_sensor = None
-
-if view_mode == "Points":
-    color_sensor = st.selectbox("Color points by", colorable_sensors, index=0)
-
-else:
-    heat_sensor = st.selectbox("Interpolate", colorable_sensors, index=0)
-
-    valid_features, _ = collect_sensor_values(geojson_data, heat_sensor)
-
-    if len(valid_features) < 2:
-        st.warning("Not enough valid readings to interpolate a heat surface for this sensor.")
-        render_sidebar_status()
-        st.stop()
-
-    points = np.array(
-        [[f["geometry"]["coordinates"][1], f["geometry"]["coordinates"][0]] for f in valid_features],
-        dtype=float,
-    )
-    values = np.array([float(f["properties"][heat_sensor]) for f in valid_features], dtype=float)
-
-    valid = np.isfinite(values) & np.isfinite(points).all(axis=1)
-    points, values = points[valid], values[valid]
-
-    if len(points) < 2:
-        st.warning("Not enough valid readings to interpolate a heat surface for this sensor.")
-        render_sidebar_status()
-        st.stop()
-
-    bounds = (
-        float(points[:, 0].min()), float(points[:, 0].max()),
-        float(points[:, 1].min()), float(points[:, 1].max()),
-    )
-
-    grid = compute_idw_grid(points, values, bounds)
-    heat_overlay_uri = render_heat_overlay_png(grid)
-    heat_bounds = bounds
-    heat_min = float(np.nanmin(grid))
-    heat_max = float(np.nanmax(grid))
+with col6:
+    if show_heatmap:
+        default_heat = preferred_sensor(colorable_sensors)
+        heat_sensor = st.selectbox(
+            "Interpolate", colorable_sensors,
+            index=colorable_sensors.index(default_heat),
+        )
+        if heat_sensor.lower() != "temperature":
+            st.caption(f"No 'temperature' field on this mission — showing interpolated {heat_sensor} instead.")
 
 
 # ---------------------------------------------------------------------
@@ -270,42 +302,92 @@ render_technical_metadata(
 if summary:
     render_section_header("Mission Summary")
     duration_minutes = (summary.get("duration_seconds") or 0) / 60
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Mission", summary.get("mission_name", selected_mission))
-    col2.metric("Samples", summary.get("sample_count", len(geojson_data["features"])))
-    col3.metric("Duration", f"{duration_minutes:.1f} min")
-    col4.metric("Flagged rows", summary.get("flagged_row_count", 0))
+    scol1, scol2, scol3, scol4 = st.columns(4)
+    scol1.metric("Mission", summary.get("mission_name", selected_mission))
+    scol2.metric("Samples", summary.get("sample_count", len(geojson_data["features"])))
+    scol3.metric("Duration", f"{duration_minutes:.1f} min")
+    scol4.metric("Flagged rows", summary.get("flagged_row_count", 0))
+
+
+# ---------------------------------------------------------------------
+# Build layers (bottom to top: imagery -> heatmap -> flight path -> points)
+# ---------------------------------------------------------------------
+
+render_section_header("Mission GIS Workspace")
+st.caption("Explore the mission data against satellite imagery and other GIS layers using GeoLibre. Click a point to see its details.")
+
+layers = []
+
+imagery_layers = []
+if show_esri:
+    imagery_layers.append(build_satellite_reference_layer(visible=True))
+if show_sentinel2:
+    imagery_layers.append(build_sentinel2_layer(visible=True))
+if len(imagery_layers) > 1:
+    # More than one opaque raster overlay makes them impossible to compare -
+    # blend anything after the first so both remain visible together.
+    for extra_layer in imagery_layers[1:]:
+        extra_layer["opacity"] = 0.6
+layers.extend(imagery_layers)
+
+heat_levels = None
+heat_unit = ""
+if show_heatmap and heat_sensor:
+    valid_features, _ = collect_sensor_values(geojson_data, heat_sensor)
+
+    if len(valid_features) < 2:
+        st.warning(f"Not enough valid '{heat_sensor}' readings to interpolate a heat surface.")
+    else:
+        points_arr = np.array(
+            [[f["geometry"]["coordinates"][1], f["geometry"]["coordinates"][0]] for f in valid_features],
+            dtype=float,
+        )
+        values_arr = np.array([float(f["properties"][heat_sensor]) for f in valid_features], dtype=float)
+        valid_mask = np.isfinite(values_arr) & np.isfinite(points_arr).all(axis=1)
+        points_arr, values_arr = points_arr[valid_mask], values_arr[valid_mask]
+
+        if len(points_arr) < 2:
+            st.warning(f"Not enough valid '{heat_sensor}' readings to interpolate a heat surface.")
+        else:
+            bounds = (lat_min, lat_max, lon_min, lon_max)
+            contour_geojson, heat_levels = _cached_heat_contours(
+                selected_mission,
+                heat_sensor,
+                tuple(map(tuple, points_arr)),
+                tuple(values_arr.tolist()),
+                bounds,
+            )
+            styled_contours = style_heat_contours(contour_geojson, heat_levels)
+            layers.append(build_heatmap_layer(selected_mission, styled_contours, visible=True))
+            heat_unit = KNOWN_UNITS.get(heat_sensor, "")
+
+if show_flight_path:
+    layers.append(build_flight_path_layer(selected_mission, geojson_data, visible=True))
+
+_, color_values = collect_sensor_values(geojson_data, color_sensor)
+if color_values:
+    vmin, vmax = min(color_values), max(color_values)
+else:
+    vmin, vmax = 0.0, 1.0
+    st.caption(f"No valid '{color_sensor}' readings to color by — points will show default styling.")
+
+styled_points_geojson = style_geojson_features(geojson_data, color_sensor, vmin, vmax, selected_mission)
+points_layer = build_points_layer(selected_mission, styled_points_geojson, visible=show_points)
+layers.append(points_layer)
 
 
 # ---------------------------------------------------------------------
 # Build + publish the GeoLibre project
 # ---------------------------------------------------------------------
 
-render_section_header("Mission GIS Workspace" if view_mode == "Points" else "Interpolated Sensor Surface")
-st.caption("Explore the mission data against satellite imagery and other GIS layers using GeoLibre. Click a point to see its details.")
-
-color_property = heat_sensor if view_mode == "Heat Surface (IDW)" else color_sensor
-_, color_values = collect_sensor_values(geojson_data, color_property)
-
-if color_values:
-    vmin, vmax = min(color_values), max(color_values)
-else:
-    vmin, vmax = 0.0, 1.0
-    st.caption(f"No valid '{color_property}' readings to color by — points will show default styling.")
-
-styled_geojson = style_geojson_features(geojson_data, color_property, vmin, vmax, selected_mission)
-
-extra_layers = [build_satellite_reference_layer(visible=True)] if show_satellite_layer else []
-
 project_data = build_project(
     selected_mission,
-    styled_geojson,
-    OPENFREEMAP_STYLES[basemap_choice],
+    layers,
+    OPENFREEMAP_STYLES["Dark"],
     lon_min, lon_max, lat_min, lat_max,
-    extra_layers=extra_layers,
 )
 
-project_data, was_thinned = fit_project_to_size(project_data)
+project_data, was_thinned = fit_project_to_size(project_data, points_layer["id"])
 if was_thinned:
     st.caption(
         "This mission has enough points that the hosted copy was automatically "
@@ -331,24 +413,42 @@ with st.expander("GeoLibre connection details", expanded=False):
     if not project_cors_ok:
         st.warning(
             f"Falling back to Streamlit's own static URL, which is not confirmed to "
-            f"work inside GeoLibre due to CORS. Reason JSONBin publishing didn't succeed: "
+            f"work inside GeoLibre due to CORS. Reason hosted publishing didn't succeed: "
             f"{publish_error}"
         )
 
     st.write("GeoLibre URL:")
     st.code(geolibre_url, language="text")
 
-    st.write("Local debug copy (open this yourself to confirm the raw project JSON — not what GeoLibre fetches when JSONBin is configured):")
+    st.write("Local debug copy (open this yourself to confirm the raw project JSON):")
     st.code(get_static_url(f"{selected_mission}.geolibre.json"), language="text")
 
 st.iframe(geolibre_url, height=760)
 
-if view_mode == "Heat Surface (IDW)":
-    st.image(heat_overlay_uri, caption=f"IDW surface: {heat_sensor} (bounds {heat_bounds})")
-    st.caption(f"IDW surface: {heat_sensor} (range {heat_min:.1f}–{heat_max:.1f})")
+
+# ---------------------------------------------------------------------
+# Heatmap legend
+# ---------------------------------------------------------------------
+
+if show_heatmap and heat_levels:
+    label = "Temperature Heatmap" if heat_sensor.lower() == "temperature" else f"{heat_sensor.title()} Heatmap"
+    render_section_header(f"{label} Legend")
+
+    legend_cols = st.columns(len(COLOR_STOPS))
+    n = len(COLOR_STOPS)
+    for i, color in enumerate(COLOR_STOPS):
+        value_at_stop = heat_levels[0] + (heat_levels[-1] - heat_levels[0]) * i / (n - 1)
+        with legend_cols[i]:
+            st.markdown(
+                f"<div style='background:{color};height:14px;border-radius:2px;'></div>"
+                f"<div style='font-size:11px;text-align:center;color:#B4B8C6;'>{value_at_stop:.1f}{heat_unit}</div>",
+                unsafe_allow_html=True,
+            )
+
     st.caption(
-        "This overlay is a flat PNG from SpacePoint's own IDW pipeline, shown "
-        "alongside GeoLibre rather than draped on the map."
+        f"Interpolated {heat_sensor} — inverse-distance-weighted from each grid cell's "
+        f"10 nearest readings (power=2). This is a deterministic spatial interpolation, "
+        f"not an AI/ML output."
     )
 
 render_sidebar_status()
