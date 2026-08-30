@@ -11,7 +11,4 @@ secondaryBackgroundColor = "#2b1642"
 textColor = "#D7D2CB"
 font = "sans serif"
 
-[sentinel_hub_layers]
-false_color = "2_FALSE_COLOR"
-ndvi = "3_NDVI"
-swir = "4_SWIR"
+
