@@ -18,26 +18,42 @@ format (https://github.com/opengeos/GeoLibre/blob/main/docs/project-format.md):
   heatmap, then the flight path, then drone observation points last (on
   top, so they stay clickable over everything beneath them).
 
+IDs (NEW): every layer now gets a DETERMINISTIC id (mission-scoped slug
+or a fixed name for basemap-independent imagery layers) instead of a
+random uuid4(). This is required for live layer-visibility toggling: the
+embed bridge (dashboard/components/geolibre_bridge) targets layers by id
+via GeoLibre's postMessage `setLayerVisibility(id, visible)` command, and
+random ids would be a different, untargetable id on every Streamlit rerun.
+
 Satellite imagery sources, and why each one is or isn't included:
 
 - Esri World Imagery: public, key-free, global, already working -
-  unchanged.
+  unchanged. Default enabled imagery layer.
 - EOX Sentinel-2 cloudless (https://s2maps.eu): a real, documented,
-  key-free global WMTS mosaic (CC BY 4.0, attribution required),
-  confirmed directly against EOX's own service before use here. This is
+  key-free global WMTS mosaic (CC BY 4.0, attribution required). This is
   an annual CLOUD-FREE COMPOSITE, not a live single-date acquisition.
-- Sentinel-2 False Color/NIR, NDVI, SWIR; Landsat Thermal; Sentinel-1
-  SAR: NOT implemented. I could not find a free, keyless, global,
-  publicly documented tile service for any of these - the real options
-  (Copernicus Data Space Ecosystem, Sentinel Hub, USGS/NASA Earthdata)
-  all require an authenticated account/API key, which the brief
-  explicitly ruled out inventing or hardcoding. Rather than fake these
-  layers, they're shown in the UI as disabled checkboxes with the reason
-  stated - see 3_Mission_Map.py.
+  FIXED: the layer now declares "maxzoom" on its raster source. EOX's
+  s2cloudless WMTS layer does not publish TileMatrix levels past the
+  high-teens (10 m native Sentinel-2 resolution has no more detail to
+  give past that), so a mission zoomed in tight (drone missions are
+  small-area, high zoom) was requesting z19/z20 tiles that simply don't
+  exist -> consistent 404s. Capping maxzoom tells MapLibre to
+  over-sample the deepest real tile instead of requesting one that isn't
+  there.
+- Sentinel-2 False Color/NIR, NDVI, SWIR: implemented via the Copernicus
+  Data Space Ecosystem's Sentinel Hub OGC WMS service
+  (sh.dataspace.copernicus.eu) - see dashboard/satellite_layers.py.
+  Requires a free Sentinel Hub "configuration" (instance ID). Uses
+  MapLibre's documented `{bbox-epsg-3857}` WMS tile-URL templating so
+  requests are genuinely dynamic per viewport, globally - not a fixed
+  bounding box.
+- Landsat Thermal, Sentinel-1 SAR: implemented via Microsoft Planetary
+  Computer's Data API dynamic mosaic tiler (STAC-search-backed, global,
+  any pan/zoom) - see dashboard/satellite_layers.py. Requires a free
+  Planetary Computer subscription key.
 """
 
 import json
-import uuid
 
 import numpy as np
 
@@ -72,6 +88,11 @@ KNOWN_UNITS = {
 # existed originally. Supabase's free tier allows 50MB per file, so this
 # threshold is now a generous safety net for the JSONBin fallback path.
 MAX_HOSTED_BYTES = 45_000_000
+
+# EOX s2cloudless does not publish TileMatrix levels beyond this - see
+# module docstring. Verified against https://tiles.maps.eox.at/wmts/1.0.0/WMTSCapabilities.xml;
+# re-check that capabilities document if EOX ever changes their max level.
+EOX_S2CLOUDLESS_MAXZOOM = 14
 
 
 def color_for_value(value: float, vmin: float, vmax: float) -> str:
@@ -152,11 +173,37 @@ def style_heat_contours(contour_geojson: dict, levels: list[float]) -> dict:
     return {**contour_geojson, "features": styled_features}
 
 
+# ---------------------------------------------------------------------
+# Deterministic layer ids
+# ---------------------------------------------------------------------
+# Mission-scoped layers (points/flight path/heatmap) are unique per
+# mission. Imagery layers are basemap-style overlays and share one id
+# across missions - that's fine, ids only need to be unique WITHIN one
+# published project.
+def points_layer_id(mission_name: str) -> str:
+    return f"{mission_name}::points"
+
+
+def flight_path_layer_id(mission_name: str) -> str:
+    return f"{mission_name}::flightpath"
+
+
+def heatmap_layer_id(mission_name: str) -> str:
+    return f"{mission_name}::heatmap"
+
+
+ESRI_LAYER_ID = "esri-satellite"
+EOX_TRUECOLOR_LAYER_ID = "sentinel2-truecolor-eox"
+# Ids for the new satellite layers live in satellite_layers.py, next to
+# the code that builds them (SENTINEL2_FALSECOLOR_ID, SENTINEL2_NDVI_ID,
+# SENTINEL2_SWIR_ID, LANDSAT_THERMAL_ID, SENTINEL1_SAR_ID).
+
+
 def build_points_layer(mission_name: str, styled_geojson: dict, visible: bool = True) -> dict:
     """The drone observation points - always last in the layers array so
     it stays on top and clickable over any imagery/heatmap beneath it."""
     return {
-        "id": str(uuid.uuid4()),
+        "id": points_layer_id(mission_name),
         "name": mission_name,
         "type": "geojson",
         "source": {"type": "geojson"},
@@ -193,7 +240,7 @@ def build_flight_path_layer(mission_name: str, geojson_data: dict, visible: bool
         })
 
     return {
-        "id": str(uuid.uuid4()),
+        "id": flight_path_layer_id(mission_name),
         "name": f"{mission_name} - Flight Path",
         "type": "geojson",
         "source": {"type": "geojson"},
@@ -215,7 +262,7 @@ def build_heatmap_layer(mission_name: str, styled_contour_geojson: dict, visible
     image. Placed before the points/flight-path layers in the layers
     array so it renders beneath them."""
     return {
-        "id": str(uuid.uuid4()),
+        "id": heatmap_layer_id(mission_name),
         "name": f"{mission_name} - Temperature Heatmap",
         "type": "geojson",
         "source": {"type": "geojson"},
@@ -235,11 +282,11 @@ def build_heatmap_layer(mission_name: str, styled_contour_geojson: dict, visible
 def build_satellite_reference_layer(visible: bool = False) -> dict:
     """
     Esri World Imagery - public, keyless, a standard reference-imagery
-    source. Already working; kept unchanged. Now used as an OVERLAY on
-    top of the permanent dark base map, not a selectable basemap.
+    source. Already working; kept unchanged. Default enabled imagery
+    layer over the dark base map.
     """
     return {
-        "id": str(uuid.uuid4()),
+        "id": ESRI_LAYER_ID,
         "name": "Esri Satellite",
         "type": "xyz",
         "source": {
@@ -262,16 +309,21 @@ def build_sentinel2_layer(visible: bool = False) -> dict:
     consumed here as XYZ-style tiles. Free for non-commercial use with
     attribution (CC BY 4.0; contains modified Copernicus Sentinel data).
     This is a cloud-free ANNUAL MOSAIC composited from Sentinel-2
-    imagery, not a live/on-demand single-date acquisition - stated here
-    so that limitation isn't silently hidden from anyone using the layer.
+    imagery, not a live/on-demand single-date acquisition.
+
+    FIXED: added source.maxzoom. Without it, a tightly-zoomed drone
+    mission requests TileMatrix levels EOX doesn't publish -> 404 on
+    every tile. With maxzoom set, MapLibre stops requesting tiles past
+    that level and stretches the deepest available tile instead.
     """
     return {
-        "id": str(uuid.uuid4()),
+        "id": EOX_TRUECOLOR_LAYER_ID,
         "name": "Sentinel-2 True Color (EOX cloudless)",
         "type": "xyz",
         "source": {
             "type": "xyz",
             "tiles": ["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg"],
+            "maxzoom": EOX_S2CLOUDLESS_MAXZOOM,
         },
         "visible": visible,
         "opacity": 1,
