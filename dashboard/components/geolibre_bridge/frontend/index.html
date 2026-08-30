@@ -50,6 +50,16 @@ function showBadge(text, ms) {
   showBadge._t = setTimeout(() => { el.style.opacity = "0"; }, ms || 1800);
 }
 
+function withCacheBuster(url) {
+  // Forces a fresh fetch of the GeoLibre SPA shell rather than a browser-
+  // cached one. GeoLibre's own docs name stale-cache version skew (some JS
+  // chunks old, some new) as the #1 cause of init-time crashes like the
+  // "getProjection: this.style is undefined" globe-control failure -
+  // busting the top-level document request is the standard mitigation.
+  const bust = (url.includes("?") ? "&" : "?") + "_cb=" + Date.now();
+  return url + bust;
+}
+
 async function tryConnectEmbedApi(iframeEl, origin) {
   // Uses GeoLibre's documented embed client via esm.sh (serves any
   // published npm package as an ES module - not a fabricated URL, but
@@ -61,6 +71,11 @@ async function tryConnectEmbedApi(iframeEl, origin) {
     const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("embed handshake timeout")), 4000));
     return await Promise.race([connectPromise, timeout]);
   } catch (err) {
+    // Expected on the public web.geolibre.app instance, which does not
+    // allowlist arbitrary embedding origins by default (per GeoLibre's own
+    // docs: "a public deployment can never be driven by the page that
+    // frames it"). Not an error condition - the soft-reload fallback below
+    // is the documented, correct behavior for this case.
     console.warn("[geolibre_bridge] embed postMessage API unavailable, falling back to soft reload:", err);
     return null;
   }
@@ -109,8 +124,7 @@ function softReloadIframe(iframeEl, geolibreUrl) {
   // Reload ONLY this nested iframe (never the outer Streamlit page).
   // Camera position on GeoLibre's side resets to the project's default
   // view on this path - unavoidable without the postMessage API.
-  const bust = (geolibreUrl.includes("?") ? "&" : "?") + "_ts=" + Date.now();
-  iframeEl.src = geolibreUrl + bust;
+  iframeEl.src = withCacheBuster(geolibreUrl);
   _appliedVisibility = {};
   _embedMap = null;
   showBadge("Reloading map view…", 2500);
@@ -128,7 +142,10 @@ async function onRender(event) {
   if (!_renderedOnce) {
     _renderedOnce = true;
     iframeEl.style.height = (args.height || 760) + "px";
-    iframeEl.src = args.geolibreUrl;
+    // FIXED: cache-bust the very first load too, not just later soft
+    // reloads - otherwise a stale cached GeoLibre shell can persist for
+    // the whole session with no way to self-heal.
+    iframeEl.src = withCacheBuster(args.geolibreUrl);
     _lastArgs = args;
     // fire-and-forget connect attempt so later visibility diffs are fast
     ensureConnected(iframeEl, args.geolibreUrl);
