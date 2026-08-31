@@ -27,10 +27,10 @@ from quality_check import run_quality_check
 
 RAW_DIR = Path("data/raw")
 
-apply_page_config("Data Quality & Calibration")
+apply_page_config("Quality Check")
 render_sidebar_logo()
 apply_custom_css()
-render_header("Data Quality")
+render_header("Quality Check")
 
 render_section_header("Choose a Raw Mission File")
 source_mode = st.radio("Source", ["Existing file", "Upload new file"], horizontal=True)

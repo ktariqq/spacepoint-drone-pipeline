@@ -34,7 +34,7 @@ DATA_DIR = Path("data/cleaned")
 IMAGE_ANALYSIS_DIR = Path("data/image_analysis")
 SECTION_KEYS = ["objective", "observations", "limitations", "conclusion"]
 
-apply_page_config("Mission Report Generator")
+apply_page_config("Mission Report")
 render_sidebar_logo()
 apply_custom_css()
 render_header("Mission Report")

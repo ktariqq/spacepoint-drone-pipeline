@@ -25,10 +25,10 @@ SAMPLE_IMAGE_DIR = Path("data/images")
 ANALYSIS_OUTPUT_DIR = Path("data/image_analysis")
 MISSION_DIR = Path("data/cleaned")
 
-apply_page_config("Image Processing Tool")
+apply_page_config("Image Analysis")
 render_sidebar_logo()
 apply_custom_css()
-render_header("Image Tool")
+render_header("Image Analysis")
 
 st.write(
     "Upload drone images to estimate vegetation coverage and get a rough "

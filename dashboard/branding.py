@@ -10,6 +10,12 @@ import streamlit as st
 
 LOGO_PATH = Path("assets/spacepoint_logo.png")
 
+# App identity shown as a small overline in the page header - kept
+# separate from each page's own title so headings read as just
+# "Mission Map", not "SpacePoint Mission Map".
+APP_NAME = "SpacePoint"
+APP_TAGLINE = "Drone Remote Sensing"
+
 # Design tokens - single source of truth for color/type
 TOKENS = {
     "bg": "#0A0C12",
@@ -91,7 +97,11 @@ def render_sidebar_status(state: str = "ok", label: str = "OPERATIONAL"):
 def render_header(subtitle: str, meta: dict | None = None):
     """Mission-console header used on every page.
 
-    subtitle: section name (e.g. "Mission Map").
+    subtitle: this page's own name (e.g. "Mission Map") - rendered as
+    the main heading, on its own, with nothing prepended to it. The
+    app's own name/tagline is shown above it as a small overline
+    instead, so the brand appears once per page without merging into
+    the page's actual title text.
     meta: optional ordered dict of small metadata fields under the title.
     """
     meta = meta or {}
@@ -105,8 +115,8 @@ def render_header(subtitle: str, meta: dict | None = None):
         f"""
         <div class="sp-header">
             <div class="sp-header-top">
-                <div class="sp-header-wordmark">
-                    <span class="sp-header-mark">SPACEPOINT</span>
+                <div class="sp-header-titleblock">
+                    <span class="sp-header-brand">{APP_NAME}<span class="sp-header-brand-divider">·</span>{APP_TAGLINE}</span>
                     <span class="sp-header-subtitle">{subtitle}</span>
                 </div>
                 <div class="sp-header-status">
@@ -285,17 +295,22 @@ def apply_custom_css():
             flex-wrap: wrap;
             gap: 8px;
         }}
-        .sp-header-wordmark {{
+        .sp-header-titleblock {{
             display: flex;
-            align-items: baseline;
-            gap: 12px;
+            flex-direction: column;
+            gap: 4px;
         }}
-        .sp-header-mark {{
+        .sp-header-brand {{
             font-family: var(--sp-font-mono);
-            font-size: 13px;
+            font-size: 10px;
             font-weight: 600;
-            letter-spacing: 0.12em;
-            color: var(--sp-text-secondary);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--sp-muted);
+        }}
+        .sp-header-brand-divider {{
+            margin: 0 6px;
+            color: var(--sp-border-strong);
         }}
         .sp-header-subtitle {{
             font-size: 26px;
