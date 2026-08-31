@@ -9,7 +9,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-a855f7?style=flat-square&labelColor=231134&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.38+-8b5cf6?style=flat-square&labelColor=231134&logo=streamlit&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-Computer_Vision-7c3aed?style=flat-square&labelColor=231134&logo=opencv&logoColor=white)
-![GeoLibre](https://img.shields.io/badge/GeoLibre-GIS_Workspace-653F84?style=flat-square&labelColor=231134)
+[![GeoLibre](https://img.shields.io/badge/GeoLibre-GIS_Workspace-653F84?style=flat-square&labelColor=231134)](https://geolibre.app)
 ![Leaflet](https://img.shields.io/badge/Leaflet.js-Mapping-653F84?style=flat-square&labelColor=231134&logo=leaflet&logoColor=white)
 ![Component](https://img.shields.io/badge/Custom-Streamlit_Component-6d28d9?style=flat-square&labelColor=231134)
 ![Gemini](https://img.shields.io/badge/Gemini_API-AI_Drafting-6d28d9?style=flat-square&labelColor=231134)
@@ -105,6 +105,7 @@ data/ # raw / cleaned / geo / images / image_analysis
 ```
 
 
+
 <br/>
 
 ## 🛰️ Getting Started
@@ -155,5 +156,7 @@ Live on **Streamlit Community Cloud**, entry point `dashboard/Dashboard.py`. To 
 Built by **Kommal Tariq**
 
 Copyright © 2026 SpacePoint. All rights reserved.
+
+GIS workspace powered by [GeoLibre](https://geolibre.app), used under the MIT License.
 
 </div>
