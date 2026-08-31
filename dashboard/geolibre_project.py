@@ -3,54 +3,56 @@ SpacePoint - GeoLibre project (.geolibre.json) builder
 Author: Kommal
 
 Builds a GeoLibre project document. Per GeoLibre's documented project
-format (https://github.com/opengeos/GeoLibre/blob/main/docs/project-format.md):
+format (https://geolibre.app/project-format/):
 
-- mapView.bbox opens already framed on the mission's extent.
-- basemapStyleUrl is the ONE permanent dark base map - never a selectable
-  option (per spec, there is no basemap picker; satellite imagery is a
-  toggleable overlay ABOVE this base, not a replacement for it).
+- mapView.bbox opens already framed on the mission's extent (or, with no
+  mission selected, a world view).
+- basemapStyleUrl is the ONE permanent dark base map.
 - A geojson layer's style.simpleStyleEnabled flag turns on per-feature
   simplestyle-spec overrides (marker-color/fill/stroke, title,
-  description) - this is the documented mechanism used for points, the
-  flight path line, and the heatmap contour polygons alike.
+  description).
 - The `layers` array we build IS the entire set of layers GeoLibre shows
-  on open, in bottom-to-top order: imagery overlays first, then the
+  on open, in bottom-to-top order: satellite imagery first, then the
   heatmap, then the flight path, then drone observation points last (on
-  top, so they stay clickable over everything beneath them).
+  top, so they stay clickable). Visibility is now set ONCE here, at
+  publish time - there are no external Streamlit checkboxes anymore.
+  Show/hide/reorder/opacity all happen inside GeoLibre's own Layers
+  panel (layout=compact exposes it) instead.
 
-IDs (NEW): every layer now gets a DETERMINISTIC id (mission-scoped slug
-or a fixed name for basemap-independent imagery layers) instead of a
-random uuid4(). This is required for live layer-visibility toggling: the
-embed bridge (dashboard/components/geolibre_bridge) targets layers by id
-via GeoLibre's postMessage `setLayerVisibility(id, visible)` command, and
-random ids would be a different, untargetable id on every Streamlit rerun.
+IDs: every layer gets a DETERMINISTIC id (mission-scoped slug or a fixed
+name for basemap-independent imagery layers), kept from earlier work even
+though the live-toggle bridge no longer diffs by id - deterministic ids
+are still useful for fit_project_to_size() and for anyone inspecting the
+published JSON.
 
-Satellite imagery sources, and why each one is or isn't included:
+Satellite imagery sources, and why each one is included:
 
-- Esri World Imagery: public, key-free, global, already working -
-  unchanged. Default enabled imagery layer.
-- EOX Sentinel-2 cloudless (https://s2maps.eu): a real, documented,
-  key-free global WMTS mosaic (CC BY 4.0, attribution required). This is
-  an annual CLOUD-FREE COMPOSITE, not a live single-date acquisition.
-  FIXED: the layer now declares "maxzoom" on its raster source. EOX's
-  s2cloudless WMTS layer does not publish TileMatrix levels past the
-  high-teens (10 m native Sentinel-2 resolution has no more detail to
-  give past that), so a mission zoomed in tight (drone missions are
-  small-area, high zoom) was requesting z19/z20 tiles that simply don't
-  exist -> consistent 404s. Capping maxzoom tells MapLibre to
-  over-sample the deepest real tile instead of requesting one that isn't
-  there.
-- Sentinel-2 False Color/NIR, NDVI, SWIR: implemented via the Copernicus
-  Data Space Ecosystem's Sentinel Hub OGC WMS service
-  (sh.dataspace.copernicus.eu) - see dashboard/satellite_layers.py.
-  Requires a free Sentinel Hub "configuration" (instance ID). Uses
-  MapLibre's documented `{bbox-epsg-3857}` WMS tile-URL templating so
-  requests are genuinely dynamic per viewport, globally - not a fixed
-  bounding box.
-- Landsat Thermal, Sentinel-1 SAR: implemented via Microsoft Planetary
-  Computer's Data API dynamic mosaic tiler (STAC-search-backed, global,
-  any pan/zoom) - see dashboard/satellite_layers.py. Requires a free
-  Planetary Computer subscription key.
+- Esri World Imagery: public, key-free, global, default-visible.
+- EOX Sentinel-2 cloudless (https://s2maps.eu): key-free global WMTS
+  mosaic, annual cloud-free composite. maxzoom capped - EOX's
+  s2cloudless layer doesn't publish TileMatrix levels past the
+  high-teens, so a tightly-zoomed drone mission was requesting tiles
+  that don't exist -> 404s. Capped so MapLibre over-samples instead.
+- NASA GIBS MODIS True Color / Aerosol Optical Depth: public, key-free,
+  global daily satellite imagery. URL template and both layers' exact
+  TileMatrixSet/format are verified against NASA's own GIBS docs
+  (https://nasa-gibs.github.io/gibs-api-docs/access-basics/, which shows
+  the exact working example URL for MODIS_Terra_Aerosol used here).
+  GIBS_REFERENCE_DATE is a fixed, safely-in-the-past date rather than
+  "today" - GIBS's most recent 1-3 days are frequently not yet processed
+  for every layer, which would 404; a date months in the past is
+  reliably available. This is intentionally NOT "live" imagery -
+  update GIBS_REFERENCE_DATE occasionally, or (better) add a live/dated
+  NASA layer through GeoLibre's own Plugins -> Web Services -> NASA
+  Earthdata panel, which handles date selection itself.
+- Broader catalogs (NDVI, thermal/LST, SAR, VIIRS false-color, NOAA):
+  intentionally NOT hardcoded here. I don't have verified URL/parameter
+  combinations for these the way I do for the two GIBS layers above, and
+  guessing has repeatedly produced broken tiles in this project before.
+  GeoLibre's own Processing -> Planetary Computer and Plugins -> Web
+  Services -> NASA Earthdata panels (available now that layout=compact
+  is set) are the maintained, correct way to browse and add these - see
+  https://geolibre.app/user-guide/data-integrations/.
 """
 
 import json
@@ -59,9 +61,6 @@ import numpy as np
 
 COLOR_STOPS = ["#3b0f70", "#8c2981", "#de4968", "#fe9f6d", "#fcfdbf"]
 
-# Real, public, key-free OpenFreeMap basemap styles. Only "Dark" is ever
-# used now - kept as a dict (rather than a bare string) in case a future,
-# explicitly-requested change wants a different single permanent base.
 OPENFREEMAP_STYLES = {
     "Dark": "https://tiles.openfreemap.org/styles/dark",
     "Liberty": "https://tiles.openfreemap.org/styles/liberty",
@@ -70,13 +69,8 @@ OPENFREEMAP_STYLES = {
     "Fiord": "https://tiles.openfreemap.org/styles/fiord",
 }
 
-# "altitude" is a real measurement but a flight parameter, not an
-# environmental reading - excluded so it can't silently become the
-# default colored/interpolated field instead of temperature (this was a
-# real bug: column order put it first in some missions).
 NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type", "altitude"}
 
-# Cosmetic units for sensors we recognize by name - purely decorative.
 KNOWN_UNITS = {
     "temperature": "°C",
     "humidity": "%",
@@ -84,15 +78,13 @@ KNOWN_UNITS = {
     "battery_voltage": "V",
 }
 
-# JSONBin's free tier hard-caps a record at 100KB, which is why this
-# existed originally. Supabase's free tier allows 50MB per file, so this
-# threshold is now a generous safety net for the JSONBin fallback path.
 MAX_HOSTED_BYTES = 45_000_000
 
-# EOX s2cloudless does not publish TileMatrix levels beyond this - see
-# module docstring. Verified against https://tiles.maps.eox.at/wmts/1.0.0/WMTSCapabilities.xml;
-# re-check that capabilities document if EOX ever changes their max level.
 EOX_S2CLOUDLESS_MAXZOOM = 14
+
+# See module docstring - a fixed, reliably-processed historical date, not
+# "today". Update occasionally for fresher imagery.
+GIBS_REFERENCE_DATE = "2026-06-01"
 
 
 def color_for_value(value: float, vmin: float, vmax: float) -> str:
@@ -105,17 +97,9 @@ def color_for_value(value: float, vmin: float, vmax: float) -> str:
 
 
 def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, vmax: float, mission_name: str) -> dict:
-    """
-    Returns a NEW geojson dict (does not mutate the input). Every feature
-    gets simplestyle-spec marker-color/title/description properties -
-    kept minimal on purpose to stay well under hosting size limits.
-
-    FIXED: each feature now also gets a top-level GeoJSON "id" (not just
-    a properties field). MapLibre-based click/hover interactivity - which
-    GeoLibre is built on - generally needs a stable feature.id to resolve
-    which feature a click landed on; without it, points can render fine
-    but never be individually selectable/clickable.
-    """
+    """Returns a NEW geojson dict. Every feature gets simplestyle-spec
+    marker-color/title/description properties AND a top-level GeoJSON
+    "id" (needed for click-to-inspect - see prior fix)."""
     unit = KNOWN_UNITS.get(property_name, "")
     styled_features = []
 
@@ -153,11 +137,6 @@ def style_geojson_features(geojson_data: dict, property_name: str, vmin: float, 
 
 
 def style_heat_contours(contour_geojson: dict, levels: list[float]) -> dict:
-    """
-    Colors each contour-band polygon by its value range. Returns a NEW
-    geojson dict with simplestyle fill/stroke properties set, using the
-    same color ramp as the drone points for visual consistency.
-    """
     vmin, vmax = levels[0], levels[-1]
     styled_features = []
     for feature in contour_geojson.get("features", []):
@@ -183,10 +162,6 @@ def style_heat_contours(contour_geojson: dict, levels: list[float]) -> dict:
 # ---------------------------------------------------------------------
 # Deterministic layer ids
 # ---------------------------------------------------------------------
-# Mission-scoped layers (points/flight path/heatmap) are unique per
-# mission. Imagery layers are basemap-style overlays and share one id
-# across missions - that's fine, ids only need to be unique WITHIN one
-# published project.
 def points_layer_id(mission_name: str) -> str:
     return f"{mission_name}::points"
 
@@ -201,14 +176,12 @@ def heatmap_layer_id(mission_name: str) -> str:
 
 ESRI_LAYER_ID = "esri-satellite"
 EOX_TRUECOLOR_LAYER_ID = "sentinel2-truecolor-eox"
-# Ids for the new satellite layers live in satellite_layers.py, next to
-# the code that builds them (SENTINEL2_FALSECOLOR_ID, SENTINEL2_NDVI_ID,
-# SENTINEL2_SWIR_ID, LANDSAT_THERMAL_ID, SENTINEL1_SAR_ID).
+GIBS_TRUECOLOR_LAYER_ID = "gibs-modis-truecolor"
+GIBS_AEROSOL_LAYER_ID = "gibs-modis-aerosol"
 
 
 def build_points_layer(mission_name: str, styled_geojson: dict, visible: bool = True) -> dict:
-    """The drone observation points - always last in the layers array so
-    it stays on top and clickable over any imagery/heatmap beneath it."""
+    """Always last in the layers array - stays on top and clickable."""
     return {
         "id": points_layer_id(mission_name),
         "name": mission_name,
@@ -230,8 +203,6 @@ def build_points_layer(mission_name: str, styled_geojson: dict, visible: bool = 
 
 
 def build_flight_path_layer(mission_name: str, geojson_data: dict, visible: bool = True) -> dict:
-    """A LineString connecting mission points in their existing
-    (already time-sorted, per clean_mission_data.py) order."""
     coordinates = [
         f["geometry"]["coordinates"]
         for f in geojson_data.get("features", [])
@@ -264,10 +235,6 @@ def build_flight_path_layer(mission_name: str, geojson_data: dict, visible: bool
 
 
 def build_heatmap_layer(mission_name: str, styled_contour_geojson: dict, visible: bool = False) -> dict:
-    """The IDW-interpolated surface, rendered as real georeferenced
-    contour-band polygons - a genuine GeoLibre layer, not a separate
-    image. Placed before the points/flight-path layers in the layers
-    array so it renders beneath them."""
     return {
         "id": heatmap_layer_id(mission_name),
         "name": f"{mission_name} - Temperature Heatmap",
@@ -286,12 +253,8 @@ def build_heatmap_layer(mission_name: str, styled_contour_geojson: dict, visible
     }
 
 
-def build_satellite_reference_layer(visible: bool = False) -> dict:
-    """
-    Esri World Imagery - public, keyless, a standard reference-imagery
-    source. Already working; kept unchanged. Default enabled imagery
-    layer over the dark base map.
-    """
+def build_satellite_reference_layer(visible: bool = True) -> dict:
+    """Esri World Imagery - public, keyless, global. Default-visible."""
     return {
         "id": ESRI_LAYER_ID,
         "name": "Esri Satellite",
@@ -310,19 +273,7 @@ def build_satellite_reference_layer(visible: bool = False) -> dict:
 
 
 def build_sentinel2_layer(visible: bool = False) -> dict:
-    """
-    EOX Sentinel-2 cloudless global mosaic (2024 edition) -
-    https://s2maps.eu - a real, documented, key-free WMTS service,
-    consumed here as XYZ-style tiles. Free for non-commercial use with
-    attribution (CC BY 4.0; contains modified Copernicus Sentinel data).
-    This is a cloud-free ANNUAL MOSAIC composited from Sentinel-2
-    imagery, not a live/on-demand single-date acquisition.
-
-    FIXED: added source.maxzoom. Without it, a tightly-zoomed drone
-    mission requests TileMatrix levels EOX doesn't publish -> 404 on
-    every tile. With maxzoom set, MapLibre stops requesting tiles past
-    that level and stretches the deepest available tile instead.
-    """
+    """EOX Sentinel-2 cloudless global mosaic - annual composite."""
     return {
         "id": EOX_TRUECOLOR_LAYER_ID,
         "name": "Sentinel-2 True Color (EOX cloudless)",
@@ -342,24 +293,67 @@ def build_sentinel2_layer(visible: bool = False) -> dict:
     }
 
 
+def build_gibs_truecolor_layer(visible: bool = False) -> dict:
+    """NASA GIBS MODIS/Terra Corrected Reflectance True Color. Public,
+    keyless, global daily imagery. GoogleMapsCompatible_Level9/jpg is
+    GIBS's documented standard combination for this specific layer."""
+    tile_url = (
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/"
+        f"MODIS_Terra_CorrectedReflectance_TrueColor/default/{GIBS_REFERENCE_DATE}/"
+        "GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg"
+    )
+    return {
+        "id": GIBS_TRUECOLOR_LAYER_ID,
+        "name": f"MODIS Terra True Color (NASA GIBS, {GIBS_REFERENCE_DATE})",
+        "type": "xyz",
+        "source": {"type": "xyz", "tiles": [tile_url], "maxzoom": 9},
+        "visible": visible,
+        "opacity": 1,
+        "style": {},
+        "metadata": {"attribution": "NASA EOSDIS GIBS / MODIS Terra"},
+    }
+
+
+def build_gibs_aerosol_layer(visible: bool = False) -> dict:
+    """NASA GIBS MODIS/Terra Aerosol Optical Depth. Public, keyless,
+    global. URL shape and GoogleMapsCompatible_Level6/png verified
+    directly against GIBS's own documented example request."""
+    tile_url = (
+        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/"
+        f"MODIS_Terra_Aerosol/default/{GIBS_REFERENCE_DATE}/"
+        "GoogleMapsCompatible_Level6/{z}/{y}/{x}.png"
+    )
+    return {
+        "id": GIBS_AEROSOL_LAYER_ID,
+        "name": f"MODIS Terra Aerosol Optical Depth (NASA GIBS, {GIBS_REFERENCE_DATE})",
+        "type": "xyz",
+        "source": {"type": "xyz", "tiles": [tile_url], "maxzoom": 6},
+        "visible": visible,
+        "opacity": 0.75,
+        "style": {},
+        "metadata": {"attribution": "NASA EOSDIS GIBS / MODIS Terra"},
+    }
+
+
 def build_project(
-    mission_name: str,
+    project_name: str,
     layers: list[dict],
     basemap_style_url: str,
     lon_min: float,
     lon_max: float,
     lat_min: float,
     lat_max: float,
+    zoom: float = 14,
 ) -> dict:
     center = [(lon_min + lon_max) / 2, (lat_min + lat_max) / 2]
     styles = {layer["id"]: layer["style"] for layer in layers if layer.get("style")}
 
     return {
         "version": "0.1.0",
-        "name": mission_name,
+        "name": project_name,
         "mapView": {
             "center": center,
-            "zoom": 14,
+            "zoom": zoom,
             "bearing": 0,
             "pitch": 0,
             "bbox": [lon_min, lat_min, lon_max, lat_max],
@@ -377,15 +371,12 @@ def _project_size_bytes(project_data: dict) -> int:
     return len(json.dumps(project_data).encode("utf-8"))
 
 
-def fit_project_to_size(project_data: dict, target_layer_id: str, max_bytes: int = MAX_HOSTED_BYTES) -> tuple[dict, bool]:
-    """
-    If the project is too large for JSONBin's free-tier fallback limit,
-    thin the points in ONE specific layer (identified by id - always the
-    drone-observations layer, never the flight path or heatmap contours,
-    which are much smaller and shouldn't be touched). Only affects this
-    hosted copy - the underlying data/geo/<mission>.geojson, cleaned CSV,
-    and reports are never touched. Returns (project_data, was_thinned).
-    """
+def fit_project_to_size(project_data: dict, target_layer_id: str | None, max_bytes: int = MAX_HOSTED_BYTES) -> tuple[dict, bool]:
+    """Thins the points layer only if present and needed (no-op when
+    target_layer_id is None, e.g. the no-mission global view)."""
+    if target_layer_id is None:
+        return project_data, False
+
     target_layer = next((l for l in project_data["layers"] if l.get("id") == target_layer_id), None)
     if target_layer is None or "geojson" not in target_layer:
         return project_data, False

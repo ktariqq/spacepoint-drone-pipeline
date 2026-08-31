@@ -4,13 +4,23 @@
 <meta charset="utf-8" />
 <style>
   html, body { margin: 0; padding: 0; background: transparent; }
-  #wrap { position: relative; width: 100%; }
+  #wrap {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    /* Purple "atmospheric glow" around the map, in keeping with the
+       app's amethyst theme - our own CSS, not GeoLibre's internals. */
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.25),
+                0 0 40px 6px rgba(139, 92, 246, 0.18),
+                0 0 90px 20px rgba(91, 33, 182, 0.12);
+  }
   #geolibre-frame { width: 100%; border: 0; display: block; }
   #sync-badge {
     position: absolute; top: 8px; right: 8px; z-index: 10;
     font: 11px/1.4 -apple-system, sans-serif; padding: 3px 8px;
-    border-radius: 4px; background: rgba(16,19,28,0.85); color: #B4B8C6;
-    border: 1px solid #262B3B; pointer-events: none; opacity: 0;
+    border-radius: 4px; background: rgba(24,12,36,0.85); color: #D8C9F5;
+    border: 1px solid rgba(139, 92, 246, 0.35); pointer-events: none; opacity: 0;
     transition: opacity 0.2s ease;
   }
 </style>
@@ -21,18 +31,8 @@
   <iframe id="geolibre-frame" allow="clipboard-write"></iframe>
 </div>
 <script>
-/* ---------------------------------------------------------------------
- * Minimal Streamlit Components v1 host protocol (no build step / no
- * external component-lib bundle - implemented directly against
- * Streamlit's documented postMessage shapes, see
- * https://docs.streamlit.io/develop/concepts/custom-components/create-static
- * for the equivalent React scaffold this mirrors).
- * ------------------------------------------------------------------- */
 let _renderedOnce = false;
 let _lastArgs = null;
-let _embedMap = null;          // resolved once connect() succeeds
-let _embedConnecting = null;   // in-flight connect() promise
-let _appliedVisibility = {};   // last visibility state actually applied
 
 function stSend(type, extra) {
   window.parent.postMessage(Object.assign({ isStreamlitMessage: true, type }, extra || {}), "*");
@@ -51,128 +51,43 @@ function showBadge(text, ms) {
 }
 
 function withCacheBuster(url) {
-  // Forces a fresh fetch of the GeoLibre SPA shell rather than a browser-
-  // cached one. GeoLibre's own docs name stale-cache version skew (some JS
-  // chunks old, some new) as the #1 cause of init-time crashes like the
-  // "getProjection: this.style is undefined" globe-control failure -
-  // busting the top-level document request is the standard mitigation.
+  // GeoLibre's own docs name stale-cache version skew as the top cause
+  // of init-time crashes - bust the top-level document request so a
+  // stale cached shell can never linger for the session.
   const bust = (url.includes("?") ? "&" : "?") + "_cb=" + Date.now();
   return url + bust;
 }
 
-async function tryConnectEmbedApi(iframeEl, origin) {
-  // Uses GeoLibre's documented embed client via esm.sh (serves any
-  // published npm package as an ES module - not a fabricated URL, but
-  // if @geolibre/embed isn't resolvable in your network, swap this for
-  // https://unpkg.com/@geolibre/embed?module or a vendored copy).
-  try {
-    const mod = await import("https://esm.sh/@geolibre/embed");
-    const connectPromise = mod.connect(iframeEl, { origin });
-    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("embed handshake timeout")), 4000));
-    return await Promise.race([connectPromise, timeout]);
-  } catch (err) {
-    // Expected on the public web.geolibre.app instance, which does not
-    // allowlist arbitrary embedding origins by default (per GeoLibre's own
-    // docs: "a public deployment can never be driven by the page that
-    // frames it"). Not an error condition - the soft-reload fallback below
-    // is the documented, correct behavior for this case.
-    console.warn("[geolibre_bridge] embed postMessage API unavailable, falling back to soft reload:", err);
-    return null;
-  }
-}
-
-function geolibreOrigin(url) {
-  try { return new URL(url).origin; } catch (e) { return "https://web.geolibre.app"; }
-}
-
-async function ensureConnected(iframeEl, geolibreUrl) {
-  if (_embedMap) return _embedMap;
-  if (_embedConnecting) return _embedConnecting;
-  _embedConnecting = tryConnectEmbedApi(iframeEl, geolibreOrigin(geolibreUrl)).then((m) => {
-    _embedMap = m;
-    _embedConnecting = null;
-    return m;
-  });
-  return _embedConnecting;
-}
-
-async function applyVisibilityDiff(iframeEl, geolibreUrl, desired) {
-  const map = await ensureConnected(iframeEl, geolibreUrl);
-
-  if (!map) {
-    // No live channel available - nothing we can do without a reload.
-    // The caller decides whether a reload is warranted.
-    return false;
-  }
-
-  let changedAny = false;
-  for (const [layerId, visible] of Object.entries(desired)) {
-    if (_appliedVisibility[layerId] === visible) continue;
-    try {
-      await map.setLayerVisibility(layerId, visible);
-      _appliedVisibility[layerId] = visible;
-      changedAny = true;
-    } catch (err) {
-      console.warn("[geolibre_bridge] setLayerVisibility failed for", layerId, err);
-    }
-  }
-  if (changedAny) showBadge("Layers synced live", 1200);
-  return true;
-}
-
-function softReloadIframe(iframeEl, geolibreUrl) {
-  // Reload ONLY this nested iframe (never the outer Streamlit page).
-  // Camera position on GeoLibre's side resets to the project's default
-  // view on this path - unavoidable without the postMessage API.
+function loadIframe(iframeEl, geolibreUrl, badgeText) {
   iframeEl.src = withCacheBuster(geolibreUrl);
-  _appliedVisibility = {};
-  _embedMap = null;
-  showBadge("Reloading map view…", 2500);
+  if (badgeText) showBadge(badgeText, 2000);
 }
 
 async function onRender(event) {
   const args = event.detail.args;
   const iframeEl = document.getElementById("geolibre-frame");
 
-  setFrameHeight(args.height || 760);
+  setFrameHeight(args.height || 820);
 
   const structuralChanged = !_lastArgs || _lastArgs.structuralVersion !== args.structuralVersion;
   const urlChanged = !_lastArgs || _lastArgs.geolibreUrl !== args.geolibreUrl;
 
   if (!_renderedOnce) {
     _renderedOnce = true;
-    iframeEl.style.height = (args.height || 760) + "px";
-    // FIXED: cache-bust the very first load too, not just later soft
-    // reloads - otherwise a stale cached GeoLibre shell can persist for
-    // the whole session with no way to self-heal.
-    iframeEl.src = withCacheBuster(args.geolibreUrl);
+    iframeEl.style.height = (args.height || 820) + "px";
+    loadIframe(iframeEl, args.geolibreUrl);
     _lastArgs = args;
-    // fire-and-forget connect attempt so later visibility diffs are fast
-    ensureConnected(iframeEl, args.geolibreUrl);
     return;
   }
 
   if (structuralChanged || urlChanged) {
-    // A real data change (mission switch, restyle by a different
-    // sensor, new heatmap sensor) - the published project itself
-    // changed, so we must reload the nested iframe. This is the one
-    // case we cannot avoid without GeoLibre's runtime addLayer()
-    // support for our contour/point geometry.
-    softReloadIframe(iframeEl, args.geolibreUrl);
+    loadIframe(iframeEl, args.geolibreUrl, "Loading map…");
     _lastArgs = args;
-    // Give the fresh iframe a moment to boot GeoLibre before diffing.
-    setTimeout(() => applyVisibilityDiff(iframeEl, args.geolibreUrl, args.layerVisibility), 1500);
     return;
   }
 
-  // Pure visibility toggle - the common case (checkbox clicked).
-  const ok = await applyVisibilityDiff(iframeEl, args.geolibreUrl, args.layerVisibility);
-  if (!ok) {
-    // Embed API never became available for this deployment/origin -
-    // only option left is a soft reload so the checkbox isn't a no-op.
-    softReloadIframe(iframeEl, args.geolibreUrl);
-    setTimeout(() => applyVisibilityDiff(iframeEl, args.geolibreUrl, args.layerVisibility), 1500);
-  }
+  // Neither changed - a Streamlit rerun triggered by something else on
+  // the page. Do nothing, so the map never visibly reloads for that.
   _lastArgs = args;
 }
 
@@ -183,7 +98,7 @@ window.addEventListener("message", (event) => {
 });
 
 stSend("streamlit:componentReady", { apiVersion: 1 });
-setFrameHeight(760);
+setFrameHeight(820);
 </script>
 </body>
 </html>

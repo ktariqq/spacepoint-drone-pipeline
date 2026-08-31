@@ -1,7 +1,11 @@
 """
 SpacePoint - Mission Map
 
-GeoLibre-based GIS viewer for SpacePoint drone missions.
+GeoLibre-based GIS workspace. Works with or without a cleaned mission:
+opens as a general GIS view (preloaded global satellite imagery) by
+default, with an optional mission to layer on top. All layer show/hide,
+reordering, and opacity happens inside GeoLibre's own Layers panel
+(layout=compact) - there are no external Streamlit toggles.
 Author: Kommal
 """
 
@@ -41,16 +45,13 @@ from dashboard.geolibre_project import (
     build_heatmap_layer,
     build_satellite_reference_layer,
     build_sentinel2_layer,
+    build_gibs_truecolor_layer,
+    build_gibs_aerosol_layer,
     build_project,
     fit_project_to_size,
-    points_layer_id,
-    flight_path_layer_id,
-    heatmap_layer_id,
-    ESRI_LAYER_ID,
-    EOX_TRUECOLOR_LAYER_ID,
+    OPENFREEMAP_STYLES,
     KNOWN_UNITS,
     COLOR_STOPS,
-    OPENFREEMAP_STYLES,
 )
 from dashboard.geolibre_publish import publish_project
 from dashboard.components.geolibre_bridge import geolibre_bridge
@@ -61,6 +62,13 @@ apply_custom_css()
 render_header("Mission Map")
 
 NON_SENSOR_PROPERTY_KEYS = {"timestamp", "has_flag", "flags_summary", "surface_type", "altitude"}
+NO_MISSION_OPTION = "None — GIS workspace only"
+
+# A generous world view so satellite imagery has somewhere sensible to
+# frame on when no mission is selected.
+WORLD_LON_MIN, WORLD_LON_MAX = -170.0, 170.0
+WORLD_LAT_MIN, WORLD_LAT_MAX = -55.0, 75.0
+WORLD_ZOOM = 2.2
 
 
 # ---------------------------------------------------------------------
@@ -122,10 +130,6 @@ def collect_sensor_values(geojson_data: dict, property_name: str):
 
 
 def get_colorable_sensors(geojson_data: dict) -> list[str]:
-    """Any numeric property present on the mission's points can be used
-    to color/interpolate - detected from the data itself, not a fixed
-    list, so this works for the original sensor-logger schema and for
-    arbitrary CSVs picked up by column_detection.py."""
     if not geojson_data.get("features"):
         return []
     sample_properties = geojson_data["features"][0].get("properties", {})
@@ -136,9 +140,6 @@ def get_colorable_sensors(geojson_data: dict) -> list[str]:
 
 
 def preferred_sensor(colorable_sensors: list[str], preferred: str = "temperature") -> str:
-    """Defaults to temperature if this mission has it - never assumes
-    it does, and never silently falls back to whatever happens to be
-    first in the properties dict (that was the altitude bug)."""
     for sensor in colorable_sensors:
         if sensor.lower() == preferred:
             return sensor
@@ -154,273 +155,212 @@ def _get_secret_bool(name: str) -> bool:
 
 @st.cache_data(show_spinner=False)
 def _cached_heat_contours(mission_name: str, sensor_name: str, points_tuple, values_tuple, bounds):
-    """Caches the IDW grid + contour extraction. Now ALSO used to
-    precompute the heatmap even while the "Temperature Heatmap"
-    checkbox is unchecked, so that checking it later is a pure
-    visibility toggle handled live by the geolibre_bridge component
-    instead of a full project republish."""
     points_arr = np.array(points_tuple, dtype=float)
     values_arr = np.array(values_tuple, dtype=float)
     grid = compute_idw_grid(points_arr, values_arr, bounds)
     return build_heat_contours_geojson(grid, bounds)
 
 
-# ---------------------------------------------------------------------
-# Ensure required directories exist
-# ---------------------------------------------------------------------
-
 GEO_DIR.mkdir(parents=True, exist_ok=True)
 CLEANED_DIR.mkdir(parents=True, exist_ok=True)
 
 
 # ---------------------------------------------------------------------
-# Mission discovery + load
+# Mission selection - OPTIONAL. No cleaned data is not an error state.
 # ---------------------------------------------------------------------
 
-missions = get_available_missions()
-
-if not missions:
-    st.warning("No mission GeoJSON data is available. Go to Data Cleaning and run a mission first.")
-    render_sidebar_status()
-    st.stop()
-
-selected_mission = st.selectbox("Mission", missions)
-
-geojson_data = load_mission_geojson(selected_mission)
-
-if geojson_data is None:
-    st.error(f"Could not load GeoJSON for mission '{selected_mission}'.")
-    render_sidebar_status()
-    st.stop()
-
-is_valid, validation_error = validate_geojson(geojson_data)
-if not is_valid:
-    st.error(f"This mission's GeoJSON isn't valid: {validation_error}")
-    render_sidebar_status()
-    st.stop()
-
-summary = load_mission_summary(selected_mission)
-
-colorable_sensors = get_colorable_sensors(geojson_data)
-
-if not colorable_sensors:
-    st.warning("No numeric sensor properties were found on this mission's points.")
-    render_sidebar_status()
-    st.stop()
-
-
-# ---------------------------------------------------------------------
-# Mission bounds
-# ---------------------------------------------------------------------
-
-coordinates = []
-for feature in geojson_data.get("features", []):
-    geometry = feature.get("geometry")
-    if not geometry:
-        continue
-    coords = geometry.get("coordinates")
-    if not coords or len(coords) < 2:
-        continue
-    try:
-        lon, lat = float(coords[0]), float(coords[1])
-        if np.isfinite(lon) and np.isfinite(lat):
-            coordinates.append([lon, lat])
-    except (TypeError, ValueError):
-        continue
-
-if not coordinates:
-    st.warning("No valid spatial coordinates were found.")
-    render_sidebar_status()
-    st.stop()
-
-all_coords = np.array(coordinates, dtype=float)
-lon_min, lon_max = float(all_coords[:, 0].min()), float(all_coords[:, 0].max())
-lat_min, lat_max = float(all_coords[:, 1].min()), float(all_coords[:, 1].max())
-
-
-# ---------------------------------------------------------------------
-# Layer controls
-# ---------------------------------------------------------------------
-
-render_section_header("Mission Data")
-col1, col2 = st.columns(2)
-with col1:
-    show_points = st.checkbox("Drone Observations", value=True)
-    show_flight_path = st.checkbox("Flight Path", value=True)
-with col2:
-    show_heatmap = st.checkbox("Temperature Heatmap", value=False)
-    st.checkbox(
-        "AI Classification",
-        value=False,
-        disabled=True,
-        help=(
-            "Not wired up yet: images uploaded on the Image Tool page aren't geotagged "
-            "in the current pipeline, so there's no coordinate to place a classification "
-            "result at on this map. Faking a location would be worse than leaving it off."
-        ),
-    )
-
-render_section_header("Satellite Imagery")
-col3, col4 = st.columns(2)
-with col3:
-    show_esri = st.checkbox("Esri Satellite", value=True)
-    show_eox_truecolor = st.checkbox("Sentinel-2 True Color (EOX)", value=False)
-with col4:
-    st.caption(
-        "For Sentinel-2 spectral bands, Landsat, Sentinel-1 SAR, and more, use "
-        "GeoLibre's own **Processing → Planetary Computer** panel or "
-        "**Plugins → Web Services** (NASA Earthdata, Historical Imagery) below — "
-        "the full toolbar is now enabled, so those panels are one click away, "
-        "browsing the same catalogs directly rather than through custom code here."
-    )
-
-col5, col6 = st.columns(2)
-with col5:
-    color_sensor = st.selectbox(
-        "Color points by", colorable_sensors,
-        index=colorable_sensors.index(preferred_sensor(colorable_sensors)),
-    )
-with col6:
-    default_heat = preferred_sensor(colorable_sensors)
-    heat_sensor = st.selectbox(
-        "Interpolate (heatmap)", colorable_sensors,
-        index=colorable_sensors.index(default_heat),
-    )
-    if heat_sensor.lower() != "temperature":
-        st.caption(f"No 'temperature' field on this mission — heatmap will show interpolated {heat_sensor} instead.")
-
-
-# ---------------------------------------------------------------------
-# Technical metadata + summary — unchanged
-# ---------------------------------------------------------------------
-
-render_technical_metadata(
-    {
-        "MISSION": selected_mission,
-        "LAT RANGE": f"{lat_min:.4f}° to {lat_max:.4f}°",
-        "LON RANGE": f"{lon_min:.4f}° to {lon_max:.4f}°",
-        "SOURCE": "ONBOARD GPS + ENVIRONMENTAL TELEMETRY",
-        "SAMPLES": len(geojson_data["features"]),
-    },
-    columns=2,
+render_section_header("Mission Data (optional)")
+st.caption(
+    "This is a general GIS workspace with satellite imagery preloaded — a mission isn't "
+    "required. Pick one below to overlay its drone observations, flight path, and heatmap."
 )
 
-if summary:
-    render_section_header("Mission Summary")
-    duration_minutes = (summary.get("duration_seconds") or 0) / 60
-    scol1, scol2, scol3, scol4 = st.columns(4)
-    scol1.metric("Mission", summary.get("mission_name", selected_mission))
-    scol2.metric("Samples", summary.get("sample_count", len(geojson_data["features"])))
-    scol3.metric("Duration", f"{duration_minutes:.1f} min")
-    scol4.metric("Flagged rows", summary.get("flagged_row_count", 0))
+missions = get_available_missions()
+mission_choice = st.selectbox("Mission", [NO_MISSION_OPTION] + missions)
+selected_mission = None if mission_choice == NO_MISSION_OPTION else mission_choice
+
+geojson_data = None
+summary = None
+colorable_sensors = []
+lon_min, lon_max, lat_min, lat_max = WORLD_LON_MIN, WORLD_LON_MAX, WORLD_LAT_MIN, WORLD_LAT_MAX
+zoom = WORLD_ZOOM
+
+if selected_mission:
+    geojson_data = load_mission_geojson(selected_mission)
+
+    if geojson_data is None:
+        st.error(f"Could not load GeoJSON for mission '{selected_mission}'. Showing the GIS workspace without it.")
+        selected_mission = None
+    else:
+        is_valid, validation_error = validate_geojson(geojson_data)
+        if not is_valid:
+            st.error(f"This mission's GeoJSON isn't valid: {validation_error}. Showing the GIS workspace without it.")
+            selected_mission = None
+            geojson_data = None
+
+if selected_mission and geojson_data:
+    summary = load_mission_summary(selected_mission)
+    colorable_sensors = get_colorable_sensors(geojson_data)
+
+    if not colorable_sensors:
+        st.warning("No numeric sensor properties were found on this mission's points — showing location only.")
+
+    coordinates = []
+    for feature in geojson_data.get("features", []):
+        geometry = feature.get("geometry")
+        if not geometry:
+            continue
+        coords = geometry.get("coordinates")
+        if not coords or len(coords) < 2:
+            continue
+        try:
+            lon, lat = float(coords[0]), float(coords[1])
+            if np.isfinite(lon) and np.isfinite(lat):
+                coordinates.append([lon, lat])
+        except (TypeError, ValueError):
+            continue
+
+    if coordinates:
+        all_coords = np.array(coordinates, dtype=float)
+        lon_min, lon_max = float(all_coords[:, 0].min()), float(all_coords[:, 0].max())
+        lat_min, lat_max = float(all_coords[:, 1].min()), float(all_coords[:, 1].max())
+        zoom = 14
+    else:
+        st.warning("No valid spatial coordinates were found for this mission — showing world view.")
+        selected_mission = None
+        geojson_data = None
 
 
 # ---------------------------------------------------------------------
-# STRUCTURAL state (mission / color-by / interpolate-by sensor):
-# changing any of these actually alters the underlying data, so the
-# project must be rebuilt + republished. Pure checkbox toggles below
-# do NOT touch this and are instead applied live by geolibre_bridge.
+# Mission-specific controls - sensor CHOICE only (what data feeds the
+# heatmap / point color), not layer visibility. Only shown with a
+# mission selected.
 # ---------------------------------------------------------------------
 
-structural_key = f"{selected_mission}::{color_sensor}::{heat_sensor}"
+color_sensor = None
+heat_sensor = None
+
+if selected_mission and colorable_sensors:
+    col5, col6 = st.columns(2)
+    with col5:
+        color_sensor = st.selectbox(
+            "Color points by", colorable_sensors,
+            index=colorable_sensors.index(preferred_sensor(colorable_sensors)),
+        )
+    with col6:
+        heat_sensor = st.selectbox(
+            "Interpolate (heatmap)", colorable_sensors,
+            index=colorable_sensors.index(preferred_sensor(colorable_sensors)),
+        )
+        if heat_sensor.lower() != "temperature":
+            st.caption(f"No 'temperature' field on this mission — heatmap will show interpolated {heat_sensor} instead.")
+
+    if summary:
+        render_section_header("Mission Summary")
+        duration_minutes = (summary.get("duration_seconds") or 0) / 60
+        scol1, scol2, scol3, scol4 = st.columns(4)
+        scol1.metric("Mission", summary.get("mission_name", selected_mission))
+        scol2.metric("Samples", summary.get("sample_count", len(geojson_data["features"])))
+        scol3.metric("Duration", f"{duration_minutes:.1f} min")
+        scol4.metric("Flagged rows", summary.get("flagged_row_count", 0))
+
+    render_technical_metadata(
+        {
+            "MISSION": selected_mission,
+            "LAT RANGE": f"{lat_min:.4f}° to {lat_max:.4f}°",
+            "LON RANGE": f"{lon_min:.4f}° to {lon_max:.4f}°",
+            "SAMPLES": len(geojson_data["features"]),
+        },
+        columns=2,
+    )
+
+
+# ---------------------------------------------------------------------
+# STRUCTURAL state: mission + sensors (only exists with a mission) is
+# the only thing that changes what gets published. Everything about
+# imagery visibility is fixed at publish time and controlled afterward
+# entirely inside GeoLibre's own Layers panel.
+# ---------------------------------------------------------------------
+
+structural_key = f"{selected_mission or 'global'}::{color_sensor}::{heat_sensor}"
 
 render_section_header("Mission GIS Workspace")
 st.caption(
-    "Explore the mission data against satellite imagery and other GIS layers using GeoLibre. "
-    "Click a point to see its details. Use the Processing and Plugins menus above the map for "
-    "additional imagery catalogs (Planetary Computer, NASA Earthdata, Historical Imagery)."
+    "Global satellite imagery is preloaded below. Use GeoLibre's own Layers panel to show, "
+    "hide, or reorder anything — including additional catalogs via Processing → Planetary "
+    "Computer and Plugins → Web Services → NASA Earthdata."
 )
 
-_, color_values = collect_sensor_values(geojson_data, color_sensor)
-if color_values:
-    vmin, vmax = min(color_values), max(color_values)
-else:
-    vmin, vmax = 0.0, 1.0
-    st.caption(f"No valid '{color_sensor}' readings to color by — points will show default styling.")
-
-styled_points_geojson = style_geojson_features(geojson_data, color_sensor, vmin, vmax, selected_mission)
-
-# Heat contours are ALWAYS computed once a sensor is chosen (not gated
-# behind show_heatmap) so that checking the box later is instant/live
-# rather than triggering a rebuild.
-valid_features, _ = collect_sensor_values(geojson_data, heat_sensor)
+heatmap_layer = None
 heat_levels = None
 heat_unit = ""
-heatmap_layer = None
-if len(valid_features) >= 2:
-    points_arr = np.array(
-        [[f["geometry"]["coordinates"][1], f["geometry"]["coordinates"][0]] for f in valid_features],
-        dtype=float,
-    )
-    values_arr = np.array([float(f["properties"][heat_sensor]) for f in valid_features], dtype=float)
-    valid_mask = np.isfinite(values_arr) & np.isfinite(points_arr).all(axis=1)
-    points_arr, values_arr = points_arr[valid_mask], values_arr[valid_mask]
+styled_points_geojson = None
 
-    if len(points_arr) >= 2:
-        bounds = (lat_min, lat_max, lon_min, lon_max)
-        contour_geojson, heat_levels = _cached_heat_contours(
-            selected_mission, heat_sensor,
-            tuple(map(tuple, points_arr)), tuple(values_arr.tolist()),
-            bounds,
+if selected_mission and color_sensor:
+    _, color_values = collect_sensor_values(geojson_data, color_sensor)
+    vmin, vmax = (min(color_values), max(color_values)) if color_values else (0.0, 1.0)
+    styled_points_geojson = style_geojson_features(geojson_data, color_sensor, vmin, vmax, selected_mission)
+
+    valid_features, _ = collect_sensor_values(geojson_data, heat_sensor)
+    if len(valid_features) >= 2:
+        points_arr = np.array(
+            [[f["geometry"]["coordinates"][1], f["geometry"]["coordinates"][0]] for f in valid_features],
+            dtype=float,
         )
-        styled_contours = style_heat_contours(contour_geojson, heat_levels)
-        heatmap_layer = build_heatmap_layer(selected_mission, styled_contours, visible=show_heatmap)
-        heat_unit = KNOWN_UNITS.get(heat_sensor, "")
-elif show_heatmap:
-    st.warning(f"Not enough valid '{heat_sensor}' readings to interpolate a heat surface.")
+        values_arr = np.array([float(f["properties"][heat_sensor]) for f in valid_features], dtype=float)
+        valid_mask = np.isfinite(values_arr) & np.isfinite(points_arr).all(axis=1)
+        points_arr, values_arr = points_arr[valid_mask], values_arr[valid_mask]
 
+        if len(points_arr) >= 2:
+            bounds = (lat_min, lat_max, lon_min, lon_max)
+            contour_geojson, heat_levels = _cached_heat_contours(
+                selected_mission, heat_sensor,
+                tuple(map(tuple, points_arr)), tuple(values_arr.tolist()),
+                bounds,
+            )
+            styled_contours = style_heat_contours(contour_geojson, heat_levels)
+            # Heatmap starts hidden - toggle it on inside GeoLibre's Layers panel.
+            heatmap_layer = build_heatmap_layer(selected_mission, styled_contours, visible=False)
+            heat_unit = KNOWN_UNITS.get(heat_sensor, "")
 
-# ---------------------------------------------------------------------
-# Build ALL layers (bottom to top). Every layer is ALWAYS included in
-# the published project regardless of its checkbox - "visible" carries
-# the checkbox state at publish time, and everything past this point
-# only changes when structural_key changes.
-# ---------------------------------------------------------------------
 
 def _build_full_layer_set():
     layers = []
 
-    # Imagery (bottom). Only Esri + EOX are built here now - both are
-    # plain, documented "xyz" sources per GeoLibre's project format and
-    # have worked reliably throughout. Everything else (Sentinel-2 bands,
-    # Landsat, Sentinel-1 SAR, historical imagery) is now added by the
-    # student directly through GeoLibre's own built-in panels (Processing
-    # → Planetary Computer, Plugins → Web Services), which are exposed by
-    # the fuller toolbar below - see layout=compact.
-    imagery_layers = [
-        build_satellite_reference_layer(visible=show_esri),
-        build_sentinel2_layer(visible=show_eox_truecolor),
-    ]
-    if len(imagery_layers) > 1:
-        for extra_layer in imagery_layers[1:]:
-            extra_layer["opacity"] = 0.6
-    layers.extend(imagery_layers)
+    # Global satellite imagery - always present, bottom of the stack.
+    # Fixed default visibility set here once; everything past this is
+    # controlled inside GeoLibre's own Layers panel.
+    layers.append(build_satellite_reference_layer(visible=True))
+    layers.append(build_sentinel2_layer(visible=False))
+    layers.append(build_gibs_truecolor_layer(visible=False))
+    layers.append(build_gibs_aerosol_layer(visible=False))
 
     if heatmap_layer:
         layers.append(heatmap_layer)
 
-    layers.append(build_flight_path_layer(selected_mission, geojson_data, visible=show_flight_path))
+    if selected_mission and geojson_data:
+        layers.append(build_flight_path_layer(selected_mission, geojson_data, visible=True))
+        points_layer = build_points_layer(
+            selected_mission,
+            styled_points_geojson if styled_points_geojson else geojson_data,
+            visible=True,
+        )
+        layers.append(points_layer)
+        return layers, points_layer["id"]
 
-    points_layer = build_points_layer(selected_mission, styled_points_geojson, visible=show_points)
-    layers.append(points_layer)
+    return layers, None
 
-    return layers, points_layer
-
-
-# ---------------------------------------------------------------------
-# Publish only when structural_key changed. Otherwise reuse the
-# already-published URL and let geolibre_bridge apply the checkbox
-# diff live via postMessage.
-# ---------------------------------------------------------------------
 
 if st.session_state.get("_geolibre_structural_key") != structural_key:
-    layers, points_layer = _build_full_layer_set()
+    layers, points_layer_id_for_thinning = _build_full_layer_set()
+    project_name = selected_mission or "spacepoint-gis-workspace"
 
     project_data = build_project(
-        selected_mission, layers, OPENFREEMAP_STYLES["Dark"],
+        project_name, layers, OPENFREEMAP_STYLES["Dark"],
         lon_min, lon_max, lat_min, lat_max,
+        zoom=zoom,
     )
-    project_data, was_thinned = fit_project_to_size(project_data, points_layer["id"])
+    project_data, was_thinned = fit_project_to_size(project_data, points_layer_id_for_thinning)
     if was_thinned:
         st.caption(
             "This mission has enough points that the hosted copy was automatically "
@@ -428,37 +368,27 @@ if st.session_state.get("_geolibre_structural_key") != structural_key:
             "reports are unaffected, only what's shown in GeoLibre."
         )
 
-    project_url, project_cors_ok, publish_error = publish_project(selected_mission, project_data)
+    project_url, project_cors_ok, publish_error = publish_project(project_name, project_data)
 
     st.session_state["_geolibre_structural_key"] = structural_key
     st.session_state["_geolibre_project_url"] = project_url
     st.session_state["_geolibre_cors_ok"] = project_cors_ok
     st.session_state["_geolibre_publish_error"] = publish_error
+    st.session_state["_geolibre_project_name"] = project_name
 
 project_url = st.session_state["_geolibre_project_url"]
 project_cors_ok = st.session_state["_geolibre_cors_ok"]
 publish_error = st.session_state["_geolibre_publish_error"]
+project_name = st.session_state["_geolibre_project_name"]
 
 params = [
     f"url={quote(project_url, safe=':/')}",
-    # FIXED: "viewer" is GeoLibre's deliberately locked-down read-only
-    # chrome (Layers, View, Controls, basemaps, search/identify only —
-    # per GeoLibre's own docs, authoring UI including Processing, Add
-    # Data, and Plugins is hidden by design). "compact" is "the complete
-    # authoring toolbar in a smaller space" - this is what exposes the
-    # Processing menu's Planetary Computer panel, Plugins → Web Services,
-    # Historical Imagery, etc. shown in the app when opened directly.
     "layout=compact",
     "theme=dark",
     "welcome=0",
 ]
 geolibre_url = "https://web.geolibre.app/?" + "&".join(params)
 
-# Hidden from regular users on purpose: this panel exposes the published
-# project URL and (if Supabase/JSONBin aren't configured) a fallback
-# static-file URL — internal debugging info, not something to surface to
-# students. Set SPACEPOINT_DEBUG_MAP = true in secrets to see it again
-# (e.g. while diagnosing a publishing issue yourself).
 if _get_secret_bool("SPACEPOINT_DEBUG_MAP"):
     with st.expander("GeoLibre connection details", expanded=False):
         st.write("Project URL fed to GeoLibre:")
@@ -475,33 +405,12 @@ if _get_secret_bool("SPACEPOINT_DEBUG_MAP"):
         st.code(geolibre_url, language="text")
 
         st.write("Local debug copy (open this yourself to confirm the raw project JSON):")
-        st.code(get_static_url(f"{selected_mission}.geolibre.json"), language="text")
-
-        st.caption(
-            "Live checkbox sync uses GeoLibre's postMessage embed API "
-            "(https://geolibre.app/user-guide/embedding/), which only works if "
-            "web.geolibre.app has allowlisted this app's origin via "
-            "GEOLIBRE_EMBED_ORIGINS on their end — outside SpacePoint's control. "
-            "If it's not allowlisted, layer toggles still update without a full "
-            "page refresh, but reload just the map pane (camera resets)."
-        )
-
-# Deterministic ids -> current desired visibility, sent to the bridge
-# on EVERY rerun. Only ids whose value actually changed get a live
-# setLayerVisibility() call client-side.
-layer_visibility = {
-    points_layer_id(selected_mission): show_points,
-    flight_path_layer_id(selected_mission): show_flight_path,
-    heatmap_layer_id(selected_mission): show_heatmap,
-    ESRI_LAYER_ID: show_esri,
-    EOX_TRUECOLOR_LAYER_ID: show_eox_truecolor,
-}
+        st.code(get_static_url(f"{project_name}.geolibre.json"), language="text")
 
 geolibre_bridge(
     geolibre_url=geolibre_url,
-    layer_visibility=layer_visibility,
     structural_version=structural_key,
-    height=760,
+    height=820,
     key="spacepoint_geolibre_map",
 )
 
@@ -513,6 +422,7 @@ geolibre_bridge(
 if heat_levels:
     label = "Temperature Heatmap" if heat_sensor.lower() == "temperature" else f"{heat_sensor.title()} Heatmap"
     render_section_header(f"{label} Legend")
+    st.caption("Toggle the heatmap layer on inside GeoLibre's Layers panel to see it on the map.")
 
     legend_cols = st.columns(len(COLOR_STOPS))
     n = len(COLOR_STOPS)
