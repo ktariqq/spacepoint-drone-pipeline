@@ -40,6 +40,10 @@ Sidebar is organized into **Mission Pipeline** (the sequential steps every missi
 
 <br/>
 
+<div align="center"><img src="assets/gis.jpg" width="1000"></div>
+
+<br/>
+
 <div align="center">━━━━━━━━━━━━━━ ✦ ✧ ✦ ━━━━━━━━━━━━━━</div>
 
 <br/>
@@ -64,10 +68,6 @@ Sidebar is organized into **Mission Pipeline** (the sequential steps every missi
 - **Live-sync bridge**: declared Streamlit Component wraps the GeoLibre iframe so it mounts once and only reloads on an actual mission/sensor change, never on unrelated reruns
 - **CV thresholding** on fixed physical ranges (not each image's own min/max) so vegetation % is comparable across images and missions
 - **Three-tier hosting fallback** for CORS-safe map publishing with automatic point thinning only when a free-tier size limit is hit
-
-<br/>
-
-<div align="center">━━━━━━━━━━━━━━ ✦ ✧ ✦ ━━━━━━━━━━━━━━</div>
 
 <br/>
 
